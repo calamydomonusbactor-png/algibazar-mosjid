@@ -11,7 +11,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ★★★★★ Firebase SDK ★★★★★ -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -397,6 +402,22 @@
         }
         .dev-overlay.active { display: block; }
         
+        /* Firebase সিঙ্ক স্ট্যাটাস */
+        .sync-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .sync-status.synced { background: #d4edda; color: #155724; border: 1px solid #28a745; }
+        .sync-status.syncing { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+        .sync-status.offline { background: #f8d7da; color: #721c24; border: 1px solid #dc3545; }
+        
         @media (max-width: 768px) {
             .form-row, .dev-panel .row { grid-template-columns: 1fr; }
             .role-card { padding: 20px 25px; min-width: 130px; }
@@ -428,6 +449,9 @@
             <h1>আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>
             <p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>
         </div>
+        
+        <!-- ★★★★★ Firebase সিঙ্ক স্ট্যাটাস ★★★★★ -->
+        <div id="syncStatus" class="sync-status synced">🔄 সিঙ্কড</div>
         
         <div id="installPrompt" class="install-prompt">
             <span class="close-prompt" onclick="document.getElementById('installPrompt').classList.remove('show')">&times;</span>
@@ -906,7 +930,7 @@
     <i class="fas fa-code"></i>
 </button>
 
-<!-- ===== ★★★★★ ডেভেলপার প্যানেল (রিসেট ঠিক করা) ★★★★★ ===== -->
+<!-- ===== ★★★★★ ডেভেলপার প্যানেল ★★★★★ ===== -->
 <div class="dev-overlay" id="devOverlay" onclick="toggleDevPanel()"></div>
 <div class="dev-panel" id="devPanel">
     <button class="close-btn" onclick="toggleDevPanel()">✕ বন্ধ</button>
@@ -923,7 +947,6 @@
     </div>
     
     <div id="devContent" style="display:none;">
-        <!-- ===== ইউজার ম্যানেজমেন্ট ===== -->
         <div class="section">
             <h4><i class="fas fa-users-cog"></i> ইউজার ম্যানেজমেন্ট</h4>
             <div class="row">
@@ -955,7 +978,6 @@
             <div id="devUserList"></div>
         </div>
         
-        <!-- ===== ★★★★★ ডাটা ম্যানেজমেন্ট (রিসেট ঠিক করা) ★★★★★ ===== -->
         <div class="section">
             <h4><i class="fas fa-database"></i> ডাটা ম্যানেজমেন্ট</h4>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -966,17 +988,14 @@
                     <i class="fas fa-upload"></i> ব্যাকআপ রিস্টোর
                 </button>
                 <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreData(event)">
-                
-                <!-- ★★★★★ রিসেট বাটন (ঠিক করা) ★★★★★ -->
-                <button class="btn btn-danger btn-sm" onclick="devResetAll()" style="background:#dc3545; color:white; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:0.8rem;">
+                <button class="btn btn-danger btn-sm" onclick="devResetAll()">
                     <i class="fas fa-trash"></i> সব রিসেট
                 </button>
-                <button class="btn btn-warning btn-sm" onclick="devResetIncomeExpense()" style="background:#ffc107; color:#333; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:0.8rem;">
+                <button class="btn btn-warning btn-sm" onclick="devResetIncomeExpense()">
                     <i class="fas fa-undo"></i> আয়-ব্যয় রিসেট
                 </button>
             </div>
             
-            <!-- Google Drive গাইড -->
             <div style="margin-top:10px; padding:10px; background:#e8f5e9; border-radius:6px; border-left:4px solid #2d7d46;">
                 <p style="font-size:0.85rem; margin:2px 0;">
                     <i class="fas fa-cloud-upload-alt" style="color:#1a472a;"></i>
@@ -990,7 +1009,6 @@
             </div>
         </div>
         
-        <!-- ===== সিস্টেম ইনফো ===== -->
         <div class="section">
             <h4><i class="fas fa-info-circle"></i> সিস্টেম ইনফো</h4>
             <p><strong>মোট মুসল্লি:</strong> <span id="devTotalMembers">০</span> জন</p>
@@ -1003,6 +1021,95 @@
 
 
 <script>
+    // =========================================
+    // ===== ★★★★★ FIREBASE CONFIG ★★★★★ =====
+    // =========================================
+    // ★★★★★ আপনার Firebase Config এখানে বসান ★★★★★
+    // ★★★★★ আপনার Firebase Config এখানে বসান ★★★★★
+const firebaseConfig = {
+    apiKey: "AIzaSyD...",  // ← আপনার API Key
+    authDomain: "your-project.firebaseapp.com",
+    databaseURL: "https://your-project-default-rtdb.firebaseio.com",
+    projectId: "your-project",
+    storageBucket: "your-project.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdef"
+};
+
+    // Firebase Initialize
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // =========================================
+    // ===== ★★★★★ FIREBASE SYNC FUNCTIONS ★★★★★ =====
+    // =========================================
+    
+    var isFirebaseSynced = false;
+    var syncTimeout = null;
+
+    function updateSyncStatus(status) {
+        var el = document.getElementById('syncStatus');
+        if (status === 'synced') {
+            el.textContent = '✅ সিঙ্কড';
+            el.className = 'sync-status synced';
+        } else if (status === 'syncing') {
+            el.textContent = '⏳ সিঙ্কিং...';
+            el.className = 'sync-status syncing';
+        } else {
+            el.textContent = '📡 অফলাইন';
+            el.className = 'sync-status offline';
+        }
+    }
+
+    // Firebase এ ডাটা সেভ
+    function saveToFirebase(path, data) {
+        if (!navigator.onLine) {
+            updateSyncStatus('offline');
+            return;
+        }
+        updateSyncStatus('syncing');
+        database.ref(path).set(data)
+            .then(() => {
+                updateSyncStatus('synced');
+                console.log('✅ Firebase সেভ সফল:', path);
+            })
+            .catch((error) => {
+                console.error('❌ Firebase সেভ ত্রুটি:', error);
+                updateSyncStatus('offline');
+            });
+    }
+
+    // Firebase থেকে ডাটা লোড
+    function loadFromFirebase(path, callback) {
+        if (!navigator.onLine) {
+            updateSyncStatus('offline');
+            callback(null);
+            return;
+        }
+        updateSyncStatus('syncing');
+        database.ref(path).once('value')
+            .then((snapshot) => {
+                var data = snapshot.val();
+                updateSyncStatus('synced');
+                callback(data);
+            })
+            .catch((error) => {
+                console.error('❌ Firebase লোড ত্রুটি:', error);
+                updateSyncStatus('offline');
+                callback(null);
+            });
+    }
+
+    // রিয়েল-টাইম লিসেনার (অন্যান্য ডিভাইস থেকে আপডেট পাওয়ার জন্য)
+    function listenToFirebase(path, callback) {
+        database.ref(path).on('value', (snapshot) => {
+            var data = snapshot.val();
+            if (data !== null && data !== undefined) {
+                callback(data);
+            }
+        });
+    }
+
     // =========================================
     // ===== PWA - INSTALL PROMPT =====
     // =========================================
@@ -1055,6 +1162,7 @@
         } else {
             status.textContent = '🔴 অফলাইন';
             status.className = 'online-status offline';
+            updateSyncStatus('offline');
         }
     }
 
@@ -1084,17 +1192,21 @@
         if (pending.length === 0) return;
         
         console.log('🔄 সিঙ্ক করা হচ্ছে:', pending.length, 'টি লেনদেন');
+        updateSyncStatus('syncing');
         
         for (var i = 0; i < pending.length; i++) {
             var txn = pending[i];
             personalTransactions.push(txn);
             totalIncome += txn.amount;
+            // Firebase এ সেভ
+            saveToFirebase('transactions/' + Date.now(), txn);
         }
         
         localStorage.setItem('pendingSync', '[]');
         updateAllReports();
         updatePublicStats();
         saveAllData();
+        updateSyncStatus('synced');
         
         if (pending.length > 0) {
             alert('✅ ' + pending.length + ' টি লেনদেন সিঙ্ক করা হয়েছে!');
@@ -1108,12 +1220,15 @@
         
         if (!navigator.onLine) {
             alert('📡 আপনি অফলাইনে আছেন। ডাটা সেভ করা হয়েছে। ইন্টারনেট এলে অটো সিঙ্ক হবে।');
+            updateSyncStatus('offline');
         } else {
             personalTransactions.push(transaction);
             totalIncome += transaction.amount;
             updateAllReports();
             updatePublicStats();
             saveAllData();
+            // Firebase এ সেভ
+            saveToFirebase('transactions/' + Date.now(), transaction);
         }
     }
 
@@ -1209,6 +1324,14 @@
             };
             localStorage.setItem('mosjidData', JSON.stringify(data));
             console.log('✅ ডাটা সেভ করা হয়েছে:', new Date().toLocaleTimeString());
+            
+            // Firebase এ সেভ
+            saveToFirebase('members', members);
+            saveToFirebase('updates', updates);
+            saveToFirebase('reportData', reportData);
+            saveToFirebase('totalIncome', totalIncome);
+            saveToFirebase('totalExpense', totalExpense);
+            
         } catch (e) {
             console.log('❌ ডাটা সেভ করতে সমস্যা:', e);
         }
@@ -1236,6 +1359,100 @@
             console.log('❌ ডাটা লোড করতে সমস্যা:', e);
         }
         return false;
+    }
+
+    // =========================================
+    // ===== ★★★★★ FIREBASE থেকে ডাটা লোড (রিয়েল-টাইম) ★★★★★ =====
+    // =========================================
+    function loadDataFromFirebase() {
+        // Members লোড
+        loadFromFirebase('members', function(data) {
+            if (data) {
+                members = data;
+                loadMemberTable();
+                loadMemberSelect();
+                updateDevInfo();
+            }
+        });
+        
+        // Updates লোড
+        loadFromFirebase('updates', function(data) {
+            if (data) {
+                updates = data;
+                loadCommitteeUpdates();
+                loadPublicUpdates();
+            }
+        });
+        
+        // Report Data লোড
+        loadFromFirebase('reportData', function(data) {
+            if (data) {
+                reportData = data;
+                updateAllReports();
+            }
+        });
+        
+        // Total Income/Expense লোড
+        loadFromFirebase('totalIncome', function(data) {
+            if (data !== null) {
+                totalIncome = data;
+                updatePublicStats();
+                updateDevInfo();
+            }
+        });
+        loadFromFirebase('totalExpense', function(data) {
+            if (data !== null) {
+                totalExpense = data;
+                updatePublicStats();
+                updateDevInfo();
+            }
+        });
+        
+        // ★★★★★ রিয়েল-টাইম লিসেনার (অন্য ডিভাইস থেকে আপডেট পেতে) ★★★★★
+        listenToFirebase('members', function(data) {
+            if (data) {
+                members = data;
+                loadMemberTable();
+                loadMemberSelect();
+                updateDevInfo();
+                console.log('🔄 Firebase থেকে members আপডেট পাওয়া গেছে!');
+            }
+        });
+        
+        listenToFirebase('updates', function(data) {
+            if (data) {
+                updates = data;
+                loadCommitteeUpdates();
+                loadPublicUpdates();
+                console.log('🔄 Firebase থেকে updates আপডেট পাওয়া গেছে!');
+            }
+        });
+        
+        listenToFirebase('reportData', function(data) {
+            if (data) {
+                reportData = data;
+                updateAllReports();
+                console.log('🔄 Firebase থেকে reportData আপডেট পাওয়া গেছে!');
+            }
+        });
+        
+        listenToFirebase('totalIncome', function(data) {
+            if (data !== null) {
+                totalIncome = data;
+                updatePublicStats();
+                updateDevInfo();
+                console.log('🔄 Firebase থেকে totalIncome আপডেট পাওয়া গেছে!');
+            }
+        });
+        
+        listenToFirebase('totalExpense', function(data) {
+            if (data !== null) {
+                totalExpense = data;
+                updatePublicStats();
+                updateDevInfo();
+                console.log('🔄 Firebase থেকে totalExpense আপডেট পাওয়া গেছে!');
+            }
+        });
     }
 
     setInterval(saveAllData, 300000);
@@ -1337,10 +1554,8 @@
     }
 
     // =========================================
-    // ===== ★★★★★ রিসেট ফাংশন (ঠিক করা) ★★★★★ =====
+    // ===== ★★★★★ রিসেট ফাংশন ★★★★★ =====
     // =========================================
-    
-    // ১. সব ডাটা রিসেট
     function devResetAll() {
         if (!isDevUnlocked) {
             alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!');
@@ -1391,7 +1606,6 @@
         }
     }
 
-    // ২. শুধু আয়-ব্যয় রিসেট
     function devResetIncomeExpense() {
         if (!isDevUnlocked) {
             alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!');
@@ -2869,6 +3083,9 @@
         if (!loaded) {
             console.log('📌 প্রথমবার ব্যবহার, ডাটা খালি রাখা হয়েছে।');
         }
+        
+        // ★★★★★ Firebase থেকে ডাটা লোড ★★★★★
+        loadDataFromFirebase();
         
         var pendingSync = JSON.parse(localStorage.getItem('pendingSync') || '[]');
         if (pendingSync.length > 0 && navigator.onLine) {
