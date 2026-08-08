@@ -1,0 +1,2190 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>আলগী বাজার জামে মসজিদ</title>
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuCAmuCBrOCBvOCBjOCBqOCBqOCBqOCCteCBoOCBvOCBhOCBqCDigKIg4oCiIiwKICAic2hvcnRfbmFtZSI6ICLggZrggbzggYzggagv4oGt4oCiIiwKICAiZGVzY3JpcHRpb24iOiAi4KaV4KeN4Ka44Ka+4KaV4KeN4KaH4KawLCDgpoXgpqHguZ3gppXgp43gpqHgpqTgppXgp43gpp8g4KaV4Ka84KawIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmZmZmZmYiLAogICJ0aGVtZV9jb2xvciI6ICIjMWE0NzJhIiwKICAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAnJTNFJTNDcmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgZmlsbD0nJTIzMWE0NzJhJy8lM0UlM0N0ZXh0IHg9JzUwJyB5PSc1MCcgZm9udC1zaXplPSc2MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZHk9Jy4zNScgZmlsbD0nd2hpdGUnJTNF8J+ljf8lM0MvdGV4dCUzRSUzQy9zdmclM0UiLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgICB9CiAgXQp9">
+    <meta name="theme-color" content="#1a472a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== গ্লোবাল স্টাইল ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 16px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .home-page { display: block; }
+        .home-page.hidden { display: none; }
+        
+        .mosque-header {
+            text-align: center; padding: 25px 20px;
+            background: linear-gradient(135deg, #1a472a, #2d7d46);
+            border-radius: 18px; color: white; margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        .mosque-header h1 { font-size: 2rem; margin-bottom: 4px; }
+        .mosque-header p { font-size: 1rem; opacity: 0.9; }
+        .mosque-logo { font-size: 3.5rem; margin-bottom: 8px; }
+        
+        .role-selector {
+            display: flex; justify-content: center; gap: 20px;
+            flex-wrap: wrap; margin: 30px 0;
+        }
+        .role-card {
+            background: white; padding: 30px 35px; border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            cursor: pointer; transition: all 0.3s ease;
+            text-align: center; min-width: 160px; border: 3px solid transparent;
+        }
+        .role-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); border-color: #2d7d46; }
+        .role-card i { font-size: 3.5rem; color: #2d7d46; margin-bottom: 10px; }
+        .role-card h3 { font-size: 1.3rem; color: #333; }
+        .role-card p { color: #666; margin-top: 4px; font-size: 0.9rem; }
+        
+        .login-page {
+            display: none; background: white; padding: 35px;
+            border-radius: 18px; max-width: 400px; margin: 40px auto;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.2);
+        }
+        .login-page.active { display: block; }
+        .login-page h2 { text-align: center; color: #1a472a; margin-bottom: 25px; font-size: 1.5rem; }
+        .login-page select, .login-page input {
+            width: 100%; padding: 14px; margin: 8px 0;
+            border: 2px solid #ddd; border-radius: 10px; font-size: 1rem;
+            transition: 0.3s;
+        }
+        .login-page select:focus, .login-page input:focus { border-color: #2d7d46; outline: none; }
+        .login-page button {
+            width: 100%; padding: 14px; background: #2d7d46;
+            color: white; border: none; border-radius: 10px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            transition: 0.3s; margin-top: 8px;
+        }
+        .login-page button:hover { background: #1a472a; }
+        .back-btn { display: inline-block; margin-top: 12px; color: #2d7d46; cursor: pointer; font-weight: bold; }
+        .back-btn:hover { text-decoration: underline; }
+        
+        .dashboard {
+            display: none; background: white; border-radius: 18px;
+            box-shadow: 0 8px 35px rgba(0,0,0,0.15); overflow: hidden;
+        }
+        .dashboard.active { display: block; }
+        
+        .dashboard-header {
+            background: #1a472a; padding: 15px 20px;
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 8px;
+        }
+        .dashboard-header h2 { color: white; font-size: 1.1rem; }
+        .dashboard-header .user-info {
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+        }
+        .dashboard-header .user-info span {
+            background: rgba(255,255,255,0.15); padding: 5px 14px;
+            border-radius: 20px; font-weight: bold; color: white; font-size: 0.8rem;
+        }
+        .logout-btn {
+            background: #dc3545; color: white; border: none;
+            padding: 6px 16px; border-radius: 8px; cursor: pointer;
+            font-weight: bold; transition: 0.3s; font-size: 0.8rem;
+        }
+        .logout-btn:hover { background: #c82333; }
+        .change-password-btn {
+            background: #ffc107; color: #333; border: none;
+            padding: 6px 16px; border-radius: 8px; cursor: pointer;
+            font-weight: bold; transition: 0.3s; font-size: 0.8rem;
+        }
+        .change-password-btn:hover { background: #e0a800; }
+        
+        .dash-menu {
+            display: flex; flex-wrap: wrap; gap: 4px;
+            padding: 10px 12px; background: #f8f9fa;
+            border-bottom: 2px solid #e8f5e9;
+        }
+        .dash-menu-item {
+            padding: 6px 14px; border-radius: 6px; cursor: pointer;
+            transition: 0.3s; font-weight: bold; font-size: 0.78rem;
+            color: #555; border: 2px solid transparent; background: transparent;
+        }
+        .dash-menu-item:hover { background: #e8f5e9; color: #1a472a; }
+        .dash-menu-item.active { background: #2d7d46; color: white; border-color: #2d7d46; }
+        .dash-menu-item i { margin-right: 4px; }
+        
+        .content-area {
+            padding: 16px 20px; min-height: 350px; max-height: 500px;
+            overflow-y: auto; background: white;
+        }
+        .content-area::-webkit-scrollbar { width: 4px; }
+        .content-area::-webkit-scrollbar-thumb { background: #2d7d46; border-radius: 10px; }
+        .content-area::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        
+        .content-area h3 {
+            color: #1a472a; margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 2px solid #e8f5e9; font-size: 1.05rem;
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .form-group { margin-bottom: 10px; }
+        .form-group label {
+            display: block; font-weight: bold; margin-bottom: 2px;
+            color: #333; font-size: 0.85rem;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 7px 10px;
+            border: 2px solid #ddd; border-radius: 6px; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #2d7d46; outline: none;
+        }
+        .form-group textarea { height: 45px; resize: vertical; }
+        .form-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+        }
+        
+        .btn {
+            padding: 7px 18px; border: none; border-radius: 6px;
+            font-size: 0.85rem; font-weight: bold; cursor: pointer;
+            transition: 0.3s; display: inline-flex; align-items: center; gap: 5px;
+        }
+        .btn-primary { background: #2d7d46; color: white; }
+        .btn-primary:hover { background: #1a472a; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #218838; }
+        .btn-warning { background: #ffc107; color: #333; }
+        .btn-warning:hover { background: #e0a800; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger:hover { background: #c82333; }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-info:hover { background: #138496; }
+        .btn-sm { padding: 4px 12px; font-size: 0.75rem; }
+        
+        .notification {
+            background: #d4edda; color: #155724;
+            padding: 8px 12px; border-radius: 6px;
+            margin: 8px 0; border-left: 4px solid #28a745;
+            display: none; font-size: 0.85rem;
+        }
+        .notification.show { display: block; }
+        .notification-error {
+            background: #f8d7da; color: #721c24; border-left-color: #dc3545;
+        }
+        
+        .table-responsive {
+            overflow-x: auto; max-height: 200px; overflow-y: auto; margin-top: 6px;
+        }
+        .table-responsive::-webkit-scrollbar { width: 3px; }
+        .table-responsive::-webkit-scrollbar-thumb { background: #2d7d46; border-radius: 10px; }
+        .table-responsive::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        th, td { padding: 5px 8px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f5f7fa; color: #333; font-weight: bold; position: sticky; top: 0; z-index: 10; }
+        tr:hover { background: #f8f9fa; }
+        
+        .badge {
+            display: inline-block; padding: 2px 8px; border-radius: 20px;
+            font-size: 0.65rem; font-weight: bold;
+        }
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-danger { background: #f8d7da; color: #721c24; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-info { background: #d1ecf1; color: #0c5460; }
+        
+        .public-view {
+            display: none; background: white; border-radius: 18px;
+            padding: 20px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+        }
+        .public-view.active { display: block; }
+        
+        .public-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px; margin: 12px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #1a472a, #2d7d46);
+            color: white; padding: 12px; border-radius: 10px; text-align: center;
+        }
+        .stat-card h4 { font-size: 0.75rem; opacity: 0.9; }
+        .stat-card p { font-size: 1.2rem; font-weight: bold; margin-top: 2px; }
+        
+        .receipt-preview {
+            background: #f8f9fa; border: 2px dashed #2d7d46;
+            padding: 12px; border-radius: 8px; margin: 10px 0;
+            font-family: 'Courier New', monospace; max-width: 280px; font-size: 0.78rem;
+        }
+        .receipt-preview .receipt-line { border-top: 1px dashed #999; margin: 4px 0; }
+        
+        .update-card {
+            background: #f8f9fa; padding: 8px 12px; border-radius: 6px;
+            margin: 5px 0; border-left: 4px solid #2d7d46;
+        }
+        .update-card h5 { color: #1a472a; font-size: 0.85rem; }
+        .update-card p { font-size: 0.8rem; margin: 2px 0; }
+        .update-card small { color: #666; font-size: 0.7rem; }
+        
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5); overflow: auto;
+        }
+        .modal-content {
+            background: white; margin: 5% auto; padding: 20px;
+            border-radius: 18px; max-width: 420px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); animation: slideDown 0.3s ease;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-close { float: right; font-size: 1.5rem; font-weight: bold; cursor: pointer; color: #999; transition: 0.3s; }
+        .modal-close:hover { color: #333; }
+        .modal h3 { color: #1a472a; margin-bottom: 12px; }
+        
+        .inline-flex { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .flex-1 { flex: 1; }
+        .mt-10 { margin-top: 10px; }
+        .mb-10 { margin-bottom: 10px; }
+        
+        .member-info-box {
+            background: #f8f9fa; padding: 8px 12px; border-radius: 6px;
+            margin: 6px 0; font-size: 0.85rem; border: 1px solid #e8f5e9;
+        }
+        .member-info-box p { margin: 2px 0; }
+        
+        .tab-bar {
+            display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px;
+        }
+        .tab-btn {
+            padding: 5px 12px; border: 2px solid #ddd;
+            background: white; border-radius: 6px; cursor: pointer;
+            font-weight: bold; transition: 0.3s; font-size: 0.75rem;
+        }
+        .tab-btn.active { background: #2d7d46; color: white; border-color: #2d7d46; }
+        .tab-btn:hover:not(.active) { background: #f0f0f0; }
+        
+        .report-summary {
+            background: #e8f5e9;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin: 8px 0;
+            border-left: 4px solid #2d7d46;
+        }
+        .report-summary h4 { color: #1a472a; margin-bottom: 3px; font-size: 0.9rem; }
+        .report-summary p { font-size: 0.85rem; margin: 2px 0; }
+        
+        .action-btn {
+            padding: 2px 8px; border: none; border-radius: 4px;
+            cursor: pointer; font-size: 0.7rem; font-weight: bold;
+            margin: 0 2px;
+        }
+        .action-btn.edit { background: #ffc107; color: #333; }
+        .action-btn.edit:hover { background: #e0a800; }
+        .action-btn.delete { background: #dc3545; color: white; }
+        .action-btn.delete:hover { background: #c82333; }
+        
+        .month-selector {
+            background: #f8f9fa; padding: 10px 12px; border-radius: 8px;
+            margin: 8px 0; border: 1px solid #e8f5e9;
+        }
+        .month-selector select {
+            width: 100%; padding: 8px; border: 2px solid #ddd;
+            border-radius: 6px; font-size: 0.9rem; background: white;
+        }
+        .month-selector select:focus { border-color: #2d7d46; outline: none; }
+        
+        .install-prompt {
+            display: none;
+            background: #1a472a;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin: 10px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .install-prompt.show { display: block; }
+        .install-prompt button {
+            background: #ffc107;
+            color: #333;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 6px;
+            font-size: 0.9rem;
+        }
+        .install-prompt button:hover { background: #e0a800; }
+        .install-prompt .close-prompt {
+            float: right;
+            cursor: pointer;
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+        .install-prompt .close-prompt:hover { opacity: 1; }
+        
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .role-card { padding: 20px 25px; min-width: 130px; }
+            .mosque-header h1 { font-size: 1.5rem; }
+            .dashboard-header { flex-direction: column; text-align: center; }
+            .dash-menu { justify-content: center; }
+            .content-area { max-height: 400px; padding: 12px 15px; }
+            .public-stats { grid-template-columns: 1fr 1fr 1fr; }
+            .stat-card p { font-size: 1rem; }
+            .mosque-logo { font-size: 2.8rem; }
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .no-print { display: none !important; }
+            .receipt-preview { border: none; max-width: 100%; }
+            .content-area { max-height: none; overflow: visible; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== HOME PAGE ===== -->
+    <div id="homePage" class="home-page">
+        <div class="mosque-header">
+            <div class="mosque-logo">🕌</div>
+            <h1>আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>
+            <p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>
+        </div>
+        
+        <div id="installPrompt" class="install-prompt">
+            <span class="close-prompt" onclick="document.getElementById('installPrompt').classList.remove('show')">&times;</span>
+            <i class="fas fa-mobile-alt" style="font-size:1.5rem;"></i>
+            <p style="margin:4px 0; font-weight:bold;">📱 অ্যাপটি ইনস্টল করুন!</p>
+            <p style="font-size:0.85rem; opacity:0.9;">হোম স্ক্রিনে যোগ করে সহজে ব্যবহার করুন</p>
+            <button id="installAppBtn">ইনস্টল করুন</button>
+        </div>
+        
+        <div class="role-selector">
+            <div class="role-card" onclick="openPublicView()">
+                <i class="fas fa-users"></i>
+                <h3>মুসল্লি</h3>
+                <p>হিসাব, বকেয়া ও আপডেট দেখুন</p>
+            </div>
+            <div class="role-card" onclick="showLogin()">
+                <i class="fas fa-user-tie"></i>
+                <h3>কমিটি</h3>
+                <p>প্রশাসনিক প্যানেল</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LOGIN PAGE ===== -->
+    <div id="loginPage" class="login-page">
+        <h2><i class="fas fa-lock"></i> কমিটি লগইন</h2>
+        <div class="form-group">
+            <label>ইউজার নির্বাচন করুন</label>
+            <select id="loginUserSelect">
+                <option value="cashier">ক্যাশিয়ার (মোঃ সালাম)</option>
+                <option value="secretary">সেক্রেটারি (মোঃ জামাল)</option>
+                <option value="president">সভাপতি (মোঃ রফিক)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>পাসওয়ার্ড</label>
+            <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড লিখুন" value="123456">
+        </div>
+        <button onclick="handleLogin()">লগইন করুন</button>
+        <div style="margin-top:12px; font-size:0.85rem; color:#666; text-align:center;">
+            <strong>পাসওয়ার্ড:</strong> 123456 (সবার জন্য একই)
+        </div>
+        <div class="back-btn" onclick="goHome()">← হোমে ফিরে যান</div>
+    </div>
+
+    <!-- ===== PUBLIC VIEW ===== -->
+    <div id="publicView" class="public-view">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
+            <h2 style="color:#1a472a; font-size:1.2rem;">🕌 আলগী বাজার জামে মসজিদ</h2>
+            <span style="background:#e8f5e9; padding:4px 12px; border-radius:20px; font-weight:bold; color:#1a472a; font-size:0.75rem;">পাবলিক ভিউ</span>
+        </div>
+        
+        <div class="public-stats">
+            <div class="stat-card"><h4>মোট সংগ্রহ</h4><p id="pubTotalIncome">১,২৫,৪০০</p></div>
+            <div class="stat-card"><h4>মোট খরচ</h4><p id="pubTotalExpense">৮৫,২০০</p></div>
+            <div class="stat-card"><h4>উদ্বৃত্ত</h4><p id="pubBalance">৪০,২০০</p></div>
+        </div>
+        
+        <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin:10px 0;">
+            <h4 style="font-size:0.9rem;">আমার বকেয়া চেক করুন</h4>
+            <div class="inline-flex">
+                <input type="text" id="checkMobile" placeholder="মোবাইল নম্বর" value="01712345678" style="flex:1; padding:6px 10px; border:2px solid #ddd; border-radius:6px; font-size:0.85rem;">
+                <button class="btn btn-primary btn-sm" onclick="checkDues()">চেক</button>
+            </div>
+            <div id="duesResult" style="margin-top:8px; font-weight:bold; color:#1a472a; font-size:0.9rem;"></div>
+        </div>
+        
+        <div style="margin:10px 0;">
+            <h4 style="font-size:0.9rem;">📊 মাসিক আয়-ব্যয়</h4>
+            <div class="month-selector">
+                <select id="reportMonthSelect" onchange="loadMonthlyReport()" style="font-size:0.85rem; padding:7px;">
+                    <option value="জানুয়ারি ২০২৬">জানুয়ারি ২০২৬</option>
+                    <option value="ফেব্রুয়ারি ২০২৬">ফেব্রুয়ারি ২০২৬</option>
+                    <option value="মার্চ ২০২৬">মার্চ ২০২৬</option>
+                    <option value="এপ্রিল ২০২৬">এপ্রিল ২০২৬</option>
+                    <option value="মে ২০২৬">মে ২০২৬</option>
+                    <option value="জুন ২০২৬">জুন ২০২৬</option>
+                    <option value="জুলাই ২০২৬">জুলাই ২০২৬</option>
+                    <option value="আগস্ট ২০২৬" selected>আগস্ট ২০২৬</option>
+                    <option value="সেপ্টেম্বর ২০২৬">সেপ্টেম্বর ২০২৬</option>
+                    <option value="অক্টোবর ২০২৬">অক্টোবর ২০২৬</option>
+                    <option value="নভেম্বর ২০২৬">নভেম্বর ২০২৬</option>
+                    <option value="ডিসেম্বর ২০২৬">ডিসেম্বর ২০২৬</option>
+                </select>
+            </div>
+            <div id="monthlyReportContainer"></div>
+        </div>
+        
+        <div style="margin:10px 0;">
+            <h4 style="font-size:0.9rem;">📢 সর্বশেষ আপডেট</h4>
+            <div id="publicUpdates"></div>
+        </div>
+        
+        <!-- ★★★★★ A4 জাবেদা প্রিন্ট বাটন ★★★★★ -->
+        <button class="btn btn-warning btn-sm no-print" onclick="printA4Report()" style="margin:4px 0;">
+            <i class="fas fa-print"></i> A4 জাবেদা প্রিন্ট
+        </button>
+        <br>
+        <div class="back-btn" onclick="goHome()">← হোমে ফিরে যান</div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div id="dashboard" class="dashboard">
+        <div class="dashboard-header">
+            <h2>🕌 আলগী বাজার জামে মসজিদ</h2>
+            <div class="user-info">
+                <span id="userRoleDisplay"><i class="fas fa-user"></i> ক্যাশিয়ার</span>
+                <button class="change-password-btn" onclick="openChangePassword()">
+                    <i class="fas fa-key"></i> পাসওয়ার্ড
+                </button>
+                <button class="logout-btn" onclick="logout()">লগআউট</button>
+            </div>
+        </div>
+        
+        <div class="dash-menu" id="dashMenu">
+            <div class="dash-menu-item active" data-tab="donation" onclick="showTab('donation', this)">
+                <i class="fas fa-hand-holding-heart"></i> অনুদান
+            </div>
+            <div class="dash-menu-item" data-tab="addMember" onclick="showTab('addMember', this)">
+                <i class="fas fa-user-plus"></i> নতুন মুসল্লি
+            </div>
+            <div class="dash-menu-item" data-tab="manageMembers" onclick="showTab('manageMembers', this)">
+                <i class="fas fa-user-edit"></i> ব্যবস্থাপনা
+            </div>
+            <div class="dash-menu-item" data-tab="expense" onclick="showTab('expense', this)">
+                <i class="fas fa-money-bill-wave"></i> খরচ
+            </div>
+            <div class="dash-menu-item" data-tab="reports" onclick="showTab('reports', this)">
+                <i class="fas fa-chart-bar"></i> রিপোর্ট
+            </div>
+            <div class="dash-menu-item" data-tab="personalReport" onclick="showTab('personalReport', this)">
+                <i class="fas fa-user-cog"></i> ব্যক্তিগত
+            </div>
+            <div class="dash-menu-item" data-tab="updates" onclick="showTab('updates', this)">
+                <i class="fas fa-bullhorn"></i> আপডেট
+            </div>
+            <div class="dash-menu-item" data-tab="members" onclick="showTab('members', this)">
+                <i class="fas fa-address-book"></i> তালিকা
+            </div>
+        </div>
+        
+        <div class="content-area" id="contentArea">
+            
+            <!-- ===== DONATION TAB ===== -->
+            <div id="tabDonation" class="tab-content active">
+                <h3><i class="fas fa-hand-holding-heart"></i> অনুদান গ্রহণ</h3>
+                <div class="notification" id="donationSuccess">
+                    <i class="fas fa-check-circle"></i> অনুদান সফলভাবে গ্রহণ করা হয়েছে!
+                </div>
+                
+                <div class="form-group" style="margin-bottom:6px;">
+                    <label>মুসল্লি ধরন</label>
+                    <select id="memberType" onchange="toggleMemberFields()" style="padding:5px 8px;">
+                        <option value="permanent">স্থায়ী মুসল্লি</option>
+                        <option value="guest">অস্থায়ী/অতিথি</option>
+                    </select>
+                </div>
+                
+                <div id="permanentFields">
+                    <div class="inline-flex">
+                        <input type="text" id="searchMobile" placeholder="মোবাইল নম্বর" value="01712345678" style="flex:1; padding:5px 8px; border:2px solid #ddd; border-radius:5px; font-size:0.82rem;">
+                        <button class="btn btn-primary btn-sm" onclick="searchMember()">সার্চ</button>
+                    </div>
+                    <div id="memberInfo" class="member-info-box">
+                        <p><strong>নাম:</strong> মোঃ আব্দুর রহিম</p>
+                        <p><strong>সিরিয়াল:</strong> ০৫ | <strong>ঠিকানা:</strong> আলগী বাজার</p>
+                        <p><strong>চাঁদা:</strong> ৫০০ টাকা | <strong>বকেয়া:</strong> ০ টাকা</p>
+                    </div>
+                </div>
+                
+                <div id="guestFields" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group"><label>নাম *</label><input type="text" id="guestName" placeholder="অতিথির নাম" value="মোঃ করিম"></div>
+                        <div class="form-group"><label>মোবাইল *</label><input type="text" id="guestMobile" placeholder="মোবাইল" value="01898765432"></div>
+                    </div>
+                    <div class="form-group"><label>ঠিকানা</label><input type="text" id="guestAddress" placeholder="ঠিকানা" value="কবিরহাট, নোয়াখালী"></div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>বাবদ *</label>
+                        <select id="donationPurpose">
+                            <option value="জানুয়ারি ২০২৬">জানুয়ারি ২০২৬</option>
+                            <option value="ফেব্রুয়ারি ২০২৬">ফেব্রুয়ারি ২০২৬</option>
+                            <option value="ঈদুল ফিতর">ঈদুল ফিতর</option>
+                            <option value="ঈদুল আযহা">ঈদুল আযহা</option>
+                            <option value="জাকাত">জাকাত</option>
+                            <option value="উন্নয়ন তহবিল">উন্নয়ন তহবিল</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>পরিমাণ (টাকা) *</label>
+                        <input type="number" id="donationAmount" placeholder="টাকা" value="500">
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" onclick="submitDonation()">
+                    <i class="fas fa-save"></i> গ্রহণ করুন & প্রিন্ট
+                </button>
+                
+                <div id="receiptPreview" style="display:none; margin-top:10px;">
+                    <h4 style="font-size:0.85rem;">📄 রশিদ</h4>
+                    <div class="receipt-preview" id="receiptContent"></div>
+                    <button class="btn btn-warning btn-sm no-print" onclick="printReceipt()">
+                        <i class="fas fa-print"></i> প্রিন্ট রশিদ
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ===== ADD MEMBER TAB ===== -->
+            <div id="tabAddMember" class="tab-content">
+                <h3><i class="fas fa-user-plus"></i> নতুন মুসল্লি যোগ</h3>
+                <div class="notification" id="addMemberSuccess">
+                    <i class="fas fa-check-circle"></i> নতুন মুসল্লি যোগ করা হয়েছে!
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>নাম *</label><input type="text" id="newMemberName" placeholder="পূর্ণ নাম" value="মোঃ ইব্রাহিম"></div>
+                    <div class="form-group"><label>মোবাইল *</label><input type="text" id="newMemberMobile" placeholder="মোবাইল" value="01712345679"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>ঠিকানা *</label><input type="text" id="newMemberAddress" placeholder="ঠিকানা" value="আলগী বাজার"></div>
+                    <div class="form-group"><label>মাসিক চাঁদা *</label><input type="number" id="newMemberCommitment" placeholder="টাকা" value="500"></div>
+                </div>
+                <div class="form-group">
+                    <label>পূর্ববর্তী বকেয়া</label>
+                    <input type="number" id="newMemberDue" placeholder="বকেয়া (টাকা)" value="0">
+                    <small style="color:#666; font-size:0.75rem;">🔹 এপস চালুর আগের বকেয়া এখানে দিন</small>
+                </div>
+                <button class="btn btn-success" onclick="addNewMember()">
+                    <i class="fas fa-save"></i> মুসল্লি যোগ করুন
+                </button>
+            </div>
+            
+            <!-- ===== MANAGE MEMBERS TAB ===== -->
+            <div id="tabManageMembers" class="tab-content">
+                <h3><i class="fas fa-user-edit"></i> মুসল্লি ব্যবস্থাপনা</h3>
+                <div class="notification" id="manageSuccess">
+                    <i class="fas fa-check-circle"></i> পরিবর্তন সফল!
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label>মুসল্লি নির্বাচন</label>
+                    <select id="memberSelect" onchange="loadMemberForEdit()" style="width:100%; padding:6px 10px; border:2px solid #ddd; border-radius:6px; font-size:0.85rem;">
+                        <option value="">-- নির্বাচন করুন --</option>
+                    </select>
+                </div>
+                <div id="editMemberForm" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group"><label>নাম *</label><input type="text" id="editMemberName"></div>
+                        <div class="form-group"><label>মোবাইল *</label><input type="text" id="editMemberMobile"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>ঠিকানা *</label><input type="text" id="editMemberAddress"></div>
+                        <div class="form-group"><label>চাঁদা *</label><input type="number" id="editMemberCommitment"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>বকেয়া</label>
+                        <input type="number" id="editMemberDue" placeholder="বকেয়া">
+                    </div>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="btn btn-primary" onclick="updateMember()">
+                            <i class="fas fa-save"></i> আপডেট
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteMember()">
+                            <i class="fas fa-trash"></i> বাদ দিন
+                        </button>
+                    </div>
+                </div>
+                <div id="noMemberSelected" style="margin-top:12px; color:#999; text-align:center; padding:15px;">
+                    <i class="fas fa-user"></i> একজন মুসল্লি নির্বাচন করুন
+                </div>
+            </div>
+            
+            <!-- ===== EXPENSE TAB ===== -->
+            <div id="tabExpense" class="tab-content">
+                <h3><i class="fas fa-money-bill-wave"></i> খরচ যোগ</h3>
+                <div class="notification" id="expenseSuccess">
+                    <i class="fas fa-check-circle"></i> খরচ যোগ করা হয়েছে!
+                </div>
+                <div id="expenseAccessDenied" style="display:none; background:#f8d7da; padding:10px; border-radius:6px; color:#721c24; margin:6px 0;">
+                    <i class="fas fa-exclamation-triangle"></i> <strong>অ্যাক্সেস অস্বীকৃত!</strong> শুধু ক্যাশিয়ার খরচ যোগ করতে পারেন।
+                </div>
+                <div id="expenseForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>খরচের ধরন *</label>
+                            <select id="expenseCategory">
+                                <option value="বিদ্যুৎ বিল">বিদ্যুৎ বিল</option>
+                                <option value="পানি বিল">পানি বিল</option>
+                                <option value="ইমাম বেতন">ইমাম বেতন</option>
+                                <option value="মুয়াজ্জিন বেতন">মুয়াজ্জিন বেতন</option>
+                                <option value="উন্নয়ন কাজ">উন্নয়ন কাজ</option>
+                                <option value="অন্যান্য">অন্যান্য</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>পরিমাণ (টাকা) *</label>
+                            <input type="number" id="expenseAmount" placeholder="টাকা" value="5000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>বিবরণ</label>
+                        <textarea id="expenseNote" placeholder="বিস্তারিত" style="height:35px;">মসজিদের মাসিক বিদ্যুৎ বিল</textarea>
+                    </div>
+                    <button class="btn btn-danger" onclick="submitExpense()">
+                        <i class="fas fa-plus-circle"></i> খরচ যোগ করুন
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ===== REPORTS TAB ===== -->
+            <div id="tabReports" class="tab-content">
+                <h3><i class="fas fa-chart-bar"></i> সাধারণ রিপোর্ট</h3>
+                <div class="tab-bar">
+                    <button class="tab-btn active" onclick="switchReportTab('daily', this)">দৈনিক</button>
+                    <button class="tab-btn" onclick="switchReportTab('weekly', this)">সাপ্তাহিক</button>
+                    <button class="tab-btn" onclick="switchReportTab('monthly', this)">মাসিক</button>
+                    <button class="tab-btn" onclick="switchReportTab('yearly', this)">বার্ষিক</button>
+                </div>
+                <div id="reportDaily" class="tab-content active">
+                    <div class="table-responsive" style="max-height:180px;">
+                        <table>
+                            <thead><tr><th>তারিখ</th><th>আয়</th><th>ব্যয়</th><th>উদ্বৃত্ত</th></tr></thead>
+                            <tbody id="reportDailyBody">
+                                <tr><td>০৮/০৮/২০২৬</td><td>২,৫০০</td><td>১,২০০</td><td>১,৩০০</td></tr>
+                                <tr><td>০৭/০৮/২০২৬</td><td>১,৮০০</td><td>২,০০০</td><td>-২০০</td></tr>
+                                <tr><td>০৬/০৮/২০২৬</td><td>৩,২০০</td><td>৮০০</td><td>২,৪০০</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="reportWeekly" class="tab-content">
+                    <p><strong>সপ্তাহ ১ (আগস্ট ২০২৬):</strong> আয় ১৫,৫০০ টাকা, ব্যয় ৮,২০০ টাকা</p>
+                </div>
+                <div id="reportMonthly" class="tab-content">
+                    <p><strong>জানুয়ারি ২০২৬:</strong> আয় ৬০,০০০, ব্যয় ৪০,০০০</p>
+                    <p><strong>ফেব্রুয়ারি ২০২৬:</strong> আয় ৫৫,০০০, ব্যয় ৩৮,০০০</p>
+                </div>
+                <div id="reportYearly" class="tab-content">
+                    <p><strong>২০২৬:</strong> মোট আয় ১,২৫,৪০০ টাকা, ব্যয় ৮৫,২০০ টাকা</p>
+                </div>
+                <!-- ★★★★★ সাধারণ রিপোর্ট প্রিন্ট বাটন ★★★★★ -->
+                <button class="btn btn-warning btn-sm no-print" onclick="printGeneralReport()" style="margin-top:8px;">
+                    <i class="fas fa-print"></i> প্রিন্ট রিপোর্ট
+                </button>
+            </div>
+            
+            <!-- ===== PERSONAL REPORT TAB ===== -->
+            <div id="tabPersonalReport" class="tab-content">
+                <h3><i class="fas fa-user-cog"></i> ব্যক্তিগত রিপোর্ট</h3>
+                <div style="background:#e8f5e9; padding:10px 14px; border-radius:6px; margin-bottom:12px; border-left:4px solid #2d7d46;">
+                    <p style="font-weight:bold; color:#1a472a; font-size:0.9rem;">
+                        <i class="fas fa-user"></i> <span id="personalReportUser">ক্যাশিয়ার</span>
+                    </p>
+                </div>
+                <div class="tab-bar">
+                    <button class="tab-btn active" onclick="switchPersonalReportTab('daily', this)">দৈনিক</button>
+                    <button class="tab-btn" onclick="switchPersonalReportTab('weekly', this)">সাপ্তাহিক</button>
+                    <button class="tab-btn" onclick="switchPersonalReportTab('monthly', this)">মাসিক</button>
+                    <button class="tab-btn" onclick="switchPersonalReportTab('yearly', this)">বার্ষিক</button>
+                </div>
+                <div id="personalDaily" class="tab-content active">
+                    <div class="report-summary">
+                        <h4>📊 আজকের সংগ্রহ</h4>
+                        <p><strong>মোট:</strong> <span id="personalDailyTotal">০</span> টাকা | <strong>লেনদেন:</strong> <span id="personalDailyCount">০</span> টি</p>
+                    </div>
+                    <div class="table-responsive" style="max-height:150px;">
+                        <table><thead><tr><th>ক্রম</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead>
+                        <tbody id="personalDailyBody"><tr><td colspan="4" style="text-align:center; color:#999;">কোনো লেনদেন নেই</td></tr></tbody></table>
+                    </div>
+                </div>
+                <div id="personalWeekly" class="tab-content">
+                    <div class="report-summary">
+                        <h4>📊 সাপ্তাহিক সংগ্রহ</h4>
+                        <p><strong>মোট:</strong> <span id="personalWeeklyTotal">০</span> টাকা | <strong>লেনদেন:</strong> <span id="personalWeeklyCount">০</span> টি</p>
+                    </div>
+                    <div class="table-responsive" style="max-height:150px;">
+                        <table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead>
+                        <tbody id="personalWeeklyBody"><tr><td colspan="4" style="text-align:center; color:#999;">কোনো লেনদেন নেই</td></tr></tbody></table>
+                    </div>
+                </div>
+                <div id="personalMonthly" class="tab-content">
+                    <div class="report-summary">
+                        <h4>📊 মাসিক সংগ্রহ</h4>
+                        <p><strong>মোট:</strong> <span id="personalMonthlyTotal">০</span> টাকা | <strong>লেনদেন:</strong> <span id="personalMonthlyCount">০</span> টি</p>
+                    </div>
+                    <div class="table-responsive" style="max-height:150px;">
+                        <table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead>
+                        <tbody id="personalMonthlyBody"><tr><td colspan="4" style="text-align:center; color:#999;">কোনো লেনদেন নেই</td></tr></tbody></table>
+                    </div>
+                </div>
+                <div id="personalYearly" class="tab-content">
+                    <div class="report-summary">
+                        <h4>📊 বার্ষিক সংগ্রহ</h4>
+                        <p><strong>মোট:</strong> <span id="personalYearlyTotal">০</span> টাকা | <strong>লেনদেন:</strong> <span id="personalYearlyCount">০</span> টি</p>
+                    </div>
+                    <div class="table-responsive" style="max-height:150px;">
+                        <table><thead><tr><th>মাস</th><th>মোট সংগ্রহ</th><th>লেনদেন</th></tr></thead>
+                        <tbody id="personalYearlyBody"><tr><td colspan="3" style="text-align:center; color:#999;">কোনো লেনদেন নেই</td></tr></tbody></table>
+                    </div>
+                </div>
+                <!-- ★★★★★ ব্যক্তিগত রিপোর্ট প্রিন্ট বাটন ★★★★★ -->
+                <button class="btn btn-warning btn-sm no-print" onclick="printPersonalReport()" style="margin-top:8px;">
+                    <i class="fas fa-print"></i> প্রিন্ট
+                </button>
+            </div>
+            
+            <!-- ===== UPDATES TAB ===== -->
+            <div id="tabUpdates" class="tab-content">
+                <h3><i class="fas fa-bullhorn"></i> আপডেট পোস্ট</h3>
+                <div class="notification" id="updateSuccess">
+                    <i class="fas fa-check-circle"></i> আপডেট পোস্ট করা হয়েছে!
+                </div>
+                <div class="form-group">
+                    <label>শিরোনাম *</label>
+                    <input type="text" id="updateTitle" placeholder="শিরোনাম" value="মসজিদের নতুন মিনার নির্মাণ">
+                </div>
+                <div class="form-group">
+                    <label>বিস্তারিত *</label>
+                    <textarea id="updateDesc" placeholder="বিস্তারিত" style="height:40px;">আলগী বাজার জামে মসজিদের নতুন মিনার নির্মাণ কাজ শুরু হয়েছে।</textarea>
+                </div>
+                <button class="btn btn-primary" onclick="submitUpdate()">
+                    <i class="fas fa-upload"></i> পোস্ট করুন
+                </button>
+                <div style="margin-top:10px;">
+                    <h4 style="font-size:0.85rem;">পূর্ববর্তী</h4>
+                    <div id="committeeUpdates"></div>
+                </div>
+            </div>
+            
+            <!-- ===== MEMBERS LIST TAB ===== -->
+            <div id="tabMembers" class="tab-content">
+                <h3><i class="fas fa-address-book"></i> মুসল্লি তালিকা</h3>
+                <div class="table-responsive" style="max-height:250px;">
+                    <table>
+                        <thead>
+                            <tr><th>সিরিয়াল</th><th>নাম</th><th>ঠিকানা</th><th>মোবাইল</th><th>চাঁদা</th><th>বকেয়া</th></tr>
+                        </thead>
+                        <tbody id="memberTableBody"></tbody>
+                    </table>
+                </div>
+                <!-- ★★★★★ মুসল্লি তালিকা প্রিন্ট বাটন ★★★★★ -->
+                <button class="btn btn-warning btn-sm no-print" onclick="printMemberList()" style="margin-top:8px;">
+                    <i class="fas fa-print"></i> তালিকা প্রিন্ট
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ===== CHANGE PASSWORD MODAL ===== -->
+<div id="changePasswordModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeChangePassword()">&times;</span>
+        <h3><i class="fas fa-key"></i> পাসওয়ার্ড পরিবর্তন</h3>
+        <div class="notification" id="passwordChangeSuccess">
+            <i class="fas fa-check-circle"></i> পাসওয়ার্ড পরিবর্তন করা হয়েছে!
+        </div>
+        <div class="form-group"><label>বর্তমান</label><input type="password" id="currentPassword" placeholder="বর্তমান পাসওয়ার্ড"></div>
+        <div class="form-group"><label>নতুন</label><input type="password" id="newPassword" placeholder="নতুন পাসওয়ার্ড"></div>
+        <div class="form-group"><label>নতুন নিশ্চিত</label><input type="password" id="confirmPassword" placeholder="আবার লিখুন"></div>
+        <button class="btn btn-primary" onclick="changePassword()" style="width:100%;">
+            <i class="fas fa-save"></i> পরিবর্তন করুন
+        </button>
+    </div>
+</div>
+
+
+<script>
+    // =========================================
+    // ===== PWA - INSTALL PROMPT =====
+    // =========================================
+    var deferredPrompt = null;
+    
+    window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('installPrompt').classList.add('show');
+    });
+    
+    document.getElementById('installAppBtn').addEventListener('click', function() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(function(choiceResult) {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('✅ User accepted the install prompt');
+                } else {
+                    console.log('❌ User dismissed the install prompt');
+                }
+                deferredPrompt = null;
+                document.getElementById('installPrompt').classList.remove('show');
+            });
+        }
+    });
+
+    // =========================================
+    // ===== SERVICE WORKER =====
+    // =========================================
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(function(registration) {
+                console.log('✅ Service Worker registered successfully!');
+            })
+            .catch(function(error) {
+                console.log('❌ Service Worker registration failed:', error);
+            });
+    }
+
+    // =========================================
+    // ===== গ্লোবাল ভেরিয়েবল =====
+    // =========================================
+    var currentUser = null;
+    var currentReceipt = null;
+    var isLoggedIn = false;
+    var editingMemberIndex = -1;
+    
+    var users = {
+        'cashier': { name: 'মোঃ সালাম', role: 'cashier', password: '123456' },
+        'secretary': { name: 'মোঃ জামাল', role: 'secretary', password: '123456' },
+        'president': { name: 'মোঃ রফিক', role: 'president', password: '123456' }
+    };
+    
+    var members = [
+        { serial: '০১', name: 'মোঃ আব্দুল্লাহ', address: 'আলগী বাজার', mobile: '০১৭১২৩৪৫৬৭৮', commitment: 500, due: 0 },
+        { serial: '০২', name: 'মোঃ হাসান', address: 'কবিরহাট', mobile: '০১৮১২৩৪৫৬৭৮', commitment: 300, due: 500 },
+        { serial: '০৩', name: 'মোঃ রফিক', address: 'নোয়াখালী', mobile: '০১৯১২৩৪৫৬৭৮', commitment: 200, due: 200 },
+        { serial: '০৪', name: 'মোঃ জামাল', address: 'আলগী বাজার', mobile: '০১৬১২৩৪৫৬৭৮', commitment: 1000, due: 0 },
+        { serial: '০৫', name: 'মোঃ আব্দুর রহিম', address: 'আলগী বাজার', mobile: '০১৭১২৩৪৫৬৭৮', commitment: 500, due: 0 }
+    ];
+    
+    var updates = [
+        { title: '🕌 মসজিদের নতুন মিনার নির্মাণ', 
+          desc: 'আলগী বাজার জামে মসজিদের নতুন মিনার নির্মাণ কাজ শুরু হয়েছে।', 
+          postedBy: 'সভাপতি', date: '০৫/০৮/২০২৬' },
+        { title: '🕌 ঈদুল ফিতরের বিশেষ নামাজ', 
+          desc: 'ঈদুল ফিতর উপলক্ষে মসজিদে বিশেষ নামাজের আয়োজন করা হয়েছে।', 
+          postedBy: 'সেক্রেটারি', date: '২৫/০৭/২০২৬' }
+    ];
+    
+    var personalTransactions = [];
+    
+    var monthlyReports = {
+        'জানুয়ারি ২০২৬': { income: 60000, expense: 40000, details: { monthly: 50000, special: 10000, electric: 5000, salary: 15000, development: 20000 } },
+        'ফেব্রুয়ারি ২০২৬': { income: 55000, expense: 38000, details: { monthly: 45000, special: 10000, electric: 4500, salary: 15000, development: 18500 } },
+        'মার্চ ২০২৬': { income: 58000, expense: 35000, details: { monthly: 48000, special: 10000, electric: 5000, salary: 15000, development: 15000 } },
+        'এপ্রিল ২০২৬': { income: 62000, expense: 42000, details: { monthly: 52000, special: 10000, electric: 6000, salary: 16000, development: 20000 } },
+        'মে ২০২৬': { income: 59000, expense: 39000, details: { monthly: 49000, special: 10000, electric: 5500, salary: 15000, development: 18500 } },
+        'জুন ২০২৬': { income: 61000, expense: 41000, details: { monthly: 51000, special: 10000, electric: 5800, salary: 15000, development: 20200 } },
+        'জুলাই ২০২৬': { income: 57000, expense: 37000, details: { monthly: 47000, special: 10000, electric: 4800, salary: 15000, development: 17200 } },
+        'আগস্ট ২০২৬': { income: 63000, expense: 43000, details: { monthly: 53000, special: 10000, electric: 6200, salary: 16000, development: 20800 } },
+        'সেপ্টেম্বর ২০২৬': { income: 60000, expense: 40000, details: { monthly: 50000, special: 10000, electric: 5400, salary: 15000, development: 19600 } },
+        'অক্টোবর ২০২৬': { income: 65000, expense: 45000, details: { monthly: 55000, special: 10000, electric: 6500, salary: 16000, development: 22500 } },
+        'নভেম্বর ২০২৬': { income: 58000, expense: 38000, details: { monthly: 48000, special: 10000, electric: 5000, salary: 15000, development: 18000 } },
+        'ডিসেম্বর ২০২৬': { income: 62000, expense: 42000, details: { monthly: 52000, special: 10000, electric: 5800, salary: 15000, development: 21200 } }
+    };
+    
+    var reportData = {
+        daily: [
+            { date: '০৮/০৮/২০২৬', income: 2500, expense: 1200 },
+            { date: '০৭/০৮/২০২৬', income: 1800, expense: 2000 },
+            { date: '০৬/০৮/২০২৬', income: 3200, expense: 800 }
+        ],
+        weekly: { income: 15500, expense: 8200 },
+        monthly: [
+            { month: 'জানুয়ারি ২০২৬', income: 60000, expense: 40000 },
+            { month: 'ফেব্রুয়ারি ২০২৬', income: 55000, expense: 38000 }
+        ],
+        yearly: { income: 125400, expense: 85200 }
+    };
+    
+    var nextSerial = 6;
+    var nextMemo = 1001;
+    var totalIncome = 125400;
+    var totalExpense = 85200;
+
+    // =========================================
+    // ===== NAVIGATION =====
+    // =========================================
+    function goHome() {
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('publicView').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'none';
+        document.getElementById('loginPage').classList.remove('active');
+        document.getElementById('publicView').classList.remove('active');
+        document.getElementById('dashboard').classList.remove('active');
+    }
+
+    function showLogin() {
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('loginPage').style.display = 'block';
+        document.getElementById('loginPage').classList.add('active');
+        document.getElementById('publicView').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'none';
+    }
+
+    function openPublicView() {
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('publicView').style.display = 'block';
+        document.getElementById('publicView').classList.add('active');
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'none';
+        loadPublicUpdates();
+        updatePublicStats();
+        loadMonthlyReport();
+    }
+
+    // =========================================
+    // ===== LOGIN =====
+    // =========================================
+    function handleLogin() {
+        var username = document.getElementById('loginUserSelect').value;
+        var password = document.getElementById('loginPassword').value.trim();
+        
+        if (users[username] && users[username].password === password) {
+            currentUser = {
+                name: users[username].name,
+                role: users[username].role,
+                username: username,
+                password: password
+            };
+            isLoggedIn = true;
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('loginPage').classList.remove('active');
+            showDashboard(currentUser);
+        } else {
+            alert('ভুল পাসওয়ার্ড! পাসওয়ার্ড: 123456');
+        }
+    }
+
+    function showDashboard(user) {
+        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('dashboard').classList.add('active');
+        document.getElementById('userRoleDisplay').innerHTML = '<i class="fas fa-user"></i> ' + user.name + ' (' + user.role + ')';
+        document.getElementById('personalReportUser').textContent = user.name + ' (' + user.role + ')';
+        
+        if (user.role === 'cashier') {
+            document.getElementById('expenseForm').style.display = 'block';
+            document.getElementById('expenseAccessDenied').style.display = 'none';
+        } else {
+            document.getElementById('expenseForm').style.display = 'none';
+            document.getElementById('expenseAccessDenied').style.display = 'block';
+        }
+        
+        var defaultTab = document.querySelector('.dash-menu-item.active');
+        if (!defaultTab) { defaultTab = document.querySelector('.dash-menu-item'); }
+        if (defaultTab) { showTab(defaultTab.dataset.tab, defaultTab); }
+        loadMemberTable();
+        loadCommitteeUpdates();
+        loadMemberSelect();
+        updateAllReports();
+        updatePersonalReports();
+    }
+
+    function logout() {
+        currentUser = null;
+        isLoggedIn = false;
+        document.getElementById('dashboard').style.display = 'none';
+        document.getElementById('dashboard').classList.remove('active');
+        goHome();
+    }
+
+    // =========================================
+    // ===== PASSWORD CHANGE =====
+    // =========================================
+    function openChangePassword() {
+        document.getElementById('changePasswordModal').style.display = 'block';
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        document.getElementById('passwordChangeSuccess').classList.remove('show');
+    }
+    function closeChangePassword() {
+        document.getElementById('changePasswordModal').style.display = 'none';
+    }
+    function changePassword() {
+        var current = document.getElementById('currentPassword').value;
+        var newPass = document.getElementById('newPassword').value;
+        var confirm = document.getElementById('confirmPassword').value;
+        if (!currentUser) { alert('আপনি লগইন করা নেই!'); return; }
+        if (current !== currentUser.password) { alert('বর্তমান পাসওয়ার্ড ভুল!'); return; }
+        if (newPass.length < 4) { alert('নতুন পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!'); return; }
+        if (newPass !== confirm) { alert('পাসওয়ার্ড মিলছে না!'); return; }
+        users[currentUser.username].password = newPass;
+        currentUser.password = newPass;
+        document.getElementById('passwordChangeSuccess').classList.add('show');
+        setTimeout(function() {
+            document.getElementById('passwordChangeSuccess').classList.remove('show');
+            closeChangePassword();
+        }, 3000);
+    }
+    window.onclick = function(event) {
+        var modal = document.getElementById('changePasswordModal');
+        if (event.target == modal) { modal.style.display = 'none'; }
+    }
+
+    // =========================================
+    // ===== TAB MANAGEMENT =====
+    // =========================================
+    function showTab(tab, menuItem) {
+        var menuItems = document.querySelectorAll('.dash-menu-item');
+        for (var i = 0; i < menuItems.length; i++) {
+            menuItems[i].classList.remove('active');
+        }
+        if (menuItem) {
+            menuItem.classList.add('active');
+        } else {
+            var items = document.querySelectorAll('.dash-menu-item');
+            for (var j = 0; j < items.length; j++) {
+                if (items[j].dataset.tab === tab) {
+                    items[j].classList.add('active');
+                    break;
+                }
+            }
+        }
+        
+        var tabContents = document.querySelectorAll('.tab-content');
+        for (var k = 0; k < tabContents.length; k++) {
+            tabContents[k].classList.remove('active');
+        }
+        
+        var tabMap = {
+            'donation': 'tabDonation',
+            'addMember': 'tabAddMember',
+            'manageMembers': 'tabManageMembers',
+            'expense': 'tabExpense',
+            'reports': 'tabReports',
+            'personalReport': 'tabPersonalReport',
+            'updates': 'tabUpdates',
+            'members': 'tabMembers'
+        };
+        var target = document.getElementById(tabMap[tab]);
+        if (target) {
+            target.classList.add('active');
+        }
+        
+        var contentArea = document.getElementById('contentArea');
+        if (contentArea) {
+            contentArea.scrollTop = 0;
+        }
+        
+        if (tab === 'personalReport') {
+            updatePersonalReports();
+        }
+        if (tab === 'manageMembers') {
+            loadMemberSelect();
+        }
+    }
+
+    function switchReportTab(type, btnElement) {
+        var reportContents = document.querySelectorAll('#tabReports .tab-content');
+        for (var i = 0; i < reportContents.length; i++) {
+            reportContents[i].classList.remove('active');
+        }
+        var reportBtns = document.querySelectorAll('#tabReports .tab-btn');
+        for (var j = 0; j < reportBtns.length; j++) {
+            reportBtns[j].classList.remove('active');
+        }
+        var reportMap = {
+            'daily': 'reportDaily',
+            'weekly': 'reportWeekly',
+            'monthly': 'reportMonthly',
+            'yearly': 'reportYearly'
+        };
+        document.getElementById(reportMap[type]).classList.add('active');
+        btnElement.classList.add('active');
+        updateReportData(type);
+    }
+
+    function switchPersonalReportTab(type, btnElement) {
+        var contents = document.querySelectorAll('#tabPersonalReport .tab-content');
+        for (var i = 0; i < contents.length; i++) {
+            contents[i].classList.remove('active');
+        }
+        var btns = document.querySelectorAll('#tabPersonalReport .tab-btn');
+        for (var j = 0; j < btns.length; j++) {
+            btns[j].classList.remove('active');
+        }
+        var map = {
+            'daily': 'personalDaily',
+            'weekly': 'personalWeekly',
+            'monthly': 'personalMonthly',
+            'yearly': 'personalYearly'
+        };
+        document.getElementById(map[type]).classList.add('active');
+        btnElement.classList.add('active');
+        updatePersonalReports();
+    }
+
+    // =========================================
+    // ===== MONTHLY REPORT =====
+    // =========================================
+    function loadMonthlyReport() {
+        var month = document.getElementById('reportMonthSelect').value;
+        var container = document.getElementById('monthlyReportContainer');
+        
+        var data = monthlyReports[month];
+        if (data) {
+            var d = data.details;
+            container.innerHTML = 
+                '<div class="table-responsive" style="max-height:180px;">' +
+                '<table>' +
+                '<thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead>' +
+                '<tbody>' +
+                '<tr><td>মাসিক চাঁদা</td><td>' + d.monthly.toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিশেষ অনুদান</td><td>' + d.special.toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + d.electric.toLocaleString() + '</td></tr>' +
+                '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + d.salary.toLocaleString() + '</td></tr>' +
+                '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + d.development.toLocaleString() + '</td></tr>' +
+                '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + data.income.toLocaleString() + '</td><td>' + data.expense.toLocaleString() + '</td></tr>' +
+                '<tr style="font-weight:bold; background:#d4edda;"><td>উদ্বৃত্ত</td><td colspan="2">' + (data.income - data.expense).toLocaleString() + ' টাকা</td></tr>' +
+                '</tbody></table></div>';
+        } else {
+            container.innerHTML = '<p style="color:#999; text-align:center; padding:15px;">এই মাসের কোনো তথ্য নেই</p>';
+        }
+    }
+
+    // =========================================
+    // ===== PERSONAL REPORTS =====
+    // =========================================
+    function updatePersonalReports() {
+        if (!currentUser) return;
+        var userRole = currentUser.role;
+        var userName = currentUser.name;
+        var today = new Date();
+        var todayStr = today.toLocaleDateString('bn-BD');
+        
+        var userTransactions = personalTransactions.filter(function(t) {
+            return t.collectorRole === userRole && t.collectorName === userName;
+        });
+        
+        // Daily
+        var dailyTxns = userTransactions.filter(function(t) { return t.date === todayStr; });
+        var dailyTotal = dailyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalDailyTotal').textContent = dailyTotal.toLocaleString();
+        document.getElementById('personalDailyCount').textContent = dailyTxns.length;
+        var dailyBody = document.getElementById('personalDailyBody');
+        if (dailyTxns.length === 0) {
+            dailyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">আজকে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < dailyTxns.length; i++) {
+                var t = dailyTxns[i];
+                html += '<tr><td>' + (i+1) + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
+            }
+            dailyBody.innerHTML = html;
+        }
+        
+        // Weekly
+        var weekAgo = new Date(today);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        var weekAgoStr = weekAgo.toLocaleDateString('bn-BD');
+        var weeklyTxns = userTransactions.filter(function(t) { return t.date >= weekAgoStr; });
+        var weeklyTotal = weeklyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalWeeklyTotal').textContent = weeklyTotal.toLocaleString();
+        document.getElementById('personalWeeklyCount').textContent = weeklyTxns.length;
+        var weeklyBody = document.getElementById('personalWeeklyBody');
+        if (weeklyTxns.length === 0) {
+            weeklyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">গত ৭ দিনে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < weeklyTxns.length; i++) {
+                var t = weeklyTxns[i];
+                html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
+            }
+            weeklyBody.innerHTML = html;
+        }
+        
+        // Monthly
+        var currentMonth = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        var monthlyTxns = userTransactions.filter(function(t) { return t.month === currentMonth; });
+        var monthlyTotal = monthlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalMonthlyTotal').textContent = monthlyTotal.toLocaleString();
+        document.getElementById('personalMonthlyCount').textContent = monthlyTxns.length;
+        var monthlyBody = document.getElementById('personalMonthlyBody');
+        if (monthlyTxns.length === 0) {
+            monthlyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">এই মাসে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < monthlyTxns.length; i++) {
+                var t = monthlyTxns[i];
+                html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
+            }
+            monthlyBody.innerHTML = html;
+        }
+        
+        // Yearly
+        var year = today.getFullYear();
+        var yearlyTxns = userTransactions.filter(function(t) { return t.year === year; });
+        var yearlyTotal = yearlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalYearlyTotal').textContent = yearlyTotal.toLocaleString();
+        document.getElementById('personalYearlyCount').textContent = yearlyTxns.length;
+        var monthlyGroups = {};
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            var t = yearlyTxns[i];
+            if (!monthlyGroups[t.month]) { monthlyGroups[t.month] = { total: 0, count: 0 }; }
+            monthlyGroups[t.month].total += t.amount;
+            monthlyGroups[t.month].count += 1;
+        }
+        var yearlyBody = document.getElementById('personalYearlyBody');
+        var monthNames = Object.keys(monthlyGroups);
+        if (monthNames.length === 0) {
+            yearlyBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#999;">এই বছরে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < monthNames.length; i++) {
+                var m = monthNames[i];
+                html += '<tr><td>' + m + '</td><td>' + monthlyGroups[m].total.toLocaleString() + '</td><td>' + monthlyGroups[m].count + '</td></tr>';
+            }
+            yearlyBody.innerHTML = html;
+        }
+    }
+
+    // =========================================
+    // ===== REPORTS =====
+    // =========================================
+    function updateAllReports() {
+        updateReportData('daily');
+        updateReportData('weekly');
+        updateReportData('monthly');
+        updateReportData('yearly');
+        updatePublicStats();
+    }
+
+    function updateReportData(type) {
+        if (type === 'daily') {
+            var tbody = document.getElementById('reportDailyBody');
+            var html = '';
+            for (var i = 0; i < reportData.daily.length; i++) {
+                var d = reportData.daily[i];
+                var balance = d.income - d.expense;
+                html += '<tr><td>' + d.date + '</td><td>' + d.income.toLocaleString() + '</td><td>' + d.expense.toLocaleString() + '</td><td>' + balance.toLocaleString() + '</td></tr>';
+            }
+            tbody.innerHTML = html;
+        } else if (type === 'weekly') {
+            var el = document.querySelector('#reportWeekly p');
+            if (el) {
+                el.textContent = 'সপ্তাহ ১ (আগস্ট ২০২৬): আয় ' + reportData.weekly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.weekly.expense.toLocaleString() + ' টাকা';
+            }
+        } else if (type === 'monthly') {
+            var container = document.getElementById('reportMonthly');
+            var html = '';
+            for (var i = 0; i < reportData.monthly.length; i++) {
+                var m = reportData.monthly[i];
+                html += '<p><strong>' + m.month + ':</strong> আয় ' + m.income.toLocaleString() + ' টাকা, ব্যয় ' + m.expense.toLocaleString() + ' টাকা</p>';
+            }
+            container.innerHTML = html;
+        } else if (type === 'yearly') {
+            var el = document.querySelector('#reportYearly p');
+            if (el) {
+                el.textContent = '২০২৬: মোট আয় ' + reportData.yearly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.yearly.expense.toLocaleString() + ' টাকা';
+            }
+        }
+    }
+
+    function updatePublicStats() {
+        var balance = totalIncome - totalExpense;
+        document.getElementById('pubTotalIncome').textContent = totalIncome.toLocaleString();
+        document.getElementById('pubTotalExpense').textContent = totalExpense.toLocaleString();
+        document.getElementById('pubBalance').textContent = balance.toLocaleString();
+    }
+
+    // =========================================
+    // ===== MEMBER FUNCTIONS =====
+    // =========================================
+    function toggleMemberFields() {
+        var type = document.getElementById('memberType').value;
+        document.getElementById('permanentFields').style.display = type === 'permanent' ? 'block' : 'none';
+        document.getElementById('guestFields').style.display = type === 'guest' ? 'block' : 'none';
+    }
+
+    function searchMember() {
+        var mobile = document.getElementById('searchMobile').value;
+        var found = false;
+        for (var i = 0; i < members.length; i++) {
+            if (members[i].mobile === mobile) {
+                document.getElementById('memberInfo').innerHTML = 
+                    '<p><strong>নাম:</strong> ' + members[i].name + '</p>' +
+                    '<p><strong>সিরিয়াল:</strong> ' + members[i].serial + ' | <strong>ঠিকানা:</strong> ' + members[i].address + '</p>' +
+                    '<p><strong>চাঁদা:</strong> ' + members[i].commitment + ' টাকা | <strong>বকেয়া:</strong> ' + members[i].due + ' টাকা</p>';
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            alert('এই মোবাইল নম্বরের কোনো মুসল্লি পাওয়া যায়নি!');
+        }
+    }
+
+    function checkDues() {
+        var mobile = document.getElementById('checkMobile').value;
+        var found = false;
+        for (var i = 0; i < members.length; i++) {
+            if (members[i].mobile === mobile) {
+                var status = members[i].due === 0 ? '✅ কোনো বকেয়া নেই।' : '⚠️ ' + members[i].due + ' টাকা বকেয়া আছে।';
+                document.getElementById('duesResult').innerHTML = 
+                    '<div style="background:#d4edda; padding:8px 12px; border-radius:6px;">' +
+                    '<i class="fas fa-check-circle" style="color:#28a745;"></i> ' +
+                    'জনাব ' + members[i].name + ', আপনার ' + status +
+                    '</div>';
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            document.getElementById('duesResult').innerHTML = 
+                '<div style="background:#f8d7da; padding:8px 12px; border-radius:6px; color:#721c24;">' +
+                '<i class="fas fa-exclamation-triangle"></i> এই মোবাইল নম্বরের কোনো মুসল্লি পাওয়া যায়নি!' +
+                '</div>';
+        }
+    }
+
+    // =========================================
+    // ===== ADD NEW MEMBER =====
+    // =========================================
+    function addNewMember() {
+        var name = document.getElementById('newMemberName').value.trim();
+        var mobile = document.getElementById('newMemberMobile').value.trim();
+        var address = document.getElementById('newMemberAddress').value.trim();
+        var commitment = parseInt(document.getElementById('newMemberCommitment').value);
+        var due = parseInt(document.getElementById('newMemberDue').value) || 0;
+        
+        if (!name || !mobile || !address || !commitment) {
+            alert('সব ফিল্ড পূরণ করুন!');
+            return;
+        }
+        
+        for (var i = 0; i < members.length; i++) {
+            if (members[i].mobile === mobile) {
+                alert('এই মোবাইল নম্বরটি ইতিমধ্যে রেজিস্টার করা আছে!');
+                return;
+            }
+        }
+        
+        var newMember = {
+            serial: String(nextSerial++).padStart(2, '0'),
+            name: name,
+            address: address,
+            mobile: mobile,
+            commitment: commitment,
+            due: due
+        };
+        members.push(newMember);
+        loadMemberTable();
+        loadMemberSelect();
+        loadPublicUpdates();
+        
+        document.getElementById('addMemberSuccess').classList.add('show');
+        setTimeout(function() { document.getElementById('addMemberSuccess').classList.remove('show'); }, 4000);
+        
+        document.getElementById('newMemberName').value = '';
+        document.getElementById('newMemberMobile').value = '';
+        document.getElementById('newMemberAddress').value = '';
+        document.getElementById('newMemberCommitment').value = '';
+        document.getElementById('newMemberDue').value = '0';
+        
+        alert('✅ "' + name + '" যোগ করা হয়েছে! (বকেয়া: ' + due + ' টাকা)');
+    }
+
+    // =========================================
+    // ===== MANAGE MEMBERS =====
+    // =========================================
+    function loadMemberSelect() {
+        var select = document.getElementById('memberSelect');
+        var currentVal = select.value;
+        select.innerHTML = '<option value="">-- নির্বাচন করুন --</option>';
+        for (var i = 0; i < members.length; i++) {
+            var m = members[i];
+            select.innerHTML += '<option value="' + i + '">' + m.serial + ' - ' + m.name + ' (' + m.mobile + ')</option>';
+        }
+        if (currentVal && currentVal !== '') {
+            select.value = currentVal;
+        }
+        loadMemberForEdit();
+    }
+
+    function loadMemberForEdit() {
+        var select = document.getElementById('memberSelect');
+        var index = parseInt(select.value);
+        var form = document.getElementById('editMemberForm');
+        var noSelect = document.getElementById('noMemberSelected');
+        
+        if (isNaN(index) || index < 0 || index >= members.length) {
+            form.style.display = 'none';
+            noSelect.style.display = 'block';
+            editingMemberIndex = -1;
+            return;
+        }
+        
+        var m = members[index];
+        form.style.display = 'block';
+        noSelect.style.display = 'none';
+        editingMemberIndex = index;
+        
+        document.getElementById('editMemberName').value = m.name;
+        document.getElementById('editMemberMobile').value = m.mobile;
+        document.getElementById('editMemberAddress').value = m.address;
+        document.getElementById('editMemberCommitment').value = m.commitment;
+        document.getElementById('editMemberDue').value = m.due;
+    }
+
+    function updateMember() {
+        if (editingMemberIndex < 0 || editingMemberIndex >= members.length) {
+            alert('দয়া করে একজন মুসল্লি নির্বাচন করুন!');
+            return;
+        }
+        
+        var name = document.getElementById('editMemberName').value.trim();
+        var mobile = document.getElementById('editMemberMobile').value.trim();
+        var address = document.getElementById('editMemberAddress').value.trim();
+        var commitment = parseInt(document.getElementById('editMemberCommitment').value);
+        var due = parseInt(document.getElementById('editMemberDue').value) || 0;
+        
+        if (!name || !mobile || !address || !commitment) {
+            alert('সব ফিল্ড পূরণ করুন!');
+            return;
+        }
+        
+        for (var i = 0; i < members.length; i++) {
+            if (i !== editingMemberIndex && members[i].mobile === mobile) {
+                alert('এই মোবাইল নম্বরটি অন্য একজন মুসল্লির!');
+                return;
+            }
+        }
+        
+        members[editingMemberIndex].name = name;
+        members[editingMemberIndex].mobile = mobile;
+        members[editingMemberIndex].address = address;
+        members[editingMemberIndex].commitment = commitment;
+        members[editingMemberIndex].due = due;
+        
+        loadMemberTable();
+        loadMemberSelect();
+        loadPublicUpdates();
+        
+        document.getElementById('manageSuccess').classList.add('show');
+        setTimeout(function() { document.getElementById('manageSuccess').classList.remove('show'); }, 4000);
+        
+        alert('✅ "' + name + '" আপডেট করা হয়েছে!');
+    }
+
+    function deleteMember() {
+        if (editingMemberIndex < 0 || editingMemberIndex >= members.length) {
+            alert('দয়া করে একজন মুসল্লি নির্বাচন করুন!');
+            return;
+        }
+        
+        var name = members[editingMemberIndex].name;
+        if (confirm('আপনি কি "' + name + '" কে বাদ দিতে চান? এই কাজটি অপরিবর্তনীয়!')) {
+            members.splice(editingMemberIndex, 1);
+            editingMemberIndex = -1;
+            loadMemberTable();
+            loadMemberSelect();
+            loadPublicUpdates();
+            
+            document.getElementById('editMemberForm').style.display = 'none';
+            document.getElementById('noMemberSelected').style.display = 'block';
+            
+            document.getElementById('manageSuccess').classList.add('show');
+            document.getElementById('manageSuccess').textContent = '✅ "' + name + '" বাদ দেওয়া হয়েছে!';
+            setTimeout(function() { document.getElementById('manageSuccess').classList.remove('show'); }, 4000);
+        }
+    }
+
+    function loadMemberTable() {
+        var tbody = document.getElementById('memberTableBody');
+        var html = '';
+        for (var i = 0; i < members.length; i++) {
+            var m = members[i];
+            var dueBadge = m.due === 0 ? 
+                '<span class="badge badge-success">শোধ</span>' : 
+                '<span class="badge badge-danger">' + m.due + ' বকেয়া</span>';
+            html += '<tr>' +
+                '<td>' + m.serial + '</td>' +
+                '<td>' + m.name + '</td>' +
+                '<td>' + m.address + '</td>' +
+                '<td>' + m.mobile + '</td>' +
+                '<td>' + m.commitment + '</td>' +
+                '<td>' + dueBadge + '</td>' +
+                '</tr>';
+        }
+        tbody.innerHTML = html;
+    }
+
+    // =========================================
+    // ===== DONATION =====
+    // =========================================
+    function submitDonation() {
+        var amount = document.getElementById('donationAmount').value;
+        var purpose = document.getElementById('donationPurpose').value;
+        var type = document.getElementById('memberType').value;
+        var name, serial, address, mobile;
+        var memberIndex = -1;
+        
+        if (type === 'permanent') {
+            var searchMobile = document.getElementById('searchMobile').value;
+            var found = false;
+            for (var i = 0; i < members.length; i++) {
+                if (members[i].mobile === searchMobile) {
+                    name = members[i].name;
+                    serial = members[i].serial;
+                    address = members[i].address;
+                    mobile = members[i].mobile;
+                    memberIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!');
+                return;
+            }
+        } else {
+            name = document.getElementById('guestName').value || 'অতিথি';
+            serial = 'N/A';
+            address = document.getElementById('guestAddress').value || 'N/A';
+            mobile = document.getElementById('guestMobile').value || 'N/A';
+        }
+        
+        if (!amount || amount <= 0) {
+            alert('দয়া করে সঠিক পরিমাণ লিখুন');
+            return;
+        }
+        amount = parseInt(amount);
+        
+        if (memberIndex >= 0 && members[memberIndex]) {
+            var oldDue = members[memberIndex].due;
+            if (oldDue > 0) {
+                if (amount >= oldDue) {
+                    members[memberIndex].due = 0;
+                } else {
+                    members[memberIndex].due = oldDue - amount;
+                }
+            }
+        }
+        
+        totalIncome += amount;
+        
+        var now = new Date();
+        var dateStr = now.toLocaleDateString('bn-BD');
+        var timeStr = now.toLocaleTimeString('bn-BD');
+        var monthStr = now.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        var yearNum = now.getFullYear();
+        
+        var transaction = {
+            memberName: name,
+            memberSerial: serial,
+            memberMobile: mobile,
+            amount: amount,
+            purpose: purpose,
+            collectorName: currentUser ? currentUser.name : 'ক্যাশিয়ার',
+            collectorRole: currentUser ? currentUser.role : 'cashier',
+            date: dateStr,
+            time: timeStr,
+            month: monthStr,
+            year: yearNum
+        };
+        personalTransactions.push(transaction);
+        
+        var today = dateStr;
+        var foundToday = false;
+        for (var i = 0; i < reportData.daily.length; i++) {
+            if (reportData.daily[i].date === today) {
+                reportData.daily[i].income += amount;
+                foundToday = true;
+                break;
+            }
+        }
+        if (!foundToday) {
+            reportData.daily.unshift({ date: today, income: amount, expense: 0 });
+        }
+        
+        reportData.weekly.income += amount;
+        var currentMonth = monthStr;
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === currentMonth) {
+                reportData.monthly[i].income += amount;
+                foundMonth = true;
+                break;
+            }
+        }
+        if (!foundMonth) {
+            reportData.monthly.unshift({ month: currentMonth, income: amount, expense: 0 });
+        }
+        reportData.yearly.income += amount;
+        
+        if (monthlyReports[currentMonth]) {
+            monthlyReports[currentMonth].income += amount;
+            monthlyReports[currentMonth].details.monthly += amount;
+        }
+        
+        currentReceipt = {
+            name: name,
+            serial: serial,
+            address: address,
+            mobile: mobile,
+            amount: amount,
+            purpose: purpose,
+            collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
+            collectorRole: currentUser ? currentUser.role : 'cashier',
+            date: dateStr,
+            time: timeStr,
+            memo: nextMemo++
+        };
+        
+        showReceipt(currentReceipt);
+        updateAllReports();
+        updatePublicStats();
+        updatePersonalReports();
+        loadMemberTable();
+        loadMemberSelect();
+        
+        var dueMsg = '';
+        if (memberIndex >= 0 && members[memberIndex]) {
+            dueMsg = ' (বর্তমান বকেয়া: ' + members[memberIndex].due + ' টাকা)';
+        }
+        
+        var notif = document.getElementById('donationSuccess');
+        notif.textContent = '✅ অনুদান গ্রহণ! মেমো: ' + currentReceipt.memo + ' | সংগ্রহ: ' + currentUser.name + dueMsg;
+        notif.classList.add('show');
+        setTimeout(function() { notif.classList.remove('show'); }, 4000);
+    }
+
+    function showReceipt(data) {
+        document.getElementById('receiptPreview').style.display = 'block';
+        document.getElementById('receiptContent').innerHTML = 
+            '<div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>' +
+            '<div style="text-align:center; font-size:0.7rem;">ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</div>' +
+            '<div class="receipt-line"></div>' +
+            '<div><strong>মেমো:</strong> ' + data.memo + '</div>' +
+            '<div><strong>সিরিয়াল:</strong> ' + data.serial + '</div>' +
+            '<div><strong>নাম:</strong> ' + data.name + '</div>' +
+            '<div><strong>ঠিকানা:</strong> ' + data.address + '</div>' +
+            '<div><strong>বাবদ:</strong> ' + data.purpose + '</div>' +
+            '<div><strong>টাকা:</strong> ' + data.amount + '</div>' +
+            '<div class="receipt-line"></div>' +
+            '<div><strong>গ্রহণ:</strong> ' + data.collector + ' (' + data.collectorRole + ')</div>' +
+            '<div><strong>তারিখ:</strong> ' + data.date + ' | ' + data.time + '</div>' +
+            '<div class="receipt-line"></div>' +
+            '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
+    }
+
+    function printReceipt() {
+        if (!currentReceipt) {
+            alert('প্রথমে অনুদান গ্রহণ করুন');
+            return;
+        }
+        var content = document.getElementById('receiptContent').innerHTML;
+        var printWindow = window.open('', '_blank', 'width=350,height=500');
+        printWindow.document.write(
+            '<html><head><title>রশিদ</title>' +
+            '<style>' +
+            'body { font-family: "Courier New", monospace; padding:20px; max-width:300px; margin:auto; }' +
+            '.receipt-line { border-top:1px dashed #999; margin:6px 0; }' +
+            '@media print { .no-print { display:none !important; } }' +
+            '</style>' +
+            '</head><body>' +
+            content +
+            '<br><div class="no-print">' +
+            '<button onclick="window.print()" style="padding:8px 20px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
+            '<button onclick="window.close()" style="padding:8px 20px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '</div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
+    }
+
+    // =========================================
+    // ===== EXPENSE =====
+    // =========================================
+    function submitExpense() {
+        if (!currentUser || currentUser.role !== 'cashier') {
+            alert('শুধুমাত্র ক্যাশিয়ার খরচ যোগ করতে পারেন!');
+            return;
+        }
+        var category = document.getElementById('expenseCategory').value;
+        var amount = document.getElementById('expenseAmount').value;
+        var note = document.getElementById('expenseNote').value;
+        if (!amount || amount <= 0) {
+            alert('দয়া করে সঠিক পরিমাণ লিখুন');
+            return;
+        }
+        amount = parseInt(amount);
+        totalExpense += amount;
+        
+        var today = new Date().toLocaleDateString('bn-BD');
+        var foundToday = false;
+        for (var i = 0; i < reportData.daily.length; i++) {
+            if (reportData.daily[i].date === today) {
+                reportData.daily[i].expense += amount;
+                foundToday = true;
+                break;
+            }
+        }
+        if (!foundToday) {
+            reportData.daily.unshift({ date: today, income: 0, expense: amount });
+        }
+        
+        reportData.weekly.expense += amount;
+        var currentMonth = new Date().toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === currentMonth) {
+                reportData.monthly[i].expense += amount;
+                foundMonth = true;
+                break;
+            }
+        }
+        if (!foundMonth) {
+            reportData.monthly.unshift({ month: currentMonth, income: 0, expense: amount });
+        }
+        reportData.yearly.expense += amount;
+        
+        if (monthlyReports[currentMonth]) {
+            monthlyReports[currentMonth].expense += amount;
+            if (category === 'বিদ্যুৎ বিল') monthlyReports[currentMonth].details.electric += amount;
+            else if (category === 'ইমাম বেতন' || category === 'মুয়াজ্জিন বেতন') monthlyReports[currentMonth].details.salary += amount;
+            else if (category === 'উন্নয়ন কাজ') monthlyReports[currentMonth].details.development += amount;
+            else monthlyReports[currentMonth].details.other = (monthlyReports[currentMonth].details.other || 0) + amount;
+        }
+        
+        updateAllReports();
+        updatePublicStats();
+        
+        var notif = document.getElementById('expenseSuccess');
+        notif.textContent = '✅ ' + category + ' - ' + amount + ' টাকা খরচ যুক্ত! (' + note + ')';
+        notif.classList.add('show');
+        setTimeout(function() { notif.classList.remove('show'); }, 4000);
+        document.getElementById('expenseAmount').value = '';
+        document.getElementById('expenseNote').value = '';
+    }
+
+    // =========================================
+    // ===== UPDATES =====
+    // =========================================
+    function submitUpdate() {
+        var title = document.getElementById('updateTitle').value;
+        var desc = document.getElementById('updateDesc').value;
+        if (!title || !desc) {
+            alert('শিরোনাম ও বিবরণ উভয়ই পূরণ করুন');
+            return;
+        }
+        var newUpdate = {
+            title: title,
+            desc: desc,
+            postedBy: currentUser ? currentUser.name : 'কমিটি',
+            date: new Date().toLocaleDateString('bn-BD')
+        };
+        updates.unshift(newUpdate);
+        loadCommitteeUpdates();
+        loadPublicUpdates();
+        var notif = document.getElementById('updateSuccess');
+        notif.textContent = '✅ "' + title + '" পোস্ট করা হয়েছে!';
+        notif.classList.add('show');
+        setTimeout(function() { notif.classList.remove('show'); }, 4000);
+        document.getElementById('updateTitle').value = '';
+        document.getElementById('updateDesc').value = '';
+    }
+
+    function loadCommitteeUpdates() {
+        var container = document.getElementById('committeeUpdates');
+        var html = '';
+        for (var i = 0; i < updates.length; i++) {
+            html += '<div class="update-card">' +
+                '<h5>' + updates[i].title + '</h5>' +
+                '<p>' + updates[i].desc + '</p>' +
+                '<small>পোস্ট: ' + updates[i].postedBy + ' - ' + updates[i].date + '</small>' +
+                '</div>';
+        }
+        container.innerHTML = html || '<p style="color:#999;">কোনো আপডেট নেই</p>';
+    }
+
+    function loadPublicUpdates() {
+        var container = document.getElementById('publicUpdates');
+        var html = '';
+        for (var i = 0; i < updates.length; i++) {
+            html += '<div class="update-card">' +
+                '<h5>' + updates[i].title + '</h5>' +
+                '<p>' + updates[i].desc + '</p>' +
+                '<small>পোস্ট: ' + updates[i].postedBy + ' - ' + updates[i].date + '</small>' +
+                '</div>';
+        }
+        container.innerHTML = html || '<p style="color:#999;">কোনো আপডেট নেই</p>';
+    }
+
+    // =========================================
+    // ===== ★★★★★ সব প্রিন্ট ফাংশন ★★★★★ =====
+    // =========================================
+
+    // 1. সাধারণ রিপোর্ট প্রিন্ট (দৈনিক/সাপ্তাহিক/মাসিক/বার্ষিক)
+    function printGeneralReport() {
+        var activeTab = document.querySelector('#tabReports .tab-content.active');
+        if (!activeTab) {
+            alert('প্রথমে একটি রিপোর্ট ট্যাব নির্বাচন করুন (দৈনিক/সাপ্তাহিক/মাসিক/বার্ষিক)');
+            return;
+        }
+        
+        var tabId = activeTab.id;
+        var tabName = '';
+        var reportContent = '';
+        
+        if (tabId === 'reportDaily') {
+            tabName = 'দৈনিক রিপোর্ট';
+            var table = document.querySelector('#reportDaily table');
+            reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
+        } else if (tabId === 'reportWeekly') {
+            tabName = 'সাপ্তাহিক রিপোর্ট';
+            reportContent = document.querySelector('#reportWeekly p')?.outerHTML || '<p>কোনো ডাটা নেই</p>';
+        } else if (tabId === 'reportMonthly') {
+            tabName = 'মাসিক রিপোর্ট';
+            reportContent = document.querySelector('#reportMonthly')?.innerHTML || '<p>কোনো ডাটা নেই</p>';
+        } else if (tabId === 'reportYearly') {
+            tabName = 'বার্ষিক রিপোর্ট';
+            reportContent = document.querySelector('#reportYearly p')?.outerHTML || '<p>কোনো ডাটা নেই</p>';
+        }
+        
+        var printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(
+            '<html><head><title>' + tabName + '</title>' +
+            '<style>' +
+            'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:1000px; margin:auto; }' +
+            '.header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; }' +
+            '.header h1 { color:#1a472a; margin:0; }' +
+            '.header p { color:#555; margin:5px 0; }' +
+            'table { width:100%; border-collapse:collapse; margin-top:10px; }' +
+            'th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; }' +
+            'th { background:#1a472a; color:white; }' +
+            'tr:nth-child(even) { background:#f9f9f9; }' +
+            '.report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:15px; }' +
+            '.footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; }' +
+            '@media print { .no-print { display:none !important; } }' +
+            '</style>' +
+            '</head><body>' +
+            '<div class="header">' +
+            '<h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>' +
+            '<p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>' +
+            '<h2 style="color:#1a472a;">' + tabName + '</h2>' +
+            '</div>' +
+            '<div class="report-date">প্রিন্ট তারিখ: ' + new Date().toLocaleDateString('bn-BD') + ' | সময়: ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<div>' + reportContent + '</div>' +
+            '<div class="footer">' +
+            '<p>এই রিপোর্টটি আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত।</p>' +
+            '<p>মসজিদের উন্নয়নে আপনার সহযোগিতা কাম্য।</p>' +
+            '</div>' +
+            '<br><div class="no-print">' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '</div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
+    }
+
+    // 2. A4 জাবেদা প্রিন্ট (মুসল্লি ভিউ)
+    function printA4Report() {
+        var income = document.getElementById('pubTotalIncome')?.textContent || '০';
+        var expense = document.getElementById('pubTotalExpense')?.textContent || '০';
+        var balance = document.getElementById('pubBalance')?.textContent || '০';
+        
+        var month = document.getElementById('reportMonthSelect')?.value || 'আগস্ট ২০২৬';
+        var monthData = monthlyReports[month] || { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
+        var d = monthData.details;
+        
+        var printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(
+            '<html><head><title>A4 জাবেদা - আলগী বাজার জামে মসজিদ</title>' +
+            '<style>' +
+            'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:40px; max-width:900px; margin:auto; }' +
+            '.header { text-align:center; margin-bottom:25px; border-bottom:3px solid #1a472a; padding-bottom:20px; }' +
+            '.header h1 { color:#1a472a; font-size:2rem; margin:0; }' +
+            '.header p { color:#555; font-size:1.1rem; margin:5px 0; }' +
+            '.header .sub-title { color:#1a472a; font-size:1.3rem; font-weight:bold; margin-top:8px; }' +
+            '.info-row { display:flex; justify-content:space-between; margin:10px 0; font-size:1rem; }' +
+            'table { width:100%; border-collapse:collapse; margin:15px 0; }' +
+            'th, td { padding:10px 15px; text-align:left; border:1px solid #333; }' +
+            'th { background:#1a472a; color:white; }' +
+            'tr:nth-child(even) { background:#f5f5f5; }' +
+            '.total-row { font-weight:bold; background:#e8f5e9; }' +
+            '.balance-row { font-weight:bold; background:#d4edda; font-size:1.1rem; }' +
+            '.footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; }' +
+            '.signature { display:flex; justify-content:space-between; margin-top:30px; }' +
+            '.signature div { text-align:center; }' +
+            '.signature .line { border-top:1px solid #333; width:200px; margin:5px auto; }' +
+            '@media print { .no-print { display:none !important; } }' +
+            '</style>' +
+            '</head><body>' +
+            '<div class="header">' +
+            '<h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>' +
+            '<p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>' +
+            '<div class="sub-title">📊 মাসিক আয়-ব্যয় জাবেদা - ' + month + '</div>' +
+            '</div>' +
+            '<div class="info-row">' +
+            '<span><strong>প্রিন্ট তারিখ:</strong> ' + new Date().toLocaleDateString('bn-BD') + '</span>' +
+            '<span><strong>সময়:</strong> ' + new Date().toLocaleTimeString('bn-BD') + '</span>' +
+            '</div>' +
+            '<table>' +
+            '<thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead>' +
+            '<tbody>' +
+            '<tr><td>মাসিক চাঁদা</td><td>' + (d.monthly || 0).toLocaleString() + '</td><td>-</td></tr>' +
+            '<tr><td>বিশেষ অনুদান</td><td>' + (d.special || 0).toLocaleString() + '</td><td>-</td></tr>' +
+            '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + (d.electric || 0).toLocaleString() + '</td></tr>' +
+            '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + (d.salary || 0).toLocaleString() + '</td></tr>' +
+            '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + (d.development || 0).toLocaleString() + '</td></tr>' +
+            '<tr class="total-row"><td>মোট</td><td>' + (monthData.income || 0).toLocaleString() + '</td><td>' + (monthData.expense || 0).toLocaleString() + '</td></tr>' +
+            '<tr class="balance-row"><td>উদ্বৃত্ত</td><td colspan="2">' + ((monthData.income || 0) - (monthData.expense || 0)).toLocaleString() + ' টাকা</td></tr>' +
+            '</tbody></table>' +
+            '<div style="margin:15px 0; padding:10px; background:#f8f9fa; border-radius:5px;">' +
+            '<p style="margin:3px 0;"><strong>📌 সর্বমোট সংগ্রহ (এখন পর্যন্ত):</strong> ' + income + ' টাকা</p>' +
+            '<p style="margin:3px 0;"><strong>📌 সর্বমোট খরচ (এখন পর্যন্ত):</strong> ' + expense + ' টাকা</p>' +
+            '<p style="margin:3px 0;"><strong>📌 সর্বমোট উদ্বৃত্ত:</strong> ' + balance + ' টাকা</p>' +
+            '</div>' +
+            '<div class="signature">' +
+            '<div><p><strong>ক্যাশিয়ার</strong></p><div class="line"></div><p>স্বাক্ষর</p></div>' +
+            '<div><p><strong>সেক্রেটারি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div>' +
+            '<div><p><strong>সভাপতি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div>' +
+            '</div>' +
+            '<div class="footer">' +
+            '<p>🔹 এই রিপোর্টটি আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত।</p>' +
+            '<p>🔹 মসজিদের উন্নয়নে আপনার সহযোগিতা কাম্য। আল্লাহ আপনাকে উত্তম প্রতিদান দিন।</p>' +
+            '</div>' +
+            '<br><div class="no-print">' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '</div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
+    }
+
+    // 3. ব্যক্তিগত রিপোর্ট প্রিন্ট
+    function printPersonalReport() {
+        if (!currentUser) {
+            alert('আপনি লগইন করা নেই!');
+            return;
+        }
+        
+        var activeTab = document.querySelector('#tabPersonalReport .tab-content.active');
+        if (!activeTab) {
+            alert('প্রথমে একটি ব্যক্তিগত রিপোর্ট ট্যাব নির্বাচন করুন');
+            return;
+        }
+        
+        var tabId = activeTab.id;
+        var tabName = '';
+        var reportContent = '';
+        var summaryHtml = '';
+        
+        if (tabId === 'personalDaily') {
+            tabName = 'দৈনিক সংগ্রহ রিপোর্ট';
+            var table = document.querySelector('#personalDaily table');
+            var summary = document.querySelector('#personalDaily .report-summary');
+            reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
+            summaryHtml = summary ? summary.outerHTML : '';
+        } else if (tabId === 'personalWeekly') {
+            tabName = 'সাপ্তাহিক সংগ্রহ রিপোর্ট';
+            var table = document.querySelector('#personalWeekly table');
+            var summary = document.querySelector('#personalWeekly .report-summary');
+            reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
+            summaryHtml = summary ? summary.outerHTML : '';
+        } else if (tabId === 'personalMonthly') {
+            tabName = 'মাসিক সংগ্রহ রিপোর্ট';
+            var table = document.querySelector('#personalMonthly table');
+            var summary = document.querySelector('#personalMonthly .report-summary');
+            reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
+            summaryHtml = summary ? summary.outerHTML : '';
+        } else if (tabId === 'personalYearly') {
+            tabName = 'বার্ষিক সংগ্রহ রিপোর্ট';
+            var table = document.querySelector('#personalYearly table');
+            var summary = document.querySelector('#personalYearly .report-summary');
+            reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
+            summaryHtml = summary ? summary.outerHTML : '';
+        }
+        
+        var printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(
+            '<html><head><title>ব্যক্তিগত রিপোর্ট - ' + currentUser.name + '</title>' +
+            '<style>' +
+            'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; }' +
+            '.header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; }' +
+            '.header h1 { color:#1a472a; margin:0; }' +
+            '.header p { color:#555; margin:3px 0; }' +
+            '.user-info { background:#e8f5e9; padding:10px 15px; border-radius:5px; margin:10px 0; border-left:4px solid #1a472a; }' +
+            '.user-info h3 { color:#1a472a; margin:0; }' +
+            'table { width:100%; border-collapse:collapse; margin-top:10px; }' +
+            'th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; }' +
+            'th { background:#1a472a; color:white; }' +
+            'tr:nth-child(even) { background:#f9f9f9; }' +
+            '.report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; }' +
+            '.footer { text-align:center; margin-top:25px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; }' +
+            '.summary-box { background:#e8f5e9; padding:10px 15px; border-radius:5px; margin:10px 0; border-left:4px solid #2d7d46; }' +
+            '@media print { .no-print { display:none !important; } }' +
+            '</style>' +
+            '</head><body>' +
+            '<div class="header">' +
+            '<h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>' +
+            '<p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>' +
+            '<h2 style="color:#1a472a;">👤 ব্যক্তিগত সংগ্রহ রিপোর্ট</h2>' +
+            '</div>' +
+            '<div class="user-info">' +
+            '<h3><i class="fas fa-user"></i> ' + currentUser.name + ' (' + currentUser.role + ')</h3>' +
+            '</div>' +
+            '<div class="report-date">প্রিন্ট তারিখ: ' + new Date().toLocaleDateString('bn-BD') + ' | সময়: ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<h3 style="color:#1a472a;">' + tabName + '</h3>' +
+            (summaryHtml ? '<div class="summary-box">' + summaryHtml + '</div>' : '') +
+            '<div>' + reportContent + '</div>' +
+            '<div class="footer">' +
+            '<p>🔹 এই রিপোর্টটি ' + currentUser.name + ' এর ব্যক্তিগত অনুদান সংগ্রহ সংক্রান্ত।</p>' +
+            '<p>🔹 মসজিদের উন্নয়নে আপনার সহযোগিতা কাম্য।</p>' +
+            '</div>' +
+            '<br><div class="no-print">' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '</div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
+    }
+
+    // 4. মুসল্লি তালিকা প্রিন্ট
+    function printMemberList() {
+        var table = document.querySelector('#tabMembers table');
+        if (!table) {
+            alert('কোনো মুসল্লি তালিকা পাওয়া যায়নি!');
+            return;
+        }
+        
+        var printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(
+            '<html><head><title>মুসল্লি তালিকা - আলগী বাজার জামে মসজিদ</title>' +
+            '<style>' +
+            'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; }' +
+            '.header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; }' +
+            '.header h1 { color:#1a472a; margin:0; }' +
+            '.header p { color:#555; margin:3px 0; }' +
+            'table { width:100%; border-collapse:collapse; margin-top:10px; }' +
+            'th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; }' +
+            'th { background:#1a472a; color:white; }' +
+            'tr:nth-child(even) { background:#f9f9f9; }' +
+            '.badge-success { background:#d4edda; color:#155724; padding:2px 8px; border-radius:20px; font-size:0.7rem; }' +
+            '.badge-danger { background:#f8d7da; color:#721c24; padding:2px 8px; border-radius:20px; font-size:0.7rem; }' +
+            '.report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; }' +
+            '.footer { text-align:center; margin-top:25px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; }' +
+            '.total-count { background:#e8f5e9; padding:8px 15px; border-radius:5px; margin:10px 0; text-align:center; font-weight:bold; }' +
+            '@media print { .no-print { display:none !important; } }' +
+            '</style>' +
+            '</head><body>' +
+            '<div class="header">' +
+            '<h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>' +
+            '<p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>' +
+            '<h2 style="color:#1a472a;">📋 মুসল্লি তালিকা</h2>' +
+            '</div>' +
+            '<div class="report-date">প্রিন্ট তারিখ: ' + new Date().toLocaleDateString('bn-BD') + ' | সময়: ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<div class="total-count">মোট মুসল্লি: ' + members.length + ' জন</div>' +
+            '<div>' + table.outerHTML + '</div>' +
+            '<div class="footer">' +
+            '<p>🔹 এই তালিকাটি আলগী বাজার জামে মসজিদের স্থায়ী মুসল্লিদের তথ্য সংক্রান্ত।</p>' +
+            '</div>' +
+            '<br><div class="no-print">' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '</div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
+    }
+
+    // =========================================
+    // ===== SESSION CHECK =====
+    // =========================================
+    function checkSession() {
+        if (isLoggedIn && currentUser) {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('publicView').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('dashboard').classList.add('active');
+            document.getElementById('userRoleDisplay').innerHTML = '<i class="fas fa-user"></i> ' + currentUser.name + ' (' + currentUser.role + ')';
+            document.getElementById('personalReportUser').textContent = currentUser.name + ' (' + currentUser.role + ')';
+            if (currentUser.role === 'cashier') {
+                document.getElementById('expenseForm').style.display = 'block';
+                document.getElementById('expenseAccessDenied').style.display = 'none';
+            } else {
+                document.getElementById('expenseForm').style.display = 'none';
+                document.getElementById('expenseAccessDenied').style.display = 'block';
+            }
+            loadMemberTable();
+            loadMemberSelect();
+            loadCommitteeUpdates();
+            loadPublicUpdates();
+            updateAllReports();
+            updatePersonalReports();
+            var defaultTab = document.querySelector('.dash-menu-item.active');
+            if (!defaultTab) { defaultTab = document.querySelector('.dash-menu-item'); }
+            if (defaultTab) { showTab(defaultTab.dataset.tab, defaultTab); }
+        }
+    }
+
+    // =========================================
+    // ===== PAGE LOAD =====
+    // =========================================
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('publicView').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'none';
+        checkSession();
+        loadMemberTable();
+        loadMemberSelect();
+        loadCommitteeUpdates();
+        loadPublicUpdates();
+        updateAllReports();
+        updatePublicStats();
+        updatePersonalReports();
+        loadMonthlyReport();
+    });
+
+    document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') { handleLogin(); }
+    });
+</script>
+
+</body>
+</html>
