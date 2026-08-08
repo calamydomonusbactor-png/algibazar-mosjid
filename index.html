@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== গ্লোবাল স্টাইল ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 16px; }
         .container { max-width: 1200px; margin: 0 auto; }
@@ -75,7 +74,6 @@
             box-shadow: 0 8px 35px rgba(0,0,0,0.15); overflow: hidden;
         }
         .dashboard.active { display: block; }
-        
         .dashboard-header {
             background: #1a472a; padding: 15px 20px;
             display: flex; justify-content: space-between;
@@ -123,12 +121,10 @@
         .content-area::-webkit-scrollbar { width: 4px; }
         .content-area::-webkit-scrollbar-thumb { background: #2d7d46; border-radius: 10px; }
         .content-area::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        
         .content-area h3 {
             color: #1a472a; margin-bottom: 12px; padding-bottom: 8px;
             border-bottom: 2px solid #e8f5e9; font-size: 1.05rem;
         }
-        
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
@@ -142,13 +138,9 @@
             border: 2px solid #ddd; border-radius: 6px; font-size: 0.9rem;
             transition: 0.3s;
         }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: #2d7d46; outline: none;
-        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #2d7d46; outline: none; }
         .form-group textarea { height: 45px; resize: vertical; }
-        .form-row {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         .btn {
             padding: 7px 18px; border: none; border-radius: 6px;
@@ -174,9 +166,7 @@
             display: none; font-size: 0.85rem;
         }
         .notification.show { display: block; }
-        .notification-error {
-            background: #f8d7da; color: #721c24; border-left-color: #dc3545;
-        }
+        .notification-error { background: #f8d7da; color: #721c24; border-left-color: #dc3545; }
         
         .table-responsive {
             overflow-x: auto; max-height: 200px; overflow-y: auto; margin-top: 6px;
@@ -184,16 +174,12 @@
         .table-responsive::-webkit-scrollbar { width: 3px; }
         .table-responsive::-webkit-scrollbar-thumb { background: #2d7d46; border-radius: 10px; }
         .table-responsive::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        
         table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         th, td { padding: 5px 8px; text-align: left; border-bottom: 1px solid #eee; }
         th { background: #f5f7fa; color: #333; font-weight: bold; position: sticky; top: 0; z-index: 10; }
         tr:hover { background: #f8f9fa; }
         
-        .badge {
-            display: inline-block; padding: 2px 8px; border-radius: 20px;
-            font-size: 0.65rem; font-weight: bold;
-        }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; }
         .badge-success { background: #d4edda; color: #155724; }
         .badge-danger { background: #f8d7da; color: #721c24; }
         .badge-warning { background: #fff3cd; color: #856404; }
@@ -204,7 +190,6 @@
             padding: 20px; box-shadow: 0 8px 35px rgba(0,0,0,0.15);
         }
         .public-view.active { display: block; }
-        
         .public-stats {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
             gap: 10px; margin: 12px 0;
@@ -260,9 +245,7 @@
         }
         .member-info-box p { margin: 2px 0; }
         
-        .tab-bar {
-            display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px;
-        }
+        .tab-bar { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
         .tab-btn {
             padding: 5px 12px; border: 2px solid #ddd;
             background: white; border-radius: 6px; cursor: pointer;
@@ -281,11 +264,7 @@
         .report-summary h4 { color: #1a472a; margin-bottom: 3px; font-size: 0.9rem; }
         .report-summary p { font-size: 0.85rem; margin: 2px 0; }
         
-        .action-btn {
-            padding: 2px 8px; border: none; border-radius: 4px;
-            cursor: pointer; font-size: 0.7rem; font-weight: bold;
-            margin: 0 2px;
-        }
+        .action-btn { padding: 2px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; margin: 0 2px; }
         .action-btn.edit { background: #ffc107; color: #333; }
         .action-btn.edit:hover { background: #e0a800; }
         .action-btn.delete { background: #dc3545; color: white; }
@@ -324,16 +303,104 @@
             font-size: 0.9rem;
         }
         .install-prompt button:hover { background: #e0a800; }
-        .install-prompt .close-prompt {
-            float: right;
-            cursor: pointer;
-            font-size: 1.2rem;
-            opacity: 0.7;
-        }
+        .install-prompt .close-prompt { float: right; cursor: pointer; font-size: 1.2rem; opacity: 0.7; }
         .install-prompt .close-prompt:hover { opacity: 1; }
         
+        /* ★★★★★ অনলাইন/অফলাইন স্ট্যাটাস ★★★★★ */
+        .online-status {
+            position: fixed;
+            bottom: 60px;
+            right: 10px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .online-status.online {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #28a745;
+        }
+        .online-status.offline {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #dc3545;
+        }
+        
+        /* ডেভেলপার বাটন */
+        .dev-trigger {
+            position: fixed; bottom: 10px; right: 10px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: #1a472a;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: 0.3s;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .dev-trigger:hover { opacity: 1; transform: scale(1.1); }
+        
+        .dev-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            max-width: 600px;
+            width: 95%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            z-index: 1000;
+            border: 3px solid #1a472a;
+        }
+        .dev-panel.active { display: block; }
+        .dev-panel .close-btn {
+            float: right;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .dev-panel h3 {
+            color: #1a472a;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e8f5e9;
+            padding-bottom: 10px;
+        }
+        .dev-panel .section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 12px 0;
+        }
+        .dev-panel .section h4 { color: #1a472a; margin-bottom: 8px; }
+        .dev-panel .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .dev-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .dev-overlay.active { display: block; }
+        
         @media (max-width: 768px) {
-            .form-row { grid-template-columns: 1fr; }
+            .form-row, .dev-panel .row { grid-template-columns: 1fr; }
             .role-card { padding: 20px 25px; min-width: 130px; }
             .mosque-header h1 { font-size: 1.5rem; }
             .dashboard-header { flex-direction: column; text-align: center; }
@@ -342,6 +409,7 @@
             .public-stats { grid-template-columns: 1fr 1fr 1fr; }
             .stat-card p { font-size: 1rem; }
             .mosque-logo { font-size: 2.8rem; }
+            .dev-panel { padding: 15px; max-width: 98%; }
         }
         @media print {
             body { background: white; padding: 0; }
@@ -391,18 +459,25 @@
         <div class="form-group">
             <label>ইউজার নির্বাচন করুন</label>
             <select id="loginUserSelect">
-                <option value="cashier">ক্যাশিয়ার (মোঃ সালাম)</option>
-                <option value="secretary">সেক্রেটারি (মোঃ জামাল)</option>
-                <option value="president">সভাপতি (মোঃ রফিক)</option>
+                <option value="cashier">ক্যাশিয়ার</option>
+                <option value="secretary">সেক্রেটারি</option>
+                <option value="president">সভাপতি</option>
             </select>
         </div>
         <div class="form-group">
             <label>পাসওয়ার্ড</label>
-            <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড লিখুন" value="123456">
+            <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড লিখুন" value="">
         </div>
         <button onclick="handleLogin()">লগইন করুন</button>
-        <div style="margin-top:12px; font-size:0.85rem; color:#666; text-align:center;">
-            <strong>পাসওয়ার্ড:</strong> 123456 (সবার জন্য একই)
+        
+        <div style="margin-top:12px; text-align:center;">
+            <a href="#" onclick="showForgotPassword()" style="color:#2d7d46; text-decoration:underline; font-size:0.85rem; cursor:pointer;">
+                <i class="fas fa-key"></i> পাসওয়ার্ড ভুলে গেছেন?
+            </a>
+        </div>
+        
+        <div style="margin-top:8px; font-size:0.8rem; color:#999; text-align:center;">
+            💡 ডিফল্ট পাসওয়ার্ড: <strong>123456</strong>
         </div>
         <div class="back-btn" onclick="goHome()">← হোমে ফিরে যান</div>
     </div>
@@ -415,15 +490,15 @@
         </div>
         
         <div class="public-stats">
-            <div class="stat-card"><h4>মোট সংগ্রহ</h4><p id="pubTotalIncome">১,২৫,৪০০</p></div>
-            <div class="stat-card"><h4>মোট খরচ</h4><p id="pubTotalExpense">৮৫,২০০</p></div>
-            <div class="stat-card"><h4>উদ্বৃত্ত</h4><p id="pubBalance">৪০,২০০</p></div>
+            <div class="stat-card"><h4>মোট সংগ্রহ</h4><p id="pubTotalIncome">০</p></div>
+            <div class="stat-card"><h4>মোট খরচ</h4><p id="pubTotalExpense">০</p></div>
+            <div class="stat-card"><h4>উদ্বৃত্ত</h4><p id="pubBalance">০</p></div>
         </div>
         
         <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin:10px 0;">
             <h4 style="font-size:0.9rem;">আমার বকেয়া চেক করুন</h4>
             <div class="inline-flex">
-                <input type="text" id="checkMobile" placeholder="মোবাইল নম্বর" value="01712345678" style="flex:1; padding:6px 10px; border:2px solid #ddd; border-radius:6px; font-size:0.85rem;">
+                <input type="text" id="checkMobile" placeholder="মোবাইল নম্বর" style="flex:1; padding:6px 10px; border:2px solid #ddd; border-radius:6px; font-size:0.85rem;">
                 <button class="btn btn-primary btn-sm" onclick="checkDues()">চেক</button>
             </div>
             <div id="duesResult" style="margin-top:8px; font-weight:bold; color:#1a472a; font-size:0.9rem;"></div>
@@ -455,7 +530,6 @@
             <div id="publicUpdates"></div>
         </div>
         
-        <!-- ★★★★★ A4 জাবেদা প্রিন্ট বাটন ★★★★★ -->
         <button class="btn btn-warning btn-sm no-print" onclick="printA4Report()" style="margin:4px 0;">
             <i class="fas fa-print"></i> A4 জাবেদা প্রিন্ট
         </button>
@@ -522,22 +596,22 @@
                 
                 <div id="permanentFields">
                     <div class="inline-flex">
-                        <input type="text" id="searchMobile" placeholder="মোবাইল নম্বর" value="01712345678" style="flex:1; padding:5px 8px; border:2px solid #ddd; border-radius:5px; font-size:0.82rem;">
+                        <input type="text" id="searchMobile" placeholder="মোবাইল নম্বর" style="flex:1; padding:5px 8px; border:2px solid #ddd; border-radius:5px; font-size:0.82rem;">
                         <button class="btn btn-primary btn-sm" onclick="searchMember()">সার্চ</button>
                     </div>
                     <div id="memberInfo" class="member-info-box">
-                        <p><strong>নাম:</strong> মোঃ আব্দুর রহিম</p>
-                        <p><strong>সিরিয়াল:</strong> ০৫ | <strong>ঠিকানা:</strong> আলগী বাজার</p>
-                        <p><strong>চাঁদা:</strong> ৫০০ টাকা | <strong>বকেয়া:</strong> ০ টাকা</p>
+                        <p><strong>নাম:</strong> -</p>
+                        <p><strong>সিরিয়াল:</strong> - | <strong>ঠিকানা:</strong> -</p>
+                        <p><strong>চাঁদা:</strong> - | <strong>বকেয়া:</strong> -</p>
                     </div>
                 </div>
                 
                 <div id="guestFields" style="display:none;">
                     <div class="form-row">
-                        <div class="form-group"><label>নাম *</label><input type="text" id="guestName" placeholder="অতিথির নাম" value="মোঃ করিম"></div>
-                        <div class="form-group"><label>মোবাইল *</label><input type="text" id="guestMobile" placeholder="মোবাইল" value="01898765432"></div>
+                        <div class="form-group"><label>নাম *</label><input type="text" id="guestName" placeholder="অতিথির নাম"></div>
+                        <div class="form-group"><label>মোবাইল *</label><input type="text" id="guestMobile" placeholder="মোবাইল"></div>
                     </div>
-                    <div class="form-group"><label>ঠিকানা</label><input type="text" id="guestAddress" placeholder="ঠিকানা" value="কবিরহাট, নোয়াখালী"></div>
+                    <div class="form-group"><label>ঠিকানা</label><input type="text" id="guestAddress" placeholder="ঠিকানা"></div>
                 </div>
                 
                 <div class="form-row">
@@ -578,11 +652,11 @@
                     <i class="fas fa-check-circle"></i> নতুন মুসল্লি যোগ করা হয়েছে!
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>নাম *</label><input type="text" id="newMemberName" placeholder="পূর্ণ নাম" value="মোঃ ইব্রাহিম"></div>
-                    <div class="form-group"><label>মোবাইল *</label><input type="text" id="newMemberMobile" placeholder="মোবাইল" value="01712345679"></div>
+                    <div class="form-group"><label>নাম *</label><input type="text" id="newMemberName" placeholder="পূর্ণ নাম"></div>
+                    <div class="form-group"><label>মোবাইল *</label><input type="text" id="newMemberMobile" placeholder="মোবাইল"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>ঠিকানা *</label><input type="text" id="newMemberAddress" placeholder="ঠিকানা" value="আলগী বাজার"></div>
+                    <div class="form-group"><label>ঠিকানা *</label><input type="text" id="newMemberAddress" placeholder="ঠিকানা"></div>
                     <div class="form-group"><label>মাসিক চাঁদা *</label><input type="number" id="newMemberCommitment" placeholder="টাকা" value="500"></div>
                 </div>
                 <div class="form-group">
@@ -663,7 +737,7 @@
                     </div>
                     <div class="form-group">
                         <label>বিবরণ</label>
-                        <textarea id="expenseNote" placeholder="বিস্তারিত" style="height:35px;">মসজিদের মাসিক বিদ্যুৎ বিল</textarea>
+                        <textarea id="expenseNote" placeholder="বিস্তারিত" style="height:35px;"></textarea>
                     </div>
                     <button class="btn btn-danger" onclick="submitExpense()">
                         <i class="fas fa-plus-circle"></i> খরচ যোগ করুন
@@ -685,24 +759,20 @@
                         <table>
                             <thead><tr><th>তারিখ</th><th>আয়</th><th>ব্যয়</th><th>উদ্বৃত্ত</th></tr></thead>
                             <tbody id="reportDailyBody">
-                                <tr><td>০৮/০৮/২০২৬</td><td>২,৫০০</td><td>১,২০০</td><td>১,৩০০</td></tr>
-                                <tr><td>০৭/০৮/২০২৬</td><td>১,৮০০</td><td>২,০০০</td><td>-২০০</td></tr>
-                                <tr><td>০৬/০৮/২০২৬</td><td>৩,২০০</td><td>৮০০</td><td>২,৪০০</td></tr>
+                                <tr><td colspan="4" style="text-align:center; color:#999;">কোনো ডাটা নেই</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div id="reportWeekly" class="tab-content">
-                    <p><strong>সপ্তাহ ১ (আগস্ট ২০২৬):</strong> আয় ১৫,৫০০ টাকা, ব্যয় ৮,২০০ টাকা</p>
+                    <p style="color:#999;">কোনো ডাটা নেই</p>
                 </div>
                 <div id="reportMonthly" class="tab-content">
-                    <p><strong>জানুয়ারি ২০২৬:</strong> আয় ৬০,০০০, ব্যয় ৪০,০০০</p>
-                    <p><strong>ফেব্রুয়ারি ২০২৬:</strong> আয় ৫৫,০০০, ব্যয় ৩৮,০০০</p>
+                    <p style="color:#999;">কোনো ডাটা নেই</p>
                 </div>
                 <div id="reportYearly" class="tab-content">
-                    <p><strong>২০২৬:</strong> মোট আয় ১,২৫,৪০০ টাকা, ব্যয় ৮৫,২০০ টাকা</p>
+                    <p style="color:#999;">কোনো ডাটা নেই</p>
                 </div>
-                <!-- ★★★★★ সাধারণ রিপোর্ট প্রিন্ট বাটন ★★★★★ -->
                 <button class="btn btn-warning btn-sm no-print" onclick="printGeneralReport()" style="margin-top:8px;">
                     <i class="fas fa-print"></i> প্রিন্ট রিপোর্ট
                 </button>
@@ -762,7 +832,6 @@
                         <tbody id="personalYearlyBody"><tr><td colspan="3" style="text-align:center; color:#999;">কোনো লেনদেন নেই</td></tr></tbody></table>
                     </div>
                 </div>
-                <!-- ★★★★★ ব্যক্তিগত রিপোর্ট প্রিন্ট বাটন ★★★★★ -->
                 <button class="btn btn-warning btn-sm no-print" onclick="printPersonalReport()" style="margin-top:8px;">
                     <i class="fas fa-print"></i> প্রিন্ট
                 </button>
@@ -776,11 +845,11 @@
                 </div>
                 <div class="form-group">
                     <label>শিরোনাম *</label>
-                    <input type="text" id="updateTitle" placeholder="শিরোনাম" value="মসজিদের নতুন মিনার নির্মাণ">
+                    <input type="text" id="updateTitle" placeholder="শিরোনাম">
                 </div>
                 <div class="form-group">
                     <label>বিস্তারিত *</label>
-                    <textarea id="updateDesc" placeholder="বিস্তারিত" style="height:40px;">আলগী বাজার জামে মসজিদের নতুন মিনার নির্মাণ কাজ শুরু হয়েছে।</textarea>
+                    <textarea id="updateDesc" placeholder="বিস্তারিত" style="height:40px;"></textarea>
                 </div>
                 <button class="btn btn-primary" onclick="submitUpdate()">
                     <i class="fas fa-upload"></i> পোস্ট করুন
@@ -802,7 +871,6 @@
                         <tbody id="memberTableBody"></tbody>
                     </table>
                 </div>
-                <!-- ★★★★★ মুসল্লি তালিকা প্রিন্ট বাটন ★★★★★ -->
                 <button class="btn btn-warning btn-sm no-print" onclick="printMemberList()" style="margin-top:8px;">
                     <i class="fas fa-print"></i> তালিকা প্রিন্ট
                 </button>
@@ -812,7 +880,6 @@
     </div>
 
 </div>
-
 
 <!-- ===== CHANGE PASSWORD MODAL ===== -->
 <div id="changePasswordModal" class="modal">
@@ -828,6 +895,109 @@
         <button class="btn btn-primary" onclick="changePassword()" style="width:100%;">
             <i class="fas fa-save"></i> পরিবর্তন করুন
         </button>
+    </div>
+</div>
+
+<!-- ===== ★★★★★ অনলাইন/অফলাইন স্ট্যাটাস ★★★★★ ===== -->
+<div id="onlineStatus" class="online-status online">
+    🟢 অনলাইন
+</div>
+
+<!-- ===== ★★★★★ ডেভেলপার বাটন ★★★★★ ===== -->
+<button class="dev-trigger" onclick="toggleDevPanel()" title="ডেভেলপার প্যানেল">
+    <i class="fas fa-code"></i>
+</button>
+
+<!-- ===== ★★★★★ ডেভেলপার প্যানেল (পাসওয়ার্ড হাইড) ★★★★★ ===== -->
+<div class="dev-overlay" id="devOverlay" onclick="toggleDevPanel()"></div>
+<div class="dev-panel" id="devPanel">
+    <button class="close-btn" onclick="toggleDevPanel()">✕ বন্ধ</button>
+    <h3><i class="fas fa-code"></i> 👨‍💻 ডেভেলপার প্যানেল</h3>
+    <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">🔒 এই প্যানেল শুধুমাত্র ডেভেলপার ব্যবহার করতে পারবেন।</p>
+    
+    <div id="devLock" style="background:#f8f9fa; padding:15px; border-radius:10px; margin-bottom:15px;">
+        <p style="font-weight:bold;">🔐 ডেভেলপার ভেরিফিকেশন</p>
+        <div class="inline-flex">
+            <input type="password" id="devPassword" placeholder="ডেভেলপার পাসওয়ার্ড দিন" style="flex:1; padding:8px 12px; border:2px solid #ddd; border-radius:6px;">
+            <button class="btn btn-primary btn-sm" onclick="unlockDevPanel()">আনলক</button>
+        </div>
+        <small style="color:#999;">💡 ডিফল্ট পাসওয়ার্ড: <strong>●●●●●●●●</strong> (শুধু ডেভেলপার জানবেন)</small>
+    </div>
+    
+    <div id="devContent" style="display:none;">
+        <!-- ===== ইউজার ম্যানেজমেন্ট ===== -->
+        <div class="section">
+            <h4><i class="fas fa-users-cog"></i> ইউজার ম্যানেজমেন্ট</h4>
+            <div class="row">
+                <div class="form-group">
+                    <label>রোল</label>
+                    <select id="devUserRole">
+                        <option value="cashier">ক্যাশিয়ার</option>
+                        <option value="secretary">সেক্রেটারি</option>
+                        <option value="president">সভাপতি</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>নতুন নাম</label>
+                    <input type="text" id="devNewUserName" placeholder="নাম লিখুন">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>নতুন পাসওয়ার্ড</label>
+                    <input type="password" id="devNewPassword" placeholder="নতুন পাসওয়ার্ড (ঐচ্ছিক)">
+                </div>
+                <div class="form-group" style="display:flex; align-items:flex-end;">
+                    <button class="btn btn-primary btn-sm" onclick="devUpdateUser()" style="width:100%;">
+                        <i class="fas fa-save"></i> আপডেট করুন
+                    </button>
+                </div>
+            </div>
+            <hr style="margin:10px 0;">
+            <div id="devUserList"></div>
+        </div>
+        
+        <!-- ===== ★★★★★ আপডেটেড ব্যাকআপ সিস্টেম ★★★★★ ===== -->
+        <div class="section">
+            <h4><i class="fas fa-database"></i> ডাটা ম্যানেজমেন্ট</h4>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-success btn-sm" onclick="backupData()">
+                    <i class="fas fa-download"></i> ব্যাকআপ ডাউনলোড
+                </button>
+                <button class="btn btn-info btn-sm" onclick="document.getElementById('restoreFileInput').click()">
+                    <i class="fas fa-upload"></i> ব্যাকআপ রিস্টোর
+                </button>
+                <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreData(event)">
+                <button class="btn btn-danger btn-sm" onclick="devResetAll()">
+                    <i class="fas fa-trash"></i> সব রিসেট
+                </button>
+                <button class="btn btn-warning btn-sm" onclick="devResetIncomeExpense()">
+                    <i class="fas fa-undo"></i> আয়-ব্যয় রিসেট
+                </button>
+            </div>
+            
+            <!-- Google Drive গাইড -->
+            <div style="margin-top:10px; padding:10px; background:#e8f5e9; border-radius:6px; border-left:4px solid #2d7d46;">
+                <p style="font-size:0.85rem; margin:2px 0;">
+                    <i class="fas fa-cloud-upload-alt" style="color:#1a472a;"></i>
+                    <strong>Google Drive-এ ব্যাকআপ রাখতে:</strong>
+                </p>
+                <ol style="font-size:0.8rem; color:#555; margin-left:20px; padding-left:0;">
+                    <li>"ব্যাকআপ ডাউনলোড" ক্লিক করে JSON ফাইল ডাউনলোড করুন</li>
+                    <li>Google Drive-এ যান → "নতুন" → "ফাইল আপলোড"</li>
+                    <li>ডাউনলোড করা JSON ফাইলটি সিলেক্ট করুন</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- ===== সিস্টেম ইনফো ===== -->
+        <div class="section">
+            <h4><i class="fas fa-info-circle"></i> সিস্টেম ইনফো</h4>
+            <p><strong>মোট মুসল্লি:</strong> <span id="devTotalMembers">০</span> জন</p>
+            <p><strong>মোট লেনদেন:</strong> <span id="devTotalTransactions">০</span> টি</p>
+            <p><strong>মোট আয়:</strong> <span id="devTotalIncome">০</span> টাকা</p>
+            <p><strong>মোট ব্যয়:</strong> <span id="devTotalExpense">০</span> টাকা</p>
+        </div>
     </div>
 </div>
 
@@ -873,71 +1043,300 @@
     }
 
     // =========================================
+    // ===== ★★★★★ অনলাইন/অফলাইন স্ট্যাটাস ★★★★★ =====
+    // =========================================
+    function updateOnlineStatus() {
+        var status = document.getElementById('onlineStatus');
+        if (navigator.onLine) {
+            status.textContent = '🟢 অনলাইন';
+            status.className = 'online-status online';
+            syncOfflineData();
+            sendPendingSMS();
+        } else {
+            status.textContent = '🔴 অফলাইন';
+            status.className = 'online-status offline';
+        }
+    }
+
+    window.addEventListener('online', function() {
+        console.log('✅ ইন্টারনেট কানেক্টেড!');
+        updateOnlineStatus();
+        setTimeout(function() {
+            syncOfflineData();
+            sendPendingSMS();
+        }, 1000);
+    });
+
+    window.addEventListener('offline', function() {
+        console.log('❌ ইন্টারনেট ডিসকানেক্ট!');
+        updateOnlineStatus();
+    });
+
+    setInterval(updateOnlineStatus, 10000);
+
+    // =========================================
+    // ===== ★★★★★ অফলাইন ডাটা সিঙ্ক ★★★★★ =====
+    // =========================================
+    function syncOfflineData() {
+        if (!navigator.onLine) return;
+        
+        var pending = JSON.parse(localStorage.getItem('pendingSync') || '[]');
+        if (pending.length === 0) return;
+        
+        console.log('🔄 সিঙ্ক করা হচ্ছে:', pending.length, 'টি লেনদেন');
+        
+        for (var i = 0; i < pending.length; i++) {
+            var txn = pending[i];
+            personalTransactions.push(txn);
+            totalIncome += txn.amount;
+        }
+        
+        localStorage.setItem('pendingSync', '[]');
+        updateAllReports();
+        updatePublicStats();
+        saveAllData();
+        
+        if (pending.length > 0) {
+            alert('✅ ' + pending.length + ' টি লেনদেন সিঙ্ক করা হয়েছে!');
+        }
+    }
+
+    function addOfflineTransaction(transaction) {
+        var pending = JSON.parse(localStorage.getItem('pendingSync') || '[]');
+        pending.push(transaction);
+        localStorage.setItem('pendingSync', JSON.stringify(pending));
+        
+        if (!navigator.onLine) {
+            alert('📡 আপনি অফলাইনে আছেন। ডাটা সেভ করা হয়েছে। ইন্টারনেট এলে অটো সিঙ্ক হবে।');
+        } else {
+            personalTransactions.push(transaction);
+            totalIncome += transaction.amount;
+            updateAllReports();
+            updatePublicStats();
+            saveAllData();
+        }
+    }
+
+    // =========================================
+    // ===== ★★★★★ SMS সিস্টেম ★★★★★ =====
+    // =========================================
+    function sendDonationSMS(mobile, name, amount, purpose, memo) {
+        var message = '🕌 আলগী বাজার জামে মসজিদ\n' +
+                      'জনাব ' + name + ',\n' +
+                      'আপনার ' + purpose + ' বাবদ ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে।\n' +
+                      'মেমো নং: ' + memo + '\n' +
+                      'ধন্যবাদ! আল্লাহ আপনার মঙ্গল করুন।';
+        
+        console.log('📱 SMS পাঠানো হচ্ছে:', mobile);
+        
+        if (navigator.onLine) {
+            // এখানে আপনার SMS API যোগ করুন
+            console.log('✅ ডেমো SMS (অনলাইন):', message);
+            return true;
+        } else {
+            var pendingSMS = JSON.parse(localStorage.getItem('pendingSMS') || '[]');
+            pendingSMS.push({ mobile: mobile, message: message });
+            localStorage.setItem('pendingSMS', JSON.stringify(pendingSMS));
+            console.log('📡 অফলাইনে SMS কুইউ করা হয়েছে');
+            return false;
+        }
+    }
+
+    function sendPendingSMS() {
+        if (!navigator.onLine) return;
+        
+        var pending = JSON.parse(localStorage.getItem('pendingSMS') || '[]');
+        if (pending.length === 0) return;
+        
+        console.log('📱 পেন্ডিং SMS পাঠানো হচ্ছে:', pending.length);
+        
+        for (var i = 0; i < pending.length; i++) {
+            console.log('✅ পেন্ডিং SMS:', pending[i]);
+        }
+        
+        localStorage.setItem('pendingSMS', '[]');
+        alert('✅ ' + pending.length + ' টি SMS পাঠানো হয়েছে!');
+    }
+
+    // =========================================
     // ===== গ্লোবাল ভেরিয়েবল =====
     // =========================================
     var currentUser = null;
     var currentReceipt = null;
     var isLoggedIn = false;
     var editingMemberIndex = -1;
+    var DEV_PASSWORD = 'admin@123';
+    var isDevUnlocked = false;
     
     var users = {
-        'cashier': { name: 'মোঃ সালাম', role: 'cashier', password: '123456' },
-        'secretary': { name: 'মোঃ জামাল', role: 'secretary', password: '123456' },
-        'president': { name: 'মোঃ রফিক', role: 'president', password: '123456' }
+        'cashier': { name: 'ক্যাশিয়ার', role: 'cashier', password: '123456' },
+        'secretary': { name: 'সেক্রেটারি', role: 'secretary', password: '123456' },
+        'president': { name: 'সভাপতি', role: 'president', password: '123456' }
     };
     
-    var members = [
-        { serial: '০১', name: 'মোঃ আব্দুল্লাহ', address: 'আলগী বাজার', mobile: '০১৭১২৩৪৫৬৭৮', commitment: 500, due: 0 },
-        { serial: '০২', name: 'মোঃ হাসান', address: 'কবিরহাট', mobile: '০১৮১২৩৪৫৬৭৮', commitment: 300, due: 500 },
-        { serial: '০৩', name: 'মোঃ রফিক', address: 'নোয়াখালী', mobile: '০১৯১২৩৪৫৬৭৮', commitment: 200, due: 200 },
-        { serial: '০৪', name: 'মোঃ জামাল', address: 'আলগী বাজার', mobile: '০১৬১২৩৪৫৬৭৮', commitment: 1000, due: 0 },
-        { serial: '০৫', name: 'মোঃ আব্দুর রহিম', address: 'আলগী বাজার', mobile: '০১৭১২৩৪৫৬৭৮', commitment: 500, due: 0 }
-    ];
-    
-    var updates = [
-        { title: '🕌 মসজিদের নতুন মিনার নির্মাণ', 
-          desc: 'আলগী বাজার জামে মসজিদের নতুন মিনার নির্মাণ কাজ শুরু হয়েছে।', 
-          postedBy: 'সভাপতি', date: '০৫/০৮/২০২৬' },
-        { title: '🕌 ঈদুল ফিতরের বিশেষ নামাজ', 
-          desc: 'ঈদুল ফিতর উপলক্ষে মসজিদে বিশেষ নামাজের আয়োজন করা হয়েছে।', 
-          postedBy: 'সেক্রেটারি', date: '২৫/০৭/২০২৬' }
-    ];
-    
+    var members = [];
+    var updates = [];
     var personalTransactions = [];
-    
-    var monthlyReports = {
-        'জানুয়ারি ২০২৬': { income: 60000, expense: 40000, details: { monthly: 50000, special: 10000, electric: 5000, salary: 15000, development: 20000 } },
-        'ফেব্রুয়ারি ২০২৬': { income: 55000, expense: 38000, details: { monthly: 45000, special: 10000, electric: 4500, salary: 15000, development: 18500 } },
-        'মার্চ ২০২৬': { income: 58000, expense: 35000, details: { monthly: 48000, special: 10000, electric: 5000, salary: 15000, development: 15000 } },
-        'এপ্রিল ২০২৬': { income: 62000, expense: 42000, details: { monthly: 52000, special: 10000, electric: 6000, salary: 16000, development: 20000 } },
-        'মে ২০২৬': { income: 59000, expense: 39000, details: { monthly: 49000, special: 10000, electric: 5500, salary: 15000, development: 18500 } },
-        'জুন ২০২৬': { income: 61000, expense: 41000, details: { monthly: 51000, special: 10000, electric: 5800, salary: 15000, development: 20200 } },
-        'জুলাই ২০২৬': { income: 57000, expense: 37000, details: { monthly: 47000, special: 10000, electric: 4800, salary: 15000, development: 17200 } },
-        'আগস্ট ২০২৬': { income: 63000, expense: 43000, details: { monthly: 53000, special: 10000, electric: 6200, salary: 16000, development: 20800 } },
-        'সেপ্টেম্বর ২০২৬': { income: 60000, expense: 40000, details: { monthly: 50000, special: 10000, electric: 5400, salary: 15000, development: 19600 } },
-        'অক্টোবর ২০২৬': { income: 65000, expense: 45000, details: { monthly: 55000, special: 10000, electric: 6500, salary: 16000, development: 22500 } },
-        'নভেম্বর ২০২৬': { income: 58000, expense: 38000, details: { monthly: 48000, special: 10000, electric: 5000, salary: 15000, development: 18000 } },
-        'ডিসেম্বর ২০২৬': { income: 62000, expense: 42000, details: { monthly: 52000, special: 10000, electric: 5800, salary: 15000, development: 21200 } }
-    };
-    
+    var monthlyReports = {};
     var reportData = {
-        daily: [
-            { date: '০৮/০৮/২০২৬', income: 2500, expense: 1200 },
-            { date: '০৭/০৮/২০২৬', income: 1800, expense: 2000 },
-            { date: '০৬/০৮/২০২৬', income: 3200, expense: 800 }
-        ],
-        weekly: { income: 15500, expense: 8200 },
-        monthly: [
-            { month: 'জানুয়ারি ২০২৬', income: 60000, expense: 40000 },
-            { month: 'ফেব্রুয়ারি ২০২৬', income: 55000, expense: 38000 }
-        ],
-        yearly: { income: 125400, expense: 85200 }
+        daily: [],
+        weekly: { income: 0, expense: 0 },
+        monthly: [],
+        yearly: { income: 0, expense: 0 }
     };
     
-    var nextSerial = 6;
+    var nextSerial = 1;
     var nextMemo = 1001;
-    var totalIncome = 125400;
-    var totalExpense = 85200;
+    var totalIncome = 0;
+    var totalExpense = 0;
+
+    // =========================================
+    // ===== ডাটা সেভ ও লোড =====
+    // =========================================
+    function saveAllData() {
+        try {
+            var data = {
+                users: users,
+                members: members,
+                updates: updates,
+                personalTransactions: personalTransactions,
+                monthlyReports: monthlyReports,
+                reportData: reportData,
+                totalIncome: totalIncome,
+                totalExpense: totalExpense,
+                nextSerial: nextSerial,
+                nextMemo: nextMemo,
+                savedAt: new Date().toISOString()
+            };
+            localStorage.setItem('mosjidData', JSON.stringify(data));
+            console.log('✅ ডাটা সেভ করা হয়েছে:', new Date().toLocaleTimeString());
+        } catch (e) {
+            console.log('❌ ডাটা সেভ করতে সমস্যা:', e);
+        }
+    }
+
+    function loadAllData() {
+        try {
+            var saved = localStorage.getItem('mosjidData');
+            if (saved) {
+                var data = JSON.parse(saved);
+                users = data.users || users;
+                members = data.members || [];
+                updates = data.updates || [];
+                personalTransactions = data.personalTransactions || [];
+                monthlyReports = data.monthlyReports || {};
+                reportData = data.reportData || { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
+                totalIncome = data.totalIncome || 0;
+                totalExpense = data.totalExpense || 0;
+                nextSerial = data.nextSerial || 1;
+                nextMemo = data.nextMemo || 1001;
+                console.log('✅ ডাটা লোড করা হয়েছে:', new Date(data.savedAt).toLocaleString());
+                return true;
+            }
+        } catch (e) {
+            console.log('❌ ডাটা লোড করতে সমস্যা:', e);
+        }
+        return false;
+    }
+
+    setInterval(saveAllData, 300000);
+
+    // =========================================
+    // ===== ★★★★★ আপডেটেড ব্যাকআপ সিস্টেম ★★★★★ =====
+    // =========================================
+    function backupData() {
+        // চেক করুন ডেভেলপার প্যানেল আনলক করা আছে কিনা
+        if (!isDevUnlocked) {
+            alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!');
+            return;
+        }
+        
+        try {
+            var data = {
+                users: users,
+                members: members,
+                updates: updates,
+                personalTransactions: personalTransactions,
+                monthlyReports: monthlyReports,
+                reportData: reportData,
+                totalIncome: totalIncome,
+                totalExpense: totalExpense,
+                nextSerial: nextSerial,
+                nextMemo: nextMemo,
+                exportedAt: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            var json = JSON.stringify(data, null, 2);
+            var blob = new Blob([json], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            
+            var dateStr = new Date().toLocaleDateString('bn-BD').replace(/\//g, '-');
+            var fileName = 'mosjid_backup_' + dateStr + '.json';
+            
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(function() {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+            
+            alert('✅ ব্যাকআপ ডাউনলোড শুরু হয়েছে!\nফাইলের নাম: ' + fileName);
+            console.log('✅ ব্যাকআপ ডাটা:', data);
+            
+        } catch (error) {
+            alert('❌ ব্যাকআপ ডাউনলোড করতে সমস্যা:\n' + error.message);
+            console.error('❌ ব্যাকআপ ত্রুটি:', error);
+        }
+    }
+
+    function restoreData(event) {
+        var file = event.target.files[0];
+        if (!file) return;
+        
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                var data = JSON.parse(e.target.result);
+                if (!data.version) { 
+                    alert('❌ এই ফাইলটি সঠিক ব্যাকআপ নয়!'); 
+                    return; 
+                }
+                if (!confirm('⚠️ ব্যাকআপ রিস্টোর করবেন? বর্তমান ডাটা মুছে যাবে!')) return;
+                
+                users = data.users || users;
+                members = data.members || [];
+                updates = data.updates || [];
+                personalTransactions = data.personalTransactions || [];
+                monthlyReports = data.monthlyReports || {};
+                reportData = data.reportData || { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
+                totalIncome = data.totalIncome || 0;
+                totalExpense = data.totalExpense || 0;
+                nextSerial = data.nextSerial || 1;
+                nextMemo = data.nextMemo || 1001;
+                
+                loadMemberTable();
+                loadMemberSelect();
+                loadCommitteeUpdates();
+                loadPublicUpdates();
+                updateAllReports();
+                updatePersonalReports();
+                loadMonthlyReport();
+                saveAllData();
+                
+                alert('✅ ব্যাকআপ রিস্টোর সম্পূর্ণ!');
+                toggleDevPanel();
+            } catch(err) {
+                alert('❌ ফাইলটি সঠিক নয়: ' + err.message);
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
 
     // =========================================
     // ===== NAVIGATION =====
@@ -978,6 +1377,11 @@
         var username = document.getElementById('loginUserSelect').value;
         var password = document.getElementById('loginPassword').value.trim();
         
+        if (!password) {
+            alert('দয়া করে পাসওয়ার্ড লিখুন!');
+            return;
+        }
+        
         if (users[username] && users[username].password === password) {
             currentUser = {
                 name: users[username].name,
@@ -990,7 +1394,7 @@
             document.getElementById('loginPage').classList.remove('active');
             showDashboard(currentUser);
         } else {
-            alert('ভুল পাসওয়ার্ড! পাসওয়ার্ড: 123456');
+            alert('ভুল পাসওয়ার্ড!');
         }
     }
 
@@ -1024,6 +1428,7 @@
         document.getElementById('dashboard').style.display = 'none';
         document.getElementById('dashboard').classList.remove('active');
         goHome();
+        saveAllData();
     }
 
     // =========================================
@@ -1054,11 +1459,105 @@
             document.getElementById('passwordChangeSuccess').classList.remove('show');
             closeChangePassword();
         }, 3000);
+        saveAllData();
     }
     window.onclick = function(event) {
         var modal = document.getElementById('changePasswordModal');
         if (event.target == modal) { modal.style.display = 'none'; }
     }
+
+    // =========================================
+    // ===== FORGOT PASSWORD =====
+    // =========================================
+    function showForgotPassword() {
+        var html = `
+            <div id="forgotPasswordModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; display:flex; align-items:center; justify-content:center;">
+                <div style="background:white; padding:30px; border-radius:18px; max-width:400px; width:95%; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                        <h3 style="color:#1a472a; margin:0;"><i class="fas fa-key"></i> পাসওয়ার্ড রিসেট</h3>
+                        <button onclick="closeForgotPassword()" style="background:#dc3545; color:white; border:none; padding:5px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">✕</button>
+                    </div>
+                    <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">আপনার ইউজারনাম নির্বাচন করে নতুন পাসওয়ার্ড সেট করুন।</p>
+                    
+                    <div class="form-group">
+                        <label>ইউজারনাম</label>
+                        <select id="forgotUserSelect" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;">
+                            <option value="cashier">ক্যাশিয়ার</option>
+                            <option value="secretary">সেক্রেটারি</option>
+                            <option value="president">সভাপতি</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>নতুন পাসওয়ার্ড</label>
+                        <input type="password" id="forgotNewPassword" placeholder="নতুন পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                    <div class="form-group">
+                        <label>পাসওয়ার্ড নিশ্চিত</label>
+                        <input type="password" id="forgotConfirmPassword" placeholder="আবার পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;">
+                    </div>
+                    <button onclick="resetPassword()" style="width:100%; padding:12px; background:#2d7d46; color:white; border:none; border-radius:8px; font-size:1.1rem; font-weight:bold; cursor:pointer;">
+                        <i class="fas fa-save"></i> পাসওয়ার্ড রিসেট করুন
+                    </button>
+                    <div style="margin-top:10px; text-align:center; font-size:0.8rem; color:#999;">
+                        💡 ডেভেলপারের সাথে যোগাযোগ করুন: মসজিদ কমিটি
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        var container = document.getElementById('forgotPasswordModalContainer');
+        if (!container) {
+            var div = document.createElement('div');
+            div.id = 'forgotPasswordModalContainer';
+            div.innerHTML = html;
+            document.body.appendChild(div);
+        } else {
+            container.innerHTML = html;
+        }
+    }
+
+    function closeForgotPassword() {
+        var container = document.getElementById('forgotPasswordModalContainer');
+        if (container) {
+            container.remove();
+        }
+    }
+
+    function resetPassword() {
+        var username = document.getElementById('forgotUserSelect').value;
+        var newPass = document.getElementById('forgotNewPassword').value;
+        var confirmPass = document.getElementById('forgotConfirmPassword').value;
+        
+        if (!newPass || newPass.length < 4) {
+            alert('পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!');
+            return;
+        }
+        
+        if (newPass !== confirmPass) {
+            alert('পাসওয়ার্ড দুইটি মিলছে না!');
+            return;
+        }
+        
+        if (users[username]) {
+            users[username].password = newPass;
+            if (currentUser && currentUser.username === username) {
+                currentUser.password = newPass;
+            }
+            saveAllData();
+            alert('✅ "' + username + '" এর পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!');
+            closeForgotPassword();
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginPassword').focus();
+        } else {
+            alert('❌ ইউজার পাওয়া যায়নি!');
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeForgotPassword();
+        }
+    });
 
     // =========================================
     // ===== TAB MANAGEMENT =====
@@ -1161,18 +1660,18 @@
         var container = document.getElementById('monthlyReportContainer');
         
         var data = monthlyReports[month];
-        if (data) {
-            var d = data.details;
+        if (data && data.income > 0) {
+            var d = data.details || { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 };
             container.innerHTML = 
                 '<div class="table-responsive" style="max-height:180px;">' +
                 '<table>' +
                 '<thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead>' +
                 '<tbody>' +
-                '<tr><td>মাসিক চাঁদা</td><td>' + d.monthly.toLocaleString() + '</td><td>-</td></tr>' +
-                '<tr><td>বিশেষ অনুদান</td><td>' + d.special.toLocaleString() + '</td><td>-</td></tr>' +
-                '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + d.electric.toLocaleString() + '</td></tr>' +
-                '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + d.salary.toLocaleString() + '</td></tr>' +
-                '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + d.development.toLocaleString() + '</td></tr>' +
+                '<tr><td>মাসিক চাঁদা</td><td>' + (d.monthly || 0).toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিশেষ অনুদান</td><td>' + (d.special || 0).toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + (d.electric || 0).toLocaleString() + '</td></tr>' +
+                '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + (d.salary || 0).toLocaleString() + '</td></tr>' +
+                '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + (d.development || 0).toLocaleString() + '</td></tr>' +
                 '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + data.income.toLocaleString() + '</td><td>' + data.expense.toLocaleString() + '</td></tr>' +
                 '<tr style="font-weight:bold; background:#d4edda;"><td>উদ্বৃত্ত</td><td colspan="2">' + (data.income - data.expense).toLocaleString() + ' টাকা</td></tr>' +
                 '</tbody></table></div>';
@@ -1195,7 +1694,6 @@
             return t.collectorRole === userRole && t.collectorName === userName;
         });
         
-        // Daily
         var dailyTxns = userTransactions.filter(function(t) { return t.date === todayStr; });
         var dailyTotal = dailyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
         document.getElementById('personalDailyTotal').textContent = dailyTotal.toLocaleString();
@@ -1212,7 +1710,6 @@
             dailyBody.innerHTML = html;
         }
         
-        // Weekly
         var weekAgo = new Date(today);
         weekAgo.setDate(weekAgo.getDate() - 7);
         var weekAgoStr = weekAgo.toLocaleDateString('bn-BD');
@@ -1232,7 +1729,6 @@
             weeklyBody.innerHTML = html;
         }
         
-        // Monthly
         var currentMonth = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
         var monthlyTxns = userTransactions.filter(function(t) { return t.month === currentMonth; });
         var monthlyTotal = monthlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
@@ -1250,7 +1746,6 @@
             monthlyBody.innerHTML = html;
         }
         
-        // Yearly
         var year = today.getFullYear();
         var yearlyTxns = userTransactions.filter(function(t) { return t.year === year; });
         var yearlyTotal = yearlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
@@ -1286,35 +1781,56 @@
         updateReportData('monthly');
         updateReportData('yearly');
         updatePublicStats();
+        updateDevInfo();
     }
 
     function updateReportData(type) {
         if (type === 'daily') {
             var tbody = document.getElementById('reportDailyBody');
             var html = '';
-            for (var i = 0; i < reportData.daily.length; i++) {
-                var d = reportData.daily[i];
-                var balance = d.income - d.expense;
-                html += '<tr><td>' + d.date + '</td><td>' + d.income.toLocaleString() + '</td><td>' + d.expense.toLocaleString() + '</td><td>' + balance.toLocaleString() + '</td></tr>';
+            if (reportData.daily.length === 0) {
+                html = '<tr><td colspan="4" style="text-align:center; color:#999;">কোনো ডাটা নেই</td></tr>';
+            } else {
+                for (var i = 0; i < reportData.daily.length; i++) {
+                    var d = reportData.daily[i];
+                    var balance = d.income - d.expense;
+                    html += '<tr><td>' + d.date + '</td><td>' + d.income.toLocaleString() + '</td><td>' + d.expense.toLocaleString() + '</td><td>' + balance.toLocaleString() + '</td></tr>';
+                }
             }
             tbody.innerHTML = html;
         } else if (type === 'weekly') {
             var el = document.querySelector('#reportWeekly p');
             if (el) {
-                el.textContent = 'সপ্তাহ ১ (আগস্ট ২০২৬): আয় ' + reportData.weekly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.weekly.expense.toLocaleString() + ' টাকা';
+                if (reportData.weekly.income === 0 && reportData.weekly.expense === 0) {
+                    el.textContent = 'কোনো ডাটা নেই';
+                    el.style.color = '#999';
+                } else {
+                    el.textContent = 'সপ্তাহ ১ (আগস্ট ২০২৬): আয় ' + reportData.weekly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.weekly.expense.toLocaleString() + ' টাকা';
+                    el.style.color = '#333';
+                }
             }
         } else if (type === 'monthly') {
             var container = document.getElementById('reportMonthly');
             var html = '';
-            for (var i = 0; i < reportData.monthly.length; i++) {
-                var m = reportData.monthly[i];
-                html += '<p><strong>' + m.month + ':</strong> আয় ' + m.income.toLocaleString() + ' টাকা, ব্যয় ' + m.expense.toLocaleString() + ' টাকা</p>';
+            if (reportData.monthly.length === 0) {
+                html = '<p style="color:#999;">কোনো ডাটা নেই</p>';
+            } else {
+                for (var i = 0; i < reportData.monthly.length; i++) {
+                    var m = reportData.monthly[i];
+                    html += '<p><strong>' + m.month + ':</strong> আয় ' + m.income.toLocaleString() + ' টাকা, ব্যয় ' + m.expense.toLocaleString() + ' টাকা</p>';
+                }
             }
             container.innerHTML = html;
         } else if (type === 'yearly') {
             var el = document.querySelector('#reportYearly p');
             if (el) {
-                el.textContent = '২০২৬: মোট আয় ' + reportData.yearly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.yearly.expense.toLocaleString() + ' টাকা';
+                if (reportData.yearly.income === 0 && reportData.yearly.expense === 0) {
+                    el.textContent = 'কোনো ডাটা নেই';
+                    el.style.color = '#999';
+                } else {
+                    el.textContent = '২০২৬: মোট আয় ' + reportData.yearly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.yearly.expense.toLocaleString() + ' টাকা';
+                    el.style.color = '#333';
+                }
             }
         }
     }
@@ -1324,6 +1840,7 @@
         document.getElementById('pubTotalIncome').textContent = totalIncome.toLocaleString();
         document.getElementById('pubTotalExpense').textContent = totalExpense.toLocaleString();
         document.getElementById('pubBalance').textContent = balance.toLocaleString();
+        updateDevInfo();
     }
 
     // =========================================
@@ -1421,6 +1938,7 @@
         document.getElementById('newMemberDue').value = '0';
         
         alert('✅ "' + name + '" যোগ করা হয়েছে! (বকেয়া: ' + due + ' টাকা)');
+        saveAllData();
     }
 
     // =========================================
@@ -1503,6 +2021,7 @@
         setTimeout(function() { document.getElementById('manageSuccess').classList.remove('show'); }, 4000);
         
         alert('✅ "' + name + '" আপডেট করা হয়েছে!');
+        saveAllData();
     }
 
     function deleteMember() {
@@ -1525,31 +2044,37 @@
             document.getElementById('manageSuccess').classList.add('show');
             document.getElementById('manageSuccess').textContent = '✅ "' + name + '" বাদ দেওয়া হয়েছে!';
             setTimeout(function() { document.getElementById('manageSuccess').classList.remove('show'); }, 4000);
+            saveAllData();
         }
     }
 
     function loadMemberTable() {
         var tbody = document.getElementById('memberTableBody');
         var html = '';
-        for (var i = 0; i < members.length; i++) {
-            var m = members[i];
-            var dueBadge = m.due === 0 ? 
-                '<span class="badge badge-success">শোধ</span>' : 
-                '<span class="badge badge-danger">' + m.due + ' বকেয়া</span>';
-            html += '<tr>' +
-                '<td>' + m.serial + '</td>' +
-                '<td>' + m.name + '</td>' +
-                '<td>' + m.address + '</td>' +
-                '<td>' + m.mobile + '</td>' +
-                '<td>' + m.commitment + '</td>' +
-                '<td>' + dueBadge + '</td>' +
-                '</tr>';
+        if (members.length === 0) {
+            html = '<tr><td colspan="6" style="text-align:center; color:#999;">কোনো মুসল্লি নেই</td></tr>';
+        } else {
+            for (var i = 0; i < members.length; i++) {
+                var m = members[i];
+                var dueBadge = m.due === 0 ? 
+                    '<span class="badge badge-success">শোধ</span>' : 
+                    '<span class="badge badge-danger">' + m.due + ' বকেয়া</span>';
+                html += '<tr>' +
+                    '<td>' + m.serial + '</td>' +
+                    '<td>' + m.name + '</td>' +
+                    '<td>' + m.address + '</td>' +
+                    '<td>' + m.mobile + '</td>' +
+                    '<td>' + m.commitment + '</td>' +
+                    '<td>' + dueBadge + '</td>' +
+                    '</tr>';
+            }
         }
         tbody.innerHTML = html;
+        updateDevInfo();
     }
 
     // =========================================
-    // ===== DONATION =====
+    // ===== DONATION (SMS সহ) =====
     // =========================================
     function submitDonation() {
         var amount = document.getElementById('donationAmount').value;
@@ -1621,7 +2146,15 @@
             month: monthStr,
             year: yearNum
         };
-        personalTransactions.push(transaction);
+        
+        if (navigator.onLine) {
+            personalTransactions.push(transaction);
+            updateAllReports();
+            updatePublicStats();
+            saveAllData();
+        } else {
+            addOfflineTransaction(transaction);
+        }
         
         var today = dateStr;
         var foundToday = false;
@@ -1651,10 +2184,11 @@
         }
         reportData.yearly.income += amount;
         
-        if (monthlyReports[currentMonth]) {
-            monthlyReports[currentMonth].income += amount;
-            monthlyReports[currentMonth].details.monthly += amount;
+        if (!monthlyReports[currentMonth]) {
+            monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
         }
+        monthlyReports[currentMonth].income += amount;
+        monthlyReports[currentMonth].details.monthly += amount;
         
         currentReceipt = {
             name: name,
@@ -1677,15 +2211,21 @@
         loadMemberTable();
         loadMemberSelect();
         
+        if (mobile && mobile !== 'N/A' && mobile !== '') {
+            sendDonationSMS(mobile, name, amount, purpose, currentReceipt.memo);
+        }
+        
         var dueMsg = '';
         if (memberIndex >= 0 && members[memberIndex]) {
             dueMsg = ' (বর্তমান বকেয়া: ' + members[memberIndex].due + ' টাকা)';
         }
         
         var notif = document.getElementById('donationSuccess');
-        notif.textContent = '✅ অনুদান গ্রহণ! মেমো: ' + currentReceipt.memo + ' | সংগ্রহ: ' + currentUser.name + dueMsg;
+        var statusMsg = navigator.onLine ? '' : ' 📡 অফলাইনে সেভ করা হয়েছে, ইন্টারনেট এলে সিঙ্ক হবে।';
+        notif.textContent = '✅ অনুদান গ্রহণ! মেমো: ' + currentReceipt.memo + ' | সংগ্রহ: ' + currentUser.name + dueMsg + statusMsg;
         notif.classList.add('show');
-        setTimeout(function() { notif.classList.remove('show'); }, 4000);
+        setTimeout(function() { notif.classList.remove('show'); }, 5000);
+        saveAllData();
     }
 
     function showReceipt(data) {
@@ -1778,13 +2318,14 @@
         }
         reportData.yearly.expense += amount;
         
-        if (monthlyReports[currentMonth]) {
-            monthlyReports[currentMonth].expense += amount;
-            if (category === 'বিদ্যুৎ বিল') monthlyReports[currentMonth].details.electric += amount;
-            else if (category === 'ইমাম বেতন' || category === 'মুয়াজ্জিন বেতন') monthlyReports[currentMonth].details.salary += amount;
-            else if (category === 'উন্নয়ন কাজ') monthlyReports[currentMonth].details.development += amount;
-            else monthlyReports[currentMonth].details.other = (monthlyReports[currentMonth].details.other || 0) + amount;
+        if (!monthlyReports[currentMonth]) {
+            monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
         }
+        monthlyReports[currentMonth].expense += amount;
+        if (category === 'বিদ্যুৎ বিল') monthlyReports[currentMonth].details.electric += amount;
+        else if (category === 'ইমাম বেতন' || category === 'মুয়াজ্জিন বেতন') monthlyReports[currentMonth].details.salary += amount;
+        else if (category === 'উন্নয়ন কাজ') monthlyReports[currentMonth].details.development += amount;
+        else monthlyReports[currentMonth].details.other = (monthlyReports[currentMonth].details.other || 0) + amount;
         
         updateAllReports();
         updatePublicStats();
@@ -1795,6 +2336,7 @@
         setTimeout(function() { notif.classList.remove('show'); }, 4000);
         document.getElementById('expenseAmount').value = '';
         document.getElementById('expenseNote').value = '';
+        saveAllData();
     }
 
     // =========================================
@@ -1822,50 +2364,52 @@
         setTimeout(function() { notif.classList.remove('show'); }, 4000);
         document.getElementById('updateTitle').value = '';
         document.getElementById('updateDesc').value = '';
+        saveAllData();
     }
 
     function loadCommitteeUpdates() {
         var container = document.getElementById('committeeUpdates');
         var html = '';
-        for (var i = 0; i < updates.length; i++) {
-            html += '<div class="update-card">' +
-                '<h5>' + updates[i].title + '</h5>' +
-                '<p>' + updates[i].desc + '</p>' +
-                '<small>পোস্ট: ' + updates[i].postedBy + ' - ' + updates[i].date + '</small>' +
-                '</div>';
+        if (updates.length === 0) {
+            html = '<p style="color:#999;">কোনো আপডেট নেই</p>';
+        } else {
+            for (var i = 0; i < updates.length; i++) {
+                html += '<div class="update-card">' +
+                    '<h5>' + updates[i].title + '</h5>' +
+                    '<p>' + updates[i].desc + '</p>' +
+                    '<small>পোস্ট: ' + updates[i].postedBy + ' - ' + updates[i].date + '</small>' +
+                    '</div>';
+            }
         }
-        container.innerHTML = html || '<p style="color:#999;">কোনো আপডেট নেই</p>';
+        container.innerHTML = html;
     }
 
     function loadPublicUpdates() {
         var container = document.getElementById('publicUpdates');
         var html = '';
-        for (var i = 0; i < updates.length; i++) {
-            html += '<div class="update-card">' +
-                '<h5>' + updates[i].title + '</h5>' +
-                '<p>' + updates[i].desc + '</p>' +
-                '<small>পোস্ট: ' + updates[i].postedBy + ' - ' + updates[i].date + '</small>' +
-                '</div>';
+        if (updates.length === 0) {
+            html = '<p style="color:#999;">কোনো আপডেট নেই</p>';
+        } else {
+            for (var i = 0; i < updates.length; i++) {
+                html += '<div class="update-card">' +
+                    '<h5>' + updates[i].title + '</h5>' +
+                    '<p>' + updates[i].desc + '</p>' +
+                    '<small>পোস্ট: ' + updates[i].postedBy + ' - ' + updates[i].date + '</small>' +
+                    '</div>';
+            }
         }
-        container.innerHTML = html || '<p style="color:#999;">কোনো আপডেট নেই</p>';
+        container.innerHTML = html;
     }
 
     // =========================================
-    // ===== ★★★★★ সব প্রিন্ট ফাংশন ★★★★★ =====
+    // ===== PRINT FUNCTIONS =====
     // =========================================
-
-    // 1. সাধারণ রিপোর্ট প্রিন্ট (দৈনিক/সাপ্তাহিক/মাসিক/বার্ষিক)
     function printGeneralReport() {
         var activeTab = document.querySelector('#tabReports .tab-content.active');
-        if (!activeTab) {
-            alert('প্রথমে একটি রিপোর্ট ট্যাব নির্বাচন করুন (দৈনিক/সাপ্তাহিক/মাসিক/বার্ষিক)');
-            return;
-        }
-        
+        if (!activeTab) { alert('প্রথমে একটি রিপোর্ট ট্যাব নির্বাচন করুন'); return; }
         var tabId = activeTab.id;
         var tabName = '';
         var reportContent = '';
-        
         if (tabId === 'reportDaily') {
             tabName = 'দৈনিক রিপোর্ট';
             var table = document.querySelector('#reportDaily table');
@@ -1880,7 +2424,6 @@
             tabName = 'বার্ষিক রিপোর্ট';
             reportContent = document.querySelector('#reportYearly p')?.outerHTML || '<p>কোনো ডাটা নেই</p>';
         }
-        
         var printWindow = window.open('', '_blank', 'width=800,height=600');
         printWindow.document.write(
             '<html><head><title>' + tabName + '</title>' +
@@ -1892,7 +2435,6 @@
             'table { width:100%; border-collapse:collapse; margin-top:10px; }' +
             'th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; }' +
             'th { background:#1a472a; color:white; }' +
-            'tr:nth-child(even) { background:#f9f9f9; }' +
             '.report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:15px; }' +
             '.footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; }' +
             '@media print { .no-print { display:none !important; } }' +
@@ -1903,34 +2445,28 @@
             '<p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>' +
             '<h2 style="color:#1a472a;">' + tabName + '</h2>' +
             '</div>' +
-            '<div class="report-date">প্রিন্ট তারিখ: ' + new Date().toLocaleDateString('bn-BD') + ' | সময়: ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
             '<div>' + reportContent + '</div>' +
-            '<div class="footer">' +
-            '<p>এই রিপোর্টটি আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত।</p>' +
-            '<p>মসজিদের উন্নয়নে আপনার সহযোগিতা কাম্য।</p>' +
-            '</div>' +
+            '<div class="footer"><p>এই রিপোর্টটি আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত।</p></div>' +
             '<br><div class="no-print">' +
-            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
-            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button>' +
             '</div>' +
             '</body></html>'
         );
         printWindow.document.close();
     }
 
-    // 2. A4 জাবেদা প্রিন্ট (মুসল্লি ভিউ)
     function printA4Report() {
         var income = document.getElementById('pubTotalIncome')?.textContent || '০';
         var expense = document.getElementById('pubTotalExpense')?.textContent || '০';
         var balance = document.getElementById('pubBalance')?.textContent || '০';
-        
         var month = document.getElementById('reportMonthSelect')?.value || 'আগস্ট ২০২৬';
         var monthData = monthlyReports[month] || { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
         var d = monthData.details;
-        
         var printWindow = window.open('', '_blank', 'width=800,height=600');
         printWindow.document.write(
-            '<html><head><title>A4 জাবেদা - আলগী বাজার জামে মসজিদ</title>' +
+            '<html><head><title>A4 জাবেদা</title>' +
             '<style>' +
             'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:40px; max-width:900px; margin:auto; }' +
             '.header { text-align:center; margin-bottom:25px; border-bottom:3px solid #1a472a; padding-bottom:20px; }' +
@@ -1957,7 +2493,7 @@
             '<div class="sub-title">📊 মাসিক আয়-ব্যয় জাবেদা - ' + month + '</div>' +
             '</div>' +
             '<div class="info-row">' +
-            '<span><strong>প্রিন্ট তারিখ:</strong> ' + new Date().toLocaleDateString('bn-BD') + '</span>' +
+            '<span><strong>প্রিন্ট:</strong> ' + new Date().toLocaleDateString('bn-BD') + '</span>' +
             '<span><strong>সময়:</strong> ' + new Date().toLocaleTimeString('bn-BD') + '</span>' +
             '</div>' +
             '<table>' +
@@ -1972,75 +2508,61 @@
             '<tr class="balance-row"><td>উদ্বৃত্ত</td><td colspan="2">' + ((monthData.income || 0) - (monthData.expense || 0)).toLocaleString() + ' টাকা</td></tr>' +
             '</tbody></table>' +
             '<div style="margin:15px 0; padding:10px; background:#f8f9fa; border-radius:5px;">' +
-            '<p style="margin:3px 0;"><strong>📌 সর্বমোট সংগ্রহ (এখন পর্যন্ত):</strong> ' + income + ' টাকা</p>' +
-            '<p style="margin:3px 0;"><strong>📌 সর্বমোট খরচ (এখন পর্যন্ত):</strong> ' + expense + ' টাকা</p>' +
-            '<p style="margin:3px 0;"><strong>📌 সর্বমোট উদ্বৃত্ত:</strong> ' + balance + ' টাকা</p>' +
+            '<p><strong>📌 সর্বমোট সংগ্রহ:</strong> ' + income + ' টাকা</p>' +
+            '<p><strong>📌 সর্বমোট খরচ:</strong> ' + expense + ' টাকা</p>' +
+            '<p><strong>📌 সর্বমোট উদ্বৃত্ত:</strong> ' + balance + ' টাকা</p>' +
             '</div>' +
             '<div class="signature">' +
             '<div><p><strong>ক্যাশিয়ার</strong></p><div class="line"></div><p>স্বাক্ষর</p></div>' +
             '<div><p><strong>সেক্রেটারি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div>' +
             '<div><p><strong>সভাপতি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div>' +
             '</div>' +
-            '<div class="footer">' +
-            '<p>🔹 এই রিপোর্টটি আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত।</p>' +
-            '<p>🔹 মসজিদের উন্নয়নে আপনার সহযোগিতা কাম্য। আল্লাহ আপনাকে উত্তম প্রতিদান দিন।</p>' +
-            '</div>' +
+            '<div class="footer"><p>🔹 আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত</p></div>' +
             '<br><div class="no-print">' +
-            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
-            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button>' +
             '</div>' +
             '</body></html>'
         );
         printWindow.document.close();
     }
 
-    // 3. ব্যক্তিগত রিপোর্ট প্রিন্ট
     function printPersonalReport() {
-        if (!currentUser) {
-            alert('আপনি লগইন করা নেই!');
-            return;
-        }
-        
+        if (!currentUser) { alert('আপনি লগইন করা নেই!'); return; }
         var activeTab = document.querySelector('#tabPersonalReport .tab-content.active');
-        if (!activeTab) {
-            alert('প্রথমে একটি ব্যক্তিগত রিপোর্ট ট্যাব নির্বাচন করুন');
-            return;
-        }
-        
+        if (!activeTab) { alert('প্রথমে একটি ব্যক্তিগত রিপোর্ট ট্যাব নির্বাচন করুন'); return; }
         var tabId = activeTab.id;
         var tabName = '';
         var reportContent = '';
         var summaryHtml = '';
-        
         if (tabId === 'personalDaily') {
-            tabName = 'দৈনিক সংগ্রহ রিপোর্ট';
+            tabName = 'দৈনিক সংগ্রহ';
             var table = document.querySelector('#personalDaily table');
             var summary = document.querySelector('#personalDaily .report-summary');
             reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
             summaryHtml = summary ? summary.outerHTML : '';
         } else if (tabId === 'personalWeekly') {
-            tabName = 'সাপ্তাহিক সংগ্রহ রিপোর্ট';
+            tabName = 'সাপ্তাহিক সংগ্রহ';
             var table = document.querySelector('#personalWeekly table');
             var summary = document.querySelector('#personalWeekly .report-summary');
             reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
             summaryHtml = summary ? summary.outerHTML : '';
         } else if (tabId === 'personalMonthly') {
-            tabName = 'মাসিক সংগ্রহ রিপোর্ট';
+            tabName = 'মাসিক সংগ্রহ';
             var table = document.querySelector('#personalMonthly table');
             var summary = document.querySelector('#personalMonthly .report-summary');
             reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
             summaryHtml = summary ? summary.outerHTML : '';
         } else if (tabId === 'personalYearly') {
-            tabName = 'বার্ষিক সংগ্রহ রিপোর্ট';
+            tabName = 'বার্ষিক সংগ্রহ';
             var table = document.querySelector('#personalYearly table');
             var summary = document.querySelector('#personalYearly .report-summary');
             reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
             summaryHtml = summary ? summary.outerHTML : '';
         }
-        
         var printWindow = window.open('', '_blank', 'width=800,height=600');
         printWindow.document.write(
-            '<html><head><title>ব্যক্তিগত রিপোর্ট - ' + currentUser.name + '</title>' +
+            '<html><head><title>ব্যক্তিগত রিপোর্ট</title>' +
             '<style>' +
             'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; }' +
             '.header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; }' +
@@ -2051,7 +2573,6 @@
             'table { width:100%; border-collapse:collapse; margin-top:10px; }' +
             'th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; }' +
             'th { background:#1a472a; color:white; }' +
-            'tr:nth-child(even) { background:#f9f9f9; }' +
             '.report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; }' +
             '.footer { text-align:center; margin-top:25px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; }' +
             '.summary-box { background:#e8f5e9; padding:10px 15px; border-radius:5px; margin:10px 0; border-left:4px solid #2d7d46; }' +
@@ -2061,39 +2582,29 @@
             '<div class="header">' +
             '<h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>' +
             '<p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>' +
-            '<h2 style="color:#1a472a;">👤 ব্যক্তিগত সংগ্রহ রিপোর্ট</h2>' +
+            '<h2 style="color:#1a472a;">👤 ব্যক্তিগত সংগ্রহ</h2>' +
             '</div>' +
-            '<div class="user-info">' +
-            '<h3><i class="fas fa-user"></i> ' + currentUser.name + ' (' + currentUser.role + ')</h3>' +
-            '</div>' +
-            '<div class="report-date">প্রিন্ট তারিখ: ' + new Date().toLocaleDateString('bn-BD') + ' | সময়: ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<div class="user-info"><h3>👤 ' + currentUser.name + ' (' + currentUser.role + ')</h3></div>' +
+            '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
             '<h3 style="color:#1a472a;">' + tabName + '</h3>' +
             (summaryHtml ? '<div class="summary-box">' + summaryHtml + '</div>' : '') +
             '<div>' + reportContent + '</div>' +
-            '<div class="footer">' +
-            '<p>🔹 এই রিপোর্টটি ' + currentUser.name + ' এর ব্যক্তিগত অনুদান সংগ্রহ সংক্রান্ত।</p>' +
-            '<p>🔹 মসজিদের উন্নয়নে আপনার সহযোগিতা কাম্য।</p>' +
-            '</div>' +
+            '<div class="footer"><p>🔹 ' + currentUser.name + ' এর ব্যক্তিগত অনুদান সংগ্রহ</p></div>' +
             '<br><div class="no-print">' +
-            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
-            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button>' +
             '</div>' +
             '</body></html>'
         );
         printWindow.document.close();
     }
 
-    // 4. মুসল্লি তালিকা প্রিন্ট
     function printMemberList() {
         var table = document.querySelector('#tabMembers table');
-        if (!table) {
-            alert('কোনো মুসল্লি তালিকা পাওয়া যায়নি!');
-            return;
-        }
-        
+        if (!table) { alert('কোনো মুসল্লি তালিকা পাওয়া যায়নি!'); return; }
         var printWindow = window.open('', '_blank', 'width=800,height=600');
         printWindow.document.write(
-            '<html><head><title>মুসল্লি তালিকা - আলগী বাজার জামে মসজিদ</title>' +
+            '<html><head><title>মুসল্লি তালিকা</title>' +
             '<style>' +
             'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; }' +
             '.header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; }' +
@@ -2102,7 +2613,6 @@
             'table { width:100%; border-collapse:collapse; margin-top:10px; }' +
             'th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; }' +
             'th { background:#1a472a; color:white; }' +
-            'tr:nth-child(even) { background:#f9f9f9; }' +
             '.badge-success { background:#d4edda; color:#155724; padding:2px 8px; border-radius:20px; font-size:0.7rem; }' +
             '.badge-danger { background:#f8d7da; color:#721c24; padding:2px 8px; border-radius:20px; font-size:0.7rem; }' +
             '.report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; }' +
@@ -2116,19 +2626,114 @@
             '<p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>' +
             '<h2 style="color:#1a472a;">📋 মুসল্লি তালিকা</h2>' +
             '</div>' +
-            '<div class="report-date">প্রিন্ট তারিখ: ' + new Date().toLocaleDateString('bn-BD') + ' | সময়: ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
             '<div class="total-count">মোট মুসল্লি: ' + members.length + ' জন</div>' +
             '<div>' + table.outerHTML + '</div>' +
-            '<div class="footer">' +
-            '<p>🔹 এই তালিকাটি আলগী বাজার জামে মসজিদের স্থায়ী মুসল্লিদের তথ্য সংক্রান্ত।</p>' +
-            '</div>' +
+            '<div class="footer"><p>🔹 আলগী বাজার জামে মসজিদের স্থায়ী মুসল্লি</p></div>' +
             '<br><div class="no-print">' +
-            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">🖨️ প্রিন্ট করুন</button>' +
-            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px; font-size:1rem;">বন্ধ করুন</button>' +
+            '<button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button>' +
+            '<button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button>' +
             '</div>' +
             '</body></html>'
         );
         printWindow.document.close();
+    }
+
+    // =========================================
+    // ===== DEVELOPER PANEL =====
+    // =========================================
+    function toggleDevPanel() {
+        var panel = document.getElementById('devPanel');
+        var overlay = document.getElementById('devOverlay');
+        if (panel.classList.contains('active')) {
+            panel.classList.remove('active');
+            overlay.classList.remove('active');
+        } else {
+            panel.classList.add('active');
+            overlay.classList.add('active');
+            document.getElementById('devPassword').focus();
+            if (isDevUnlocked) {
+                document.getElementById('devContent').style.display = 'block';
+                document.getElementById('devLock').style.display = 'none';
+                updateDevInfo();
+                loadDevUserList();
+            } else {
+                document.getElementById('devContent').style.display = 'none';
+                document.getElementById('devLock').style.display = 'block';
+            }
+        }
+    }
+
+    function unlockDevPanel() {
+        var password = document.getElementById('devPassword').value;
+        if (password === DEV_PASSWORD) {
+            isDevUnlocked = true;
+            document.getElementById('devContent').style.display = 'block';
+            document.getElementById('devLock').style.display = 'none';
+            updateDevInfo();
+            loadDevUserList();
+            document.getElementById('devPassword').value = '';
+            alert('✅ ডেভেলপার প্যানেল আনলক করা হয়েছে!');
+        } else {
+            alert('❌ ভুল পাসওয়ার্ড!');
+            document.getElementById('devPassword').value = '';
+        }
+    }
+
+    function loadDevUserList() {
+        var container = document.getElementById('devUserList');
+        var html = '<h5 style="margin-bottom:5px;">বর্তমান ইউজার:</h5>';
+        for (var role in users) {
+            var roleName = role === 'cashier' ? 'ক্যাশিয়ার' : role === 'secretary' ? 'সেক্রেটারি' : 'সভাপতি';
+            html += '<div style="display:flex; justify-content:space-between; padding:3px 8px; border-bottom:1px solid #eee; font-size:0.9rem;">' +
+                '<span><strong>' + roleName + ':</strong></span>' +
+                '<span>' + users[role].name + '</span>' +
+                '</div>';
+        }
+        container.innerHTML = html;
+    }
+
+    function devUpdateUser() {
+        var role = document.getElementById('devUserRole').value;
+        var newName = document.getElementById('devNewUserName').value.trim();
+        var newPass = document.getElementById('devNewPassword').value.trim();
+        
+        if (newName) {
+            users[role].name = newName;
+            if (currentUser && currentUser.role === role) {
+                currentUser.name = newName;
+                document.getElementById('userRoleDisplay').innerHTML = '<i class="fas fa-user"></i> ' + newName + ' (' + role + ')';
+                document.getElementById('personalReportUser').textContent = newName + ' (' + role + ')';
+            }
+        }
+        
+        if (newPass && newPass.length >= 4) {
+            users[role].password = newPass;
+            if (currentUser && currentUser.role === role) {
+                currentUser.password = newPass;
+            }
+            alert('✅ পাসওয়ার্ড পরিবর্তন করা হয়েছে!');
+        }
+        
+        if (newName) {
+            document.getElementById('devNewUserName').value = '';
+            loadDevUserList();
+            loadCommitteeUpdates();
+            alert('✅ "' + role + '" আপডেট করা হয়েছে!');
+        }
+        
+        if (newPass) {
+            document.getElementById('devNewPassword').value = '';
+        }
+        
+        saveAllData();
+    }
+
+    function updateDevInfo() {
+        document.getElementById('devTotalMembers').textContent = members.length;
+        document.getElementById('devTotalTransactions').textContent = personalTransactions.length;
+        document.getElementById('devTotalIncome').textContent = totalIncome.toLocaleString();
+        document.getElementById('devTotalExpense').textContent = totalExpense.toLocaleString();
     }
 
     // =========================================
@@ -2166,6 +2771,21 @@
     // ===== PAGE LOAD =====
     // =========================================
     document.addEventListener('DOMContentLoaded', function() {
+        var loaded = loadAllData();
+        if (!loaded) {
+            console.log('📌 প্রথমবার ব্যবহার, ডাটা খালি রাখা হয়েছে।');
+        }
+        
+        var pendingSync = JSON.parse(localStorage.getItem('pendingSync') || '[]');
+        if (pendingSync.length > 0 && navigator.onLine) {
+            syncOfflineData();
+        }
+        
+        var pendingSMS = JSON.parse(localStorage.getItem('pendingSMS') || '[]');
+        if (pendingSMS.length > 0 && navigator.onLine) {
+            sendPendingSMS();
+        }
+        
         document.getElementById('homePage').style.display = 'block';
         document.getElementById('loginPage').style.display = 'none';
         document.getElementById('publicView').style.display = 'none';
@@ -2179,6 +2799,11 @@
         updatePublicStats();
         updatePersonalReports();
         loadMonthlyReport();
+        updateOnlineStatus();
+        
+        document.getElementById('devPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') { unlockDevPanel(); }
+        });
     });
 
     document.getElementById('loginPassword').addEventListener('keypress', function(e) {
