@@ -306,7 +306,6 @@
         .install-prompt .close-prompt { float: right; cursor: pointer; font-size: 1.2rem; opacity: 0.7; }
         .install-prompt .close-prompt:hover { opacity: 1; }
         
-        /* ★★★★★ অনলাইন/অফলাইন স্ট্যাটাস ★★★★★ */
         .online-status {
             position: fixed;
             bottom: 60px;
@@ -330,7 +329,6 @@
             border: 1px solid #dc3545;
         }
         
-        /* ডেভেলপার বাটন */
         .dev-trigger {
             position: fixed; bottom: 10px; right: 10px;
             width: 40px; height: 40px;
@@ -898,7 +896,7 @@
     </div>
 </div>
 
-<!-- ===== ★★★★★ অনলাইন/অফলাইন স্ট্যাটাস ★★★★★ ===== -->
+<!-- ===== ONLINE/OFFLINE STATUS ===== -->
 <div id="onlineStatus" class="online-status online">
     🟢 অনলাইন
 </div>
@@ -908,7 +906,7 @@
     <i class="fas fa-code"></i>
 </button>
 
-<!-- ===== ★★★★★ ডেভেলপার প্যানেল (পাসওয়ার্ড হাইড) ★★★★★ ===== -->
+<!-- ===== ★★★★★ ডেভেলপার প্যানেল (রিসেট ঠিক করা) ★★★★★ ===== -->
 <div class="dev-overlay" id="devOverlay" onclick="toggleDevPanel()"></div>
 <div class="dev-panel" id="devPanel">
     <button class="close-btn" onclick="toggleDevPanel()">✕ বন্ধ</button>
@@ -957,7 +955,7 @@
             <div id="devUserList"></div>
         </div>
         
-        <!-- ===== ★★★★★ আপডেটেড ব্যাকআপ সিস্টেম ★★★★★ ===== -->
+        <!-- ===== ★★★★★ ডাটা ম্যানেজমেন্ট (রিসেট ঠিক করা) ★★★★★ ===== -->
         <div class="section">
             <h4><i class="fas fa-database"></i> ডাটা ম্যানেজমেন্ট</h4>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -968,10 +966,12 @@
                     <i class="fas fa-upload"></i> ব্যাকআপ রিস্টোর
                 </button>
                 <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreData(event)">
-                <button class="btn btn-danger btn-sm" onclick="devResetAll()">
+                
+                <!-- ★★★★★ রিসেট বাটন (ঠিক করা) ★★★★★ -->
+                <button class="btn btn-danger btn-sm" onclick="devResetAll()" style="background:#dc3545; color:white; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:0.8rem;">
                     <i class="fas fa-trash"></i> সব রিসেট
                 </button>
-                <button class="btn btn-warning btn-sm" onclick="devResetIncomeExpense()">
+                <button class="btn btn-warning btn-sm" onclick="devResetIncomeExpense()" style="background:#ffc107; color:#333; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:0.8rem;">
                     <i class="fas fa-undo"></i> আয়-ব্যয় রিসেট
                 </button>
             </div>
@@ -1043,7 +1043,7 @@
     }
 
     // =========================================
-    // ===== ★★★★★ অনলাইন/অফলাইন স্ট্যাটাস ★★★★★ =====
+    // ===== ONLINE/OFFLINE STATUS =====
     // =========================================
     function updateOnlineStatus() {
         var status = document.getElementById('onlineStatus');
@@ -1075,7 +1075,7 @@
     setInterval(updateOnlineStatus, 10000);
 
     // =========================================
-    // ===== ★★★★★ অফলাইন ডাটা সিঙ্ক ★★★★★ =====
+    // ===== OFFLINE DATA SYNC =====
     // =========================================
     function syncOfflineData() {
         if (!navigator.onLine) return;
@@ -1118,7 +1118,7 @@
     }
 
     // =========================================
-    // ===== ★★★★★ SMS সিস্টেম ★★★★★ =====
+    // ===== SMS SYSTEM =====
     // =========================================
     function sendDonationSMS(mobile, name, amount, purpose, memo) {
         var message = '🕌 আলগী বাজার জামে মসজিদ\n' +
@@ -1130,7 +1130,6 @@
         console.log('📱 SMS পাঠানো হচ্ছে:', mobile);
         
         if (navigator.onLine) {
-            // এখানে আপনার SMS API যোগ করুন
             console.log('✅ ডেমো SMS (অনলাইন):', message);
             return true;
         } else {
@@ -1191,7 +1190,7 @@
     var totalExpense = 0;
 
     // =========================================
-    // ===== ডাটা সেভ ও লোড =====
+    // ===== DATA SAVE & LOAD =====
     // =========================================
     function saveAllData() {
         try {
@@ -1242,10 +1241,9 @@
     setInterval(saveAllData, 300000);
 
     // =========================================
-    // ===== ★★★★★ আপডেটেড ব্যাকআপ সিস্টেম ★★★★★ =====
+    // ===== BACKUP SYSTEM =====
     // =========================================
     function backupData() {
-        // চেক করুন ডেভেলপার প্যানেল আনলক করা আছে কিনা
         if (!isDevUnlocked) {
             alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!');
             return;
@@ -1336,6 +1334,102 @@
         };
         reader.readAsText(file);
         event.target.value = '';
+    }
+
+    // =========================================
+    // ===== ★★★★★ রিসেট ফাংশন (ঠিক করা) ★★★★★ =====
+    // =========================================
+    
+    // ১. সব ডাটা রিসেট
+    function devResetAll() {
+        if (!isDevUnlocked) {
+            alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!');
+            return;
+        }
+        
+        if (!confirm('⚠️ সাবধান! সব ডাটা (মুসল্লি, আয়, ব্যয়, বকেয়া, লেনদেন, আপডেট) মুছে যাবে!')) {
+            return;
+        }
+        if (!confirm('আবারও নিশ্চিত করুন! এই কাজটি অপরিবর্তনীয়!')) {
+            return;
+        }
+        
+        try {
+            members = [];
+            updates = [];
+            personalTransactions = [];
+            monthlyReports = {};
+            reportData = {
+                daily: [],
+                weekly: { income: 0, expense: 0 },
+                monthly: [],
+                yearly: { income: 0, expense: 0 }
+            };
+            totalIncome = 0;
+            totalExpense = 0;
+            nextSerial = 1;
+            nextMemo = 1001;
+            
+            loadMemberTable();
+            loadMemberSelect();
+            loadCommitteeUpdates();
+            loadPublicUpdates();
+            updateAllReports();
+            updatePersonalReports();
+            loadMonthlyReport();
+            updateDevInfo();
+            
+            saveAllData();
+            
+            alert('✅ সব ডাটা সফলভাবে রিসেট করা হয়েছে!');
+            console.log('✅ সব ডাটা রিসেট সম্পূর্ণ');
+            toggleDevPanel();
+            
+        } catch (error) {
+            alert('❌ রিসেট করতে সমস্যা: ' + error.message);
+            console.error('❌ রিসেট ত্রুটি:', error);
+        }
+    }
+
+    // ২. শুধু আয়-ব্যয় রিসেট
+    function devResetIncomeExpense() {
+        if (!isDevUnlocked) {
+            alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!');
+            return;
+        }
+        
+        if (!confirm('শুধু আয়-ব্যয় রিসেট করবেন? (মুসল্লি ও বকেয়া থাকবে)')) {
+            return;
+        }
+        
+        try {
+            personalTransactions = [];
+            monthlyReports = {};
+            reportData = {
+                daily: [],
+                weekly: { income: 0, expense: 0 },
+                monthly: [],
+                yearly: { income: 0, expense: 0 }
+            };
+            totalIncome = 0;
+            totalExpense = 0;
+            nextMemo = 1001;
+            
+            updateAllReports();
+            updatePersonalReports();
+            loadMonthlyReport();
+            updateDevInfo();
+            
+            saveAllData();
+            
+            alert('✅ আয়-ব্যয় রিসেট করা হয়েছে! বকেয়া অপরিবর্তিত আছে।');
+            console.log('✅ আয়-ব্যয় রিসেট সম্পূর্ণ');
+            toggleDevPanel();
+            
+        } catch (error) {
+            alert('❌ রিসেট করতে সমস্যা: ' + error.message);
+            console.error('❌ রিসেট ত্রুটি:', error);
+        }
     }
 
     // =========================================
@@ -2800,6 +2894,14 @@
         updatePersonalReports();
         loadMonthlyReport();
         updateOnlineStatus();
+        
+        // ডেভেলপার ফাংশন চেক
+        if (typeof devResetAll !== 'function') {
+            console.warn('⚠️ devResetAll ফাংশন পাওয়া যায়নি!');
+        }
+        if (typeof devResetIncomeExpense !== 'function') {
+            console.warn('⚠️ devResetIncomeExpense ফাংশন পাওয়া যায়নি!');
+        }
         
         document.getElementById('devPassword').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') { unlockDevPanel(); }
