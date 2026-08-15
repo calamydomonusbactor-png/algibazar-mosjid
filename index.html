@@ -727,9 +727,9 @@
 
 <script>
     // =========================================
-// ===== ★★★★★ FIREBASE CONFIG ★★★★★ =====
-// =========================================
-const firebaseConfig = {
+    // ===== ★★★★★ FIREBASE CONFIG ★★★★★ =====
+    // =========================================
+    const firebaseConfig = {
   apiKey: "AIzaSyCASdw5uCXCWl_knQkI0EJOYfCd6WmMqKY",
   authDomain: "mosjid-management-system.firebaseapp.com",
   databaseURL: "https://mosjid-management-system-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -739,406 +739,277 @@ const firebaseConfig = {
   appId: "1:60515683618:web:dbc87800452fe729d9e97b",
   measurementId: "G-D85W6F8Q26"
 };
-// Firebase Initialize
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-// =========================================
-// ===== ★★★★★ Firebase কানেকশন টেস্ট ★★★★★ =====
-// =========================================
-function testFirebaseConnection() {
-    database.ref('.info/connected').on('value', function(snap) {
-        if (snap.val() === true) {
-            console.log('✅ Firebase সংযুক্ত!');
-            document.getElementById('syncStatus').textContent = '✅ সিঙ্কড';
-            document.getElementById('syncStatus').className = 'sync-status synced';
-        } else {
-            console.log('❌ Firebase সংযুক্ত নয়!');
-            document.getElementById('syncStatus').textContent = '📡 অফলাইন';
-            document.getElementById('syncStatus').className = 'sync-status offline';
-        }
-    });
-}
 
-// =========================================
-// ===== ★★★★★ Firebase-এ ডাটা সেভ (সঠিক) ★★★★★ =====
-// =========================================
-function saveToFirebase(path, data) {
-    if (!navigator.onLine) {
-        console.warn('📡 অফলাইন, ডাটা সেভ করা সম্ভব নয়');
-        return;
-    }
-    
-    console.log('💾 Firebase-এ সেভ হচ্ছে:', path, data);
-    
-    database.ref(path).set(data)
-        .then(() => {
-            console.log('✅ Firebase-এ সেভ সফল:', path);
-        })
-        .catch((error) => {
-            console.error('❌ Firebase সেভ ত্রুটি:', error);
-            alert('❌ Firebase-এ ডাটা সেভ করতে সমস্যা: ' + error.message);
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // =========================================
+    // ===== ★★★★★ FIREBASE কানেকশন টেস্ট ★★★★★ =====
+    // =========================================
+    function testFirebaseConnection() {
+        database.ref('.info/connected').on('value', function(snap) {
+            if (snap.val() === true) {
+                console.log('✅ Firebase সংযুক্ত!');
+                document.getElementById('syncStatus').textContent = '✅ সিঙ্কড';
+                document.getElementById('syncStatus').className = 'sync-status synced';
+            } else {
+                console.log('❌ Firebase সংযুক্ত নয়!');
+                document.getElementById('syncStatus').textContent = '📡 অফলাইন';
+                document.getElementById('syncStatus').className = 'sync-status offline';
+            }
         });
-}
-
-// =========================================
-// ===== ★★★★★ Firebase থেকে ডাটা লোড (সঠিক) ★★★★★ =====
-// =========================================
-function loadFromFirebase(path, callback) {
-    if (!navigator.onLine) {
-        console.warn('📡 অফলাইন, ডাটা লোড করা সম্ভব নয়');
-        callback(null);
-        return;
     }
-    
-    console.log('📥 Firebase থেকে লোড হচ্ছে:', path);
-    
-    database.ref(path).once('value')
-        .then((snapshot) => {
-            const data = snapshot.val();
-            console.log('✅ Firebase থেকে লোড সফল:', path, data);
-            callback(data);
-        })
-        .catch((error) => {
-            console.error('❌ Firebase লোড ত্রুটি:', error);
-            callback(null);
-        });
-}
 
-// =========================================
-// ===== ★★★★★ রিয়েল-টাইম লিসেনার (সঠিক) ★★★★★ =====
-// =========================================
-function listenToFirebase(path, callback) {
-    console.log('👂 Firebase লিসেনার শুরু:', path);
-    
-    database.ref(path).on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (data !== null && data !== undefined) {
-            console.log('🔄 Firebase রিয়েল-টাইম আপডেট:', path, data);
-            callback(data);
-        } else {
-            console.log('📭 Firebase-এ ডাটা নেই:', path);
-        }
-    }, (error) => {
-        console.error('❌ Firebase লিসেনার ত্রুটি:', error);
-    });
-}
-
-// =========================================
-// ===== ★★★★★ Firebase-এ সব ডাটা সেভ ★★★★★ =====
-// =========================================
-function saveAllDataToFirebase() {
-    console.log('💾 সব ডাটা Firebase-এ সেভ হচ্ছে...');
-    saveToFirebase('members', members);
-    saveToFirebase('updates', updates);
-    saveToFirebase('reportData', reportData);
-    saveToFirebase('totalIncome', totalIncome);
-    saveToFirebase('totalExpense', totalExpense);
-    saveToFirebase('personalTransactions', personalTransactions);
-    saveToFirebase('monthlyReports', monthlyReports);
-    console.log('✅ সব ডাটা Firebase-এ সেভ সম্পূর্ণ!');
-}
-
-// =========================================
-// ===== ★★★★★ Firebase থেকে সব ডাটা লোড ★★★★★ =====
-// =========================================
-function loadAllDataFromFirebase() {
-    console.log('📥 সব ডাটা Firebase থেকে লোড হচ্ছে...');
-    
-    loadFromFirebase('members', function(data) {
-        if (data && Array.isArray(data)) {
-            members = data;
-            loadMemberTable();
-            loadMemberSelect();
-            updateDevInfo();
-            console.log('✅ members লোড করা হয়েছে:', members.length, 'জন');
-        } else {
-            console.log('📭 members-এ কোনো ডাটা নেই');
-        }
-    });
-    
-    loadFromFirebase('updates', function(data) {
-        if (data && Array.isArray(data)) {
-            updates = data;
-            loadCommitteeUpdates();
-            loadPublicUpdates();
-            console.log('✅ updates লোড করা হয়েছে:', updates.length, 'টি');
-        } else {
-            console.log('📭 updates-এ কোনো ডাটা নেই');
-        }
-    });
-    
-    loadFromFirebase('reportData', function(data) {
-        if (data) {
-            reportData = data;
-            updateAllReports();
-            console.log('✅ reportData লোড করা হয়েছে');
-        } else {
-            console.log('📭 reportData-এ কোনো ডাটা নেই');
-        }
-    });
-    
-    loadFromFirebase('totalIncome', function(data) {
-        if (data !== null && data !== undefined) {
-            totalIncome = data;
-            updatePublicStats();
-            updateDevInfo();
-            console.log('✅ totalIncome লোড করা হয়েছে:', totalIncome);
-        } else {
-            console.log('📭 totalIncome-এ কোনো ডাটা নেই');
-        }
-    });
-    
-    loadFromFirebase('totalExpense', function(data) {
-        if (data !== null && data !== undefined) {
-            totalExpense = data;
-            updatePublicStats();
-            updateDevInfo();
-            console.log('✅ totalExpense লোড করা হয়েছে:', totalExpense);
-        } else {
-            console.log('📭 totalExpense-এ কোনো ডাটা নেই');
-        }
-    });
-    
-    loadFromFirebase('personalTransactions', function(data) {
-        if (data && Array.isArray(data)) {
-            personalTransactions = data;
-            updatePersonalReports();
-            console.log('✅ personalTransactions লোড করা হয়েছে:', personalTransactions.length, 'টি');
-        } else {
-            console.log('📭 personalTransactions-এ কোনো ডাটা নেই');
-        }
-    });
-    
-    loadFromFirebase('monthlyReports', function(data) {
-        if (data) {
-            monthlyReports = data;
-            loadMonthlyReport();
-            console.log('✅ monthlyReports লোড করা হয়েছে');
-        } else {
-            console.log('📭 monthlyReports-এ কোনো ডাটা নেই');
-        }
-    });
-}
-
-// =========================================
-// ===== ★★★★★ রিয়েল-টাইম লিসেনার চালু ★★★★★ =====
-// =========================================
-function listenToAllFirebase() {
-    console.log('👂 রিয়েল-টাইম লিসেনার চালু হচ্ছে...');
-    
-    listenToFirebase('members', function(data) {
-        if (data && Array.isArray(data)) {
-            members = data;
-            loadMemberTable();
-            loadMemberSelect();
-            updateDevInfo();
-            console.log('🔄 members রিয়েল-টাইম আপডেট!', members.length, 'জন');
-        }
-    });
-    
-    listenToFirebase('updates', function(data) {
-        if (data && Array.isArray(data)) {
-            updates = data;
-            loadCommitteeUpdates();
-            loadPublicUpdates();
-            console.log('🔄 updates রিয়েল-타임 আপডেট!', updates.length, 'টি');
-        }
-    });
-    
-    listenToFirebase('reportData', function(data) {
-        if (data) {
-            reportData = data;
-            updateAllReports();
-            console.log('🔄 reportData রিয়েল-টাইম আপডেট!');
-        }
-    });
-    
-    listenToFirebase('totalIncome', function(data) {
-        if (data !== null && data !== undefined) {
-            totalIncome = data;
-            updatePublicStats();
-            updateDevInfo();
-            console.log('🔄 totalIncome রিয়েল-টাইম আপডেট!', totalIncome);
-        }
-    });
-    
-    listenToFirebase('totalExpense', function(data) {
-        if (data !== null && data !== undefined) {
-            totalExpense = data;
-            updatePublicStats();
-            updateDevInfo();
-            console.log('🔄 totalExpense রিয়েল-টাইম আপডেট!', totalExpense);
-        }
-    });
-    
-    listenToFirebase('personalTransactions', function(data) {
-        if (data && Array.isArray(data)) {
-            personalTransactions = data;
-            updatePersonalReports();
-            console.log('🔄 personalTransactions রিয়েল-টাইম আপডেট!', personalTransactions.length, 'টি');
-        }
-    });
-    
-    listenToFirebase('monthlyReports', function(data) {
-        if (data) {
-            monthlyReports = data;
-            loadMonthlyReport();
-            console.log('🔄 monthlyReports রিয়েল-টাইম আপডেট!');
-        }
-    });
-    
-    console.log('✅ রিয়েল-টাইম লিসেনার চালু সম্পূর্ণ!');
-}
-
-// =========================================
-// ===== ★★★★★ saveAllData আপডেট ★★★★★ =====
-// =========================================
-function saveAllData() {
-    try {
-        // লোকাল স্টোরেজে সেভ
-        var data = { 
-            users, members, updates, personalTransactions, 
-            monthlyReports, reportData, totalIncome, totalExpense, 
-            nextSerial, nextMemo, savedAt: new Date().toISOString() 
-        };
-        localStorage.setItem('mosjidData', JSON.stringify(data));
-        console.log('✅ ডাটা লোকাল স্টোরেজে সেভ করা হয়েছে');
-        
-        // Firebase-এ সেভ
-        saveAllDataToFirebase();
-        
-    } catch(e) { 
-        console.log('❌ ডাটা সেভ সমস্যা:', e); 
-    }
-}
-
-// =========================================
-// ===== ★★★★★ অ্যাড নিউ মেম্বার আপডেট (Firebase সেভ সহ) ★★★★★ =====
-// =========================================
-function addNewMember() {
-    var name = document.getElementById('newMemberName').value.trim();
-    var mobile = document.getElementById('newMemberMobile').value.trim();
-    var address = document.getElementById('newMemberAddress').value.trim();
-    var commitment = parseInt(document.getElementById('newMemberCommitment').value);
-    var due = parseInt(document.getElementById('newMemberDue').value) || 0;
-    
-    if (!name || !mobile || !address || !commitment) { 
-        alert('সব ফিল্ড পূরণ করুন!'); 
-        return; 
-    }
-    
-    mobile = mobile.replace(/[^০-৯0-9]/g, '');
-    
-    for (var i = 0; i < members.length; i++) {
-        if (members[i].mobile === mobile || convertToEnglish(members[i].mobile) === convertToEnglish(mobile)) {
-            alert('এই মোবাইল নম্বরটি ইতিমধ্যে রেজিস্টার করা আছে!');
+    // =========================================
+    // ===== ★★★★★ FIREBASE-এ ডাটা সেভ ★★★★★ =====
+    // =========================================
+    function saveToFirebase(path, data) {
+        if (!navigator.onLine) {
+            console.warn('📡 অফলাইন, ডাটা সেভ করা সম্ভব নয়');
             return;
         }
+        
+        console.log('💾 Firebase-এ সেভ হচ্ছে:', path, data);
+        
+        database.ref(path).set(data)
+            .then(() => {
+                console.log('✅ Firebase-এ সেভ সফল:', path);
+            })
+            .catch((error) => {
+                console.error('❌ Firebase সেভ ত্রুটি:', error);
+            });
     }
-    
-    var newMember = {
-        serial: String(nextSerial++).padStart(2, '0'),
-        name: name,
-        address: address,
-        mobile: mobile,
-        commitment: commitment,
-        due: due
-    };
-    
-    members.push(newMember);
-    
-    // ★★★★★ Firebase-এ সেভ ★★★★★
-    saveAllData();
-    
-    loadMemberTable();
-    loadMemberSelect();
-    loadPublicUpdates();
-    
-    document.getElementById('addMemberSuccess').classList.add('show');
-    setTimeout(function() { document.getElementById('addMemberSuccess').classList.remove('show'); }, 4000);
-    
-    document.getElementById('newMemberName').value = '';
-    document.getElementById('newMemberMobile').value = '';
-    document.getElementById('newMemberAddress').value = '';
-    document.getElementById('newMemberCommitment').value = '';
-    document.getElementById('newMemberDue').value = '0';
-    
-    alert('✅ "' + name + '" যোগ করা হয়েছে! (বকেয়া: ' + due + ' টাকা)');
-}
-
-// =========================================
-// ===== ★★★★★ পেজ লোড ★★★★★ =====
-// =========================================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 অ্যাপ লোড হচ্ছে...');
-    
-    // 🔥 Firebase কানেকশন টেস্ট
-    testFirebaseConnection();
-    
-    // লোকাল ডাটা লোড
-    loadAllData();
-    
-    // 🔥 Firebase থেকে ডাটা লোড
-    loadAllDataFromFirebase();
-    
-    // 🔥 রিয়েল-টাইম লিসেনার চালু
-    listenToAllFirebase();
-    
-    generateMonthList();
-    updateOnlineStatus();
-    loadMemberTable();
-    loadMemberSelect();
-    loadCommitteeUpdates();
-    loadPublicUpdates();
-    updateAllReports();
-    updatePublicStats();
-    updatePersonalReports();
-    loadMonthlyReport();
-    
-    console.log('✅ অ্যাপ লোড সম্পূর্ণ!');
-});
 
     // =========================================
-    // ===== ★★★★★ মাস লিস্ট জেনারেট ★★★★★ =====
+    // ===== ★★★★★ FIREBASE থেকে ডাটা লোড ★★★★★ =====
     // =========================================
-    function generateMonthList() {
-        var select = document.getElementById('donationPurpose');
-        if (!select) return;
-        var currentYear = new Date().getFullYear();
-        var currentMonth = new Date().getMonth();
-        select.innerHTML = '';
-        var bengaliMonths = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
-        
-        var advanceOption = document.createElement('option');
-        advanceOption.value = 'অগ্রিম';
-        advanceOption.textContent = '📌 অগ্রিম (এগিয়ে)';
-        select.appendChild(advanceOption);
-        
-        for (var i = 0; i < 12; i++) {
-            var monthIndex = (currentMonth + i) % 12;
-            var year = currentYear + Math.floor((currentMonth + i) / 12);
-            var option = document.createElement('option');
-            var monthName = bengaliMonths[monthIndex];
-            option.value = monthName + ' ' + year;
-            option.textContent = monthName + ' ' + year + (i === 0 ? ' (বর্তমান)' : i > 0 ? ' (অগ্রিম)' : '');
-            select.appendChild(option);
+    function loadFromFirebase(path, callback) {
+        if (!navigator.onLine) {
+            console.warn('📡 অফলাইন, ডাটা লোড করা সম্ভব নয়');
+            callback(null);
+            return;
         }
-        console.log('✅ মাস লিস্ট জেনারেট করা হয়েছে!');
+        
+        console.log('📥 Firebase থেকে লোড হচ্ছে:', path);
+        
+        database.ref(path).once('value')
+            .then((snapshot) => {
+                const data = snapshot.val();
+                console.log('✅ Firebase থেকে লোড সফল:', path, data);
+                callback(data);
+            })
+            .catch((error) => {
+                console.error('❌ Firebase লোড ত্রুটি:', error);
+                callback(null);
+            });
     }
 
     // =========================================
-    // ===== ★★★★★ বাংলা ↔ ইংরেজি নাম্বার কনভার্ট ★★★★★ =====
+    // ===== ★★★★★ রিয়েল-টাইম লিসেনার ★★★★★ =====
     // =========================================
-    function convertToEnglish(bengaliNum) {
-        if (!bengaliNum) return '';
-        var map = {'০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9'};
-        return String(bengaliNum).replace(/[০-৯]/g, function(m) { return map[m] || m; });
+    function listenToFirebase(path, callback) {
+        console.log('👂 Firebase লিসেনার শুরু:', path);
+        
+        database.ref(path).on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data !== null && data !== undefined) {
+                console.log('🔄 Firebase রিয়েল-টাইম আপডেট:', path, data);
+                callback(data);
+            }
+        }, (error) => {
+            console.error('❌ Firebase লিসেনার ত্রুটি:', error);
+        });
     }
-    function convertToBengali(englishNum) {
-        if (!englishNum) return '';
-        var map = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
-        return String(englishNum).replace(/[0-9]/g, function(m) { return map[m] || m; });
+
+    // =========================================
+    // ===== ★★★★★ FIREBASE-এ সব ডাটা সেভ ★★★★★ =====
+    // =========================================
+    function saveAllDataToFirebase() {
+        console.log('💾 সব ডাটা Firebase-এ সেভ হচ্ছে...');
+        saveToFirebase('members', members);
+        saveToFirebase('updates', updates);
+        saveToFirebase('reportData', reportData);
+        saveToFirebase('totalIncome', totalIncome);
+        saveToFirebase('totalExpense', totalExpense);
+        saveToFirebase('personalTransactions', personalTransactions);
+        saveToFirebase('monthlyReports', monthlyReports);
+        console.log('✅ সব ডাটা Firebase-এ সেভ সম্পূর্ণ!');
     }
+
+    // =========================================
+    // ===== ★★★★★ FIREBASE থেকে সব ডাটা লোড ★★★★★ =====
+    // =========================================
+    function loadAllDataFromFirebase() {
+        console.log('📥 সব ডাটা Firebase থেকে লোড হচ্ছে...');
+        
+        loadFromFirebase('members', function(data) {
+            if (data && Array.isArray(data)) {
+                members = data;
+                loadMemberTable();
+                loadMemberSelect();
+                updateDevInfo();
+                console.log('✅ members লোড করা হয়েছে:', members.length, 'জন');
+            } else {
+                console.log('📭 members-এ কোনো ডাটা নেই');
+            }
+        });
+        
+        loadFromFirebase('updates', function(data) {
+            if (data && Array.isArray(data)) {
+                updates = data;
+                loadCommitteeUpdates();
+                loadPublicUpdates();
+                console.log('✅ updates লোড করা হয়েছে:', updates.length, 'টি');
+            } else {
+                console.log('📭 updates-এ কোনো ডাটা নেই');
+            }
+        });
+        
+        loadFromFirebase('reportData', function(data) {
+            if (data) {
+                reportData = data;
+                updateAllReports();
+                console.log('✅ reportData লোড করা হয়েছে');
+            } else {
+                console.log('📭 reportData-এ কোনো ডাটা নেই');
+            }
+        });
+        
+        loadFromFirebase('totalIncome', function(data) {
+            if (data !== null && data !== undefined) {
+                totalIncome = data;
+                updatePublicStats();
+                updateDevInfo();
+                console.log('✅ totalIncome লোড করা হয়েছে:', totalIncome);
+            } else {
+                console.log('📭 totalIncome-এ কোনো ডাটা নেই');
+            }
+        });
+        
+        loadFromFirebase('totalExpense', function(data) {
+            if (data !== null && data !== undefined) {
+                totalExpense = data;
+                updatePublicStats();
+                updateDevInfo();
+                console.log('✅ totalExpense লোড করা হয়েছে:', totalExpense);
+            } else {
+                console.log('📭 totalExpense-এ কোনো ডাটা নেই');
+            }
+        });
+        
+        loadFromFirebase('personalTransactions', function(data) {
+            if (data && Array.isArray(data)) {
+                personalTransactions = data;
+                updatePersonalReports();
+                console.log('✅ personalTransactions লোড করা হয়েছে:', personalTransactions.length, 'টি');
+            } else {
+                console.log('📭 personalTransactions-এ কোনো ডাটা নেই');
+            }
+        });
+        
+        loadFromFirebase('monthlyReports', function(data) {
+            if (data) {
+                monthlyReports = data;
+                loadMonthlyReport();
+                console.log('✅ monthlyReports লোড করা হয়েছে');
+            } else {
+                console.log('📭 monthlyReports-এ কোনো ডাটা নেই');
+            }
+        });
+    }
+
+    // =========================================
+    // ===== ★★★★★ রিয়েল-টাইম লিসেনার চালু ★★★★★ =====
+    // =========================================
+    function listenToAllFirebase() {
+        console.log('👂 রিয়েল-টাইম লিসেনার চালু হচ্ছে...');
+        
+        listenToFirebase('members', function(data) {
+            if (data && Array.isArray(data)) {
+                members = data;
+                loadMemberTable();
+                loadMemberSelect();
+                updateDevInfo();
+                console.log('🔄 members রিয়েল-টাইম আপডেট!', members.length, 'জন');
+            }
+        });
+        
+        listenToFirebase('updates', function(data) {
+            if (data && Array.isArray(data)) {
+                updates = data;
+                loadCommitteeUpdates();
+                loadPublicUpdates();
+                console.log('🔄 updates রিয়েল-টাইম আপডেট!', updates.length, 'টি');
+            }
+        });
+        
+        listenToFirebase('reportData', function(data) {
+            if (data) {
+                reportData = data;
+                updateAllReports();
+                console.log('🔄 reportData রিয়েল-টাইম আপডেট!');
+            }
+        });
+        
+        listenToFirebase('totalIncome', function(data) {
+            if (data !== null && data !== undefined) {
+                totalIncome = data;
+                updatePublicStats();
+                updateDevInfo();
+                console.log('🔄 totalIncome রিয়েল-টাইম আপডেট!', totalIncome);
+            }
+        });
+        
+        listenToFirebase('totalExpense', function(data) {
+            if (data !== null && data !== undefined) {
+                totalExpense = data;
+                updatePublicStats();
+                updateDevInfo();
+                console.log('🔄 totalExpense রিয়েল-টাইম আপডেট!', totalExpense);
+            }
+        });
+        
+        listenToFirebase('personalTransactions', function(data) {
+            if (data && Array.isArray(data)) {
+                personalTransactions = data;
+                updatePersonalReports();
+                console.log('🔄 personalTransactions রিয়েল-টাইম আপডেট!', personalTransactions.length, 'টি');
+            }
+        });
+        
+        listenToFirebase('monthlyReports', function(data) {
+            if (data) {
+                monthlyReports = data;
+                loadMonthlyReport();
+                console.log('🔄 monthlyReports রিয়েল-টাইম আপডেট!');
+            }
+        });
+        
+        console.log('✅ রিয়েল-টাইম লিসেনার চালু সম্পূর্ণ!');
+    }
+
+    // =========================================
+    // ===== ★★★★★ গ্লোবাল ভেরিয়েবল ★★★★★ =====
+    // =========================================
+    var currentUser = null;
+    var currentReceipt = null;
+    var isLoggedIn = false;
+    var editingMemberIndex = -1;
+    var DEV_PASSWORD = 'admin@123';
+    var isDevUnlocked = false;
+
+    var users = {
+        'cashier': { name: 'ক্যাশিয়ার', role: 'cashier', password: '123456' },
+        'secretary': { name: 'সেক্রেটারি', role: 'secretary', password: '123456' },
+        'president': { name: 'সভাপতি', role: 'president', password: '123456' }
+    };
+
+    var members = [];
+    var updates = [];
+    var personalTransactions = [];
+    var monthlyReports = {};
+    var reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
+    var nextSerial = 1, nextMemo = 1001, totalIncome = 0, totalExpense = 0;
 
     // =========================================
     // ===== ★★★★★ নেভিগেশন ফাংশন ★★★★★ =====
@@ -1178,26 +1049,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // =========================================
     // ===== ★★★★★ লগইন ফাংশন ★★★★★ =====
     // =========================================
-    var currentUser = null;
-    var currentReceipt = null;
-    var isLoggedIn = false;
-    var editingMemberIndex = -1;
-    var DEV_PASSWORD = 'admin@123';
-    var isDevUnlocked = false;
-
-    var users = {
-        'cashier': { name: 'ক্যাশিয়ার', role: 'cashier', password: '123456' },
-        'secretary': { name: 'সেক্রেটারি', role: 'secretary', password: '123456' },
-        'president': { name: 'সভাপতি', role: 'president', password: '123456' }
-    };
-
-    var members = [];
-    var updates = [];
-    var personalTransactions = [];
-    var monthlyReports = {};
-    var reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
-    var nextSerial = 1, nextMemo = 1001, totalIncome = 0, totalExpense = 0;
-
     function handleLogin() {
         var username = document.getElementById('loginUserSelect').value;
         var password = document.getElementById('loginPassword').value.trim();
@@ -1301,10 +1152,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // =========================================
     function saveAllData() {
         try {
-            var data = { users, members, updates, personalTransactions, monthlyReports, reportData, totalIncome, totalExpense, nextSerial, nextMemo, savedAt: new Date().toISOString() };
+            // লোকাল স্টোরেজে সেভ
+            var data = { 
+                users, members, updates, personalTransactions, 
+                monthlyReports, reportData, totalIncome, totalExpense, 
+                nextSerial, nextMemo, savedAt: new Date().toISOString() 
+            };
             localStorage.setItem('mosjidData', JSON.stringify(data));
-            console.log('✅ ডাটা সেভ করা হয়েছে');
-        } catch(e) { console.log('❌ ডাটা সেভ সমস্যা:', e); }
+            console.log('✅ ডাটা লোকাল স্টোরেজে সেভ করা হয়েছে');
+            
+            // 🔥 Firebase-এ সেভ
+            saveAllDataToFirebase();
+            
+        } catch(e) { 
+            console.log('❌ ডাটা সেভ সমস্যা:', e); 
+        }
     }
 
     function loadAllData() {
@@ -1322,11 +1184,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 totalExpense = data.totalExpense || 0;
                 nextSerial = data.nextSerial || 1;
                 nextMemo = data.nextMemo || 1001;
-                console.log('✅ ডাটা লোড করা হয়েছে');
+                console.log('✅ ডাটা লোকাল স্টোরেজ থেকে লোড করা হয়েছে');
                 return true;
             }
         } catch(e) { console.log('❌ ডাটা লোড সমস্যা:', e); }
         return false;
+    }
+
+    // =========================================
+    // ===== ★★★★★ বাংলা ↔ ইংরেজি নাম্বার কনভার্ট ★★★★★ =====
+    // =========================================
+    function convertToEnglish(bengaliNum) {
+        if (!bengaliNum) return '';
+        var map = {'০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9'};
+        return String(bengaliNum).replace(/[০-৯]/g, function(m) { return map[m] || m; });
+    }
+    function convertToBengali(englishNum) {
+        if (!englishNum) return '';
+        var map = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+        return String(englishNum).replace(/[0-9]/g, function(m) { return map[m] || m; });
+    }
+
+    // =========================================
+    // ===== ★★★★★ মাস লিস্ট জেনারেট ★★★★★ =====
+    // =========================================
+    function generateMonthList() {
+        var select = document.getElementById('donationPurpose');
+        if (!select) return;
+        var currentYear = new Date().getFullYear();
+        var currentMonth = new Date().getMonth();
+        select.innerHTML = '';
+        var bengaliMonths = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+        
+        var advanceOption = document.createElement('option');
+        advanceOption.value = 'অগ্রিম';
+        advanceOption.textContent = '📌 অগ্রিম (এগিয়ে)';
+        select.appendChild(advanceOption);
+        
+        for (var i = 0; i < 12; i++) {
+            var monthIndex = (currentMonth + i) % 12;
+            var year = currentYear + Math.floor((currentMonth + i) / 12);
+            var option = document.createElement('option');
+            var monthName = bengaliMonths[monthIndex];
+            option.value = monthName + ' ' + year;
+            option.textContent = monthName + ' ' + year + (i === 0 ? ' (বর্তমান)' : i > 0 ? ' (অগ্রিম)' : '');
+            select.appendChild(option);
+        }
+        console.log('✅ মাস লিস্ট জেনারেট করা হয়েছে!');
     }
 
     // =========================================
@@ -1446,18 +1350,24 @@ document.addEventListener('DOMContentLoaded', function() {
             due: due
         };
         members.push(newMember);
+        
+        // 🔥 Firebase-এ সেভ
+        saveAllData();
+        
         loadMemberTable();
         loadMemberSelect();
         loadPublicUpdates();
+        
         document.getElementById('addMemberSuccess').classList.add('show');
         setTimeout(function() { document.getElementById('addMemberSuccess').classList.remove('show'); }, 4000);
+        
         document.getElementById('newMemberName').value = '';
         document.getElementById('newMemberMobile').value = '';
         document.getElementById('newMemberAddress').value = '';
         document.getElementById('newMemberCommitment').value = '';
         document.getElementById('newMemberDue').value = '0';
+        
         alert('✅ "' + name + '" যোগ করা হয়েছে! (বকেয়া: ' + due + ' টাকা)');
-        saveAllData();
     }
 
     function loadMemberSelect() {
@@ -1513,13 +1423,16 @@ document.addEventListener('DOMContentLoaded', function() {
         members[editingMemberIndex].address = address;
         members[editingMemberIndex].commitment = commitment;
         members[editingMemberIndex].due = due;
+        
+        // 🔥 Firebase-এ সেভ
+        saveAllData();
+        
         loadMemberTable();
         loadMemberSelect();
         loadPublicUpdates();
         document.getElementById('manageSuccess').classList.add('show');
         setTimeout(function() { document.getElementById('manageSuccess').classList.remove('show'); }, 4000);
         alert('✅ "' + name + '" আপডেট করা হয়েছে!');
-        saveAllData();
     }
 
     function deleteMember() {
@@ -1528,6 +1441,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirm('আপনি কি "' + name + '" কে বাদ দিতে চান? এই কাজটি অপরিবর্তনীয়!')) {
             members.splice(editingMemberIndex, 1);
             editingMemberIndex = -1;
+            
+            // 🔥 Firebase-এ সেভ
+            saveAllData();
+            
             loadMemberTable();
             loadMemberSelect();
             loadPublicUpdates();
@@ -1536,7 +1453,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('manageSuccess').classList.add('show');
             document.getElementById('manageSuccess').textContent = '✅ "' + name + '" বাদ দেওয়া হয়েছে!';
             setTimeout(function() { document.getElementById('manageSuccess').classList.remove('show'); }, 4000);
-            saveAllData();
         }
     }
 
@@ -1943,7 +1859,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =========================================
-    // ===== ★★★★★ অন্যান্য ফাংশন (ডামি) ★★★★★ =====
+    // ===== ★★★★★ অন্যান্য ফাংশন ★★★★★ =====
     // =========================================
     function submitExpense() {
         if (!currentUser || currentUser.role !== 'cashier') {
@@ -2002,6 +1918,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!title || !desc) { alert('শিরোনাম ও বিবরণ উভয়ই পূরণ করুন'); return; }
         var newUpdate = { title: title, desc: desc, postedBy: currentUser ? currentUser.name : 'কমিটি', date: new Date().toLocaleDateString('bn-BD') };
         updates.unshift(newUpdate);
+        saveAllData();
         loadCommitteeUpdates();
         loadPublicUpdates();
         document.getElementById('updateSuccess').classList.add('show');
@@ -2009,7 +1926,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() { document.getElementById('updateSuccess').classList.remove('show'); }, 4000);
         document.getElementById('updateTitle').value = '';
         document.getElementById('updateDesc').value = '';
-        saveAllData();
     }
 
     function loadCommitteeUpdates() {
@@ -2383,24 +2299,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =========================================
-    // ===== ★★★★★ পেজ লোড ★★★★★ =====
+    // ===== ★★★★★ অনলাইন স্ট্যাটাস ★★★★★ =====
     // =========================================
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 অ্যাপ লোড হচ্ছে...');
-        loadAllData();
-        generateMonthList();
-        updateOnlineStatus();
-        loadMemberTable();
-        loadMemberSelect();
-        loadCommitteeUpdates();
-        loadPublicUpdates();
-        updateAllReports();
-        updatePublicStats();
-        updatePersonalReports();
-        loadMonthlyReport();
-        console.log('✅ অ্যাপ লোড সম্পূর্ণ!');
-    });
-
     function updateOnlineStatus() {
         var status = document.getElementById('onlineStatus');
         if (navigator.onLine) {
@@ -2414,6 +2314,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
+
+    // =========================================
+    // ===== ★★★★★ পেজ লোড ★★★★★ =====
+    // =========================================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 অ্যাপ লোড হচ্ছে...');
+        
+        // 🔥 Firebase কানেকশন টেস্ট
+        testFirebaseConnection();
+        
+        // লোকাল ডাটা লোড
+        loadAllData();
+        
+        // 🔥 Firebase থেকে ডাটা লোড
+        loadAllDataFromFirebase();
+        
+        // 🔥 রিয়েল-টাইম লিসেনার চালু
+        listenToAllFirebase();
+        
+        generateMonthList();
+        updateOnlineStatus();
+        loadMemberTable();
+        loadMemberSelect();
+        loadCommitteeUpdates();
+        loadPublicUpdates();
+        updateAllReports();
+        updatePublicStats();
+        updatePersonalReports();
+        loadMonthlyReport();
+        
+        console.log('✅ অ্যাপ লোড সম্পূর্ণ!');
+    });
 
     document.getElementById('loginPassword').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') { handleLogin(); }
