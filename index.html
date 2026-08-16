@@ -333,7 +333,7 @@
                     </div>
                 </div>
                 <button class="btn btn-success" onclick="submitDonation()">
-                    <i class="fas fa-save"></i> গ্রহণ করুন & প্রিন্ট
+                    <i class="fas fa-save"></i> গ্রহণ করুন
                 </button>
                 <div id="receiptPreview" style="display:none; margin-top:10px;">
                     <h4 style="font-size:0.85rem;">📄 রশিদ</h4>
@@ -850,7 +850,6 @@
         var weekStartStr = weekStart.getDate() + '/' + (weekStart.getMonth() + 1) + '/' + weekStart.getFullYear();
         var weekEndStr = weekEnd.getDate() + '/' + (weekEnd.getMonth() + 1) + '/' + weekEnd.getFullYear();
         
-        // সঠিক ডেট পার্সিং - convertToEnglish ব্যবহার করে
         var weeklyTxns = [];
         for (var i = 0; i < personalTransactions.length; i++) {
             var t = personalTransactions[i];
@@ -912,7 +911,6 @@
         var monthEndStr = monthEnd.toLocaleDateString('bn-BD');
         var monthName = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
         
-        // সঠিক ডেট পার্সিং - convertToEnglish ব্যবহার করে
         var monthlyTxns = [];
         for (var i = 0; i < personalTransactions.length; i++) {
             var t = personalTransactions[i];
@@ -989,7 +987,6 @@
         var yearStartStr = yearStart.toLocaleDateString('bn-BD');
         var yearEndStr = yearEnd.toLocaleDateString('bn-BD');
         
-        // সঠিক ডেট পার্সিং - convertToEnglish ব্যবহার করে
         var yearlyTxns = [];
         for (var i = 0; i < personalTransactions.length; i++) {
             var t = personalTransactions[i];
@@ -1113,7 +1110,7 @@
             dailyBody.innerHTML = html;
         }
         
-        // সাপ্তাহিক - সঠিক ডেট পার্সিং
+        // সাপ্তাহিক
         var currentDay = today.getDay();
         var currentDate = today.getDate();
         var weekStart = new Date(today);
@@ -1403,10 +1400,7 @@
     }
 
     // =========================================
-    // ===== ★★★★★ অনুদান ★★★★★ =====
-    // =========================================
-        // =========================================
-    // ===== ★★★★★ অনুদান গ্রহণ (আপডেট) ★★★★★ =====
+    // ===== ★★★★★ অনুদান (সঠিক সমাধান) ★★★★★ =====
     // =========================================
     function submitDonation() {
         var amount = document.getElementById('donationAmount').value;
@@ -1422,30 +1416,18 @@
                 var memberEng = convertToEnglish(members[i].mobile);
                 var searchEng = convertToEnglish(searchMobile);
                 if (members[i].mobile === searchMobile || memberEng === searchEng) {
-                    name = members[i].name; 
-                    serial = members[i].serial; 
-                    address = members[i].address; 
-                    mobile = members[i].mobile;
-                    memberIndex = i; 
-                    found = true; 
-                    break;
+                    name = members[i].name; serial = members[i].serial; address = members[i].address; mobile = members[i].mobile;
+                    memberIndex = i; found = true; break;
                 }
             }
-            if (!found) { 
-                alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!'); 
-                return; 
-            }
+            if (!found) { alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!'); return; }
         } else {
             name = document.getElementById('guestName').value || 'অতিথি';
-            serial = 'N/A'; 
-            address = document.getElementById('guestAddress').value || 'N/A';
+            serial = 'N/A'; address = document.getElementById('guestAddress').value || 'N/A';
             mobile = document.getElementById('guestMobile').value || 'N/A';
         }
         
-        if (!amount || amount <= 0) { 
-            alert('দয়া করে সঠিক পরিমাণ লিখুন'); 
-            return; 
-        }
+        if (!amount || amount <= 0) { alert('দয়া করে সঠিক পরিমাণ লিখুন'); return; }
         amount = parseInt(amount);
         
         // ★★★ চেক করুন: এই মুসল্লির এই মাসের অনুদান ইতিমধ্যে কেউ গ্রহণ করেছে কিনা ★★★
@@ -1462,7 +1444,7 @@
             }
         }
         
-        // অগ্রিম চেক - অগ্রিমের জন্য আলাদা চেক
+        // অগ্রিম চেক
         if (memberIndex >= 0 && purpose === 'অগ্রিম') {
             for (var i = 0; i < personalTransactions.length; i++) {
                 var t = personalTransactions[i];
@@ -1490,17 +1472,11 @@
         var yearNum = now.getFullYear();
         
         var transaction = {
-            memberName: name, 
-            memberSerial: serial, 
-            memberMobile: mobile,
-            amount: amount, 
-            purpose: purpose,
+            memberName: name, memberSerial: serial, memberMobile: mobile,
+            amount: amount, purpose: purpose,
             collectorName: currentUser ? currentUser.name : 'ক্যাশিয়ার',
             collectorRole: currentUser ? currentUser.role : 'cashier',
-            date: dateStr, 
-            time: timeStr, 
-            month: monthStr, 
-            year: yearNum,
+            date: dateStr, time: timeStr, month: monthStr, year: yearNum,
             isAdvance: purpose === 'অগ্রিম'
         };
         
@@ -1515,19 +1491,14 @@
                 var idx = (currentMonthIndex + m + 1) % 12;
                 var yr = currentYear + Math.floor((currentMonthIndex + m + 1) / 12);
                 personalTransactions.push({
-                    memberName: name, 
-                    memberSerial: serial, 
-                    memberMobile: mobile,
+                    memberName: name, memberSerial: serial, memberMobile: mobile,
                     amount: advanceAmountPerMonth,
                     purpose: bengaliMonths[idx] + ' ' + yr,
                     collectorName: currentUser ? currentUser.name : 'ক্যাশিয়ার',
                     collectorRole: currentUser ? currentUser.role : 'cashier',
-                    date: dateStr, 
-                    time: timeStr,
-                    month: bengaliMonths[idx] + ' ' + yr, 
-                    year: yr,
-                    isAdvance: true, 
-                    advanceParentId: advanceParentId
+                    date: dateStr, time: timeStr,
+                    month: bengaliMonths[idx] + ' ' + yr, year: yr,
+                    isAdvance: true, advanceParentId: advanceParentId
                 });
             }
             if (!monthlyReports[monthStr]) {
@@ -1541,17 +1512,11 @@
             saveAllData();
             showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
             currentReceipt = {
-                name: name, 
-                serial: serial, 
-                address: address, 
-                mobile: mobile,
-                amount: amount, 
-                purpose: 'অগ্রিম (১২ মাস)',
+                name: name, serial: serial, address: address, mobile: mobile,
+                amount: amount, purpose: 'অগ্রিম (১২ মাস)',
                 collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
                 collectorRole: currentUser ? currentUser.role : 'cashier',
-                date: dateStr, 
-                time: timeStr, 
-                memo: nextMemo++
+                date: dateStr, time: timeStr, memo: nextMemo++
             };
             showReceipt(currentReceipt);
             // ★★★ প্রিন্ট অপশন দেখান ★★★
@@ -1591,17 +1556,11 @@
         monthlyReports[currentMonth].details.monthly += amount;
         
         currentReceipt = {
-            name: name, 
-            serial: serial, 
-            address: address, 
-            mobile: mobile,
-            amount: amount, 
-            purpose: purpose,
+            name: name, serial: serial, address: address, mobile: mobile,
+            amount: amount, purpose: purpose,
             collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
             collectorRole: currentUser ? currentUser.role : 'cashier',
-            date: dateStr, 
-            time: timeStr, 
-            memo: nextMemo++
+            date: dateStr, time: timeStr, memo: nextMemo++
         };
         
         showReceipt(currentReceipt);
@@ -1617,7 +1576,7 @@
         saveAllData();
     }
 
-       function showReceipt(data) {
+    function showReceipt(data) {
         document.getElementById('receiptContent').innerHTML = 
             '<div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>' +
             '<div style="text-align:center; font-size:0.7rem;">ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</div>' +
@@ -1634,7 +1593,7 @@
             '<div class="receipt-line"></div>' +
             '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
         
-        // ★★★ প্রিন্ট বাটন দেখান ★★★
+        // ★★★ প্রিন্ট অপশন দেখান ★★★
         document.getElementById('receiptPreview').style.display = 'block';
     }
 
