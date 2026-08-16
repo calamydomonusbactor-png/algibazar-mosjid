@@ -1730,6 +1730,7 @@
 
     // ★★★★★ 2. সাপ্তাহিক রিপোর্ট ★★★★★
         // ★★★★★ 2. সাপ্তাহিক রিপোর্ট (ঠিক করা) ★★★★★
+     // ★★★★★ সাপ্তাহিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
     function updateWeeklyReport() {
         var today = new Date();
         var currentDate = today.getDate();
@@ -1754,7 +1755,7 @@
         var weekStartStr = weekStart.getDate() + '/' + (weekStart.getMonth() + 1) + '/' + weekStart.getFullYear();
         var weekEndStr = weekEnd.getDate() + '/' + (weekEnd.getMonth() + 1) + '/' + weekEnd.getFullYear();
         
-        // ★★★ এখানে পরিবর্তন ★★★
+        // ★★★ সঠিক ডেট পার্সিং ★★★
         var weeklyTxns = [];
         for (var i = 0; i < personalTransactions.length; i++) {
             var t = personalTransactions[i];
@@ -1815,6 +1816,7 @@
     }
 
     // 3. মাসিক রিপোর্ট
+    f    // ★★★★★ মাসিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
     function updateMonthlyReport() {
         var today = new Date();
         var currentYear = today.getFullYear();
@@ -1827,10 +1829,21 @@
         var monthEndStr = monthEnd.toLocaleDateString('bn-BD');
         var monthName = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
         
-        var monthlyTxns = personalTransactions.filter(function(t) {
-            var txnDate = new Date(t.date);
-            return txnDate >= monthStart && txnDate <= monthEnd;
-        });
+        // ★★★ সঠিক ডেট পার্সিং ★★★
+        var monthlyTxns = [];
+        for (var i = 0; i < personalTransactions.length; i++) {
+            var t = personalTransactions[i];
+            var parts = t.date.split('/');
+            if (parts.length === 3) {
+                var day = parseInt(convertToEnglish(parts[0]));
+                var month = parseInt(convertToEnglish(parts[1])) - 1;
+                var year = parseInt(convertToEnglish(parts[2]));
+                var txnDate = new Date(year, month, day);
+                if (txnDate >= monthStart && txnDate <= monthEnd) {
+                    monthlyTxns.push(t);
+                }
+            }
+        }
         
         var monthlyIncome = 0, monthlyExpense = 0;
         for (var i = 0; i < monthlyTxns.length; i++) {
@@ -1899,6 +1912,8 @@
 
     // 4. বার্ষিক রিপোর্ট
     function updateYearlyReport() {
+        // ★★★★★ বার্ষিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
+    function updateYearlyReport() {
         var today = new Date();
         var currentYear = today.getFullYear();
         
@@ -1907,10 +1922,21 @@
         var yearStartStr = yearStart.toLocaleDateString('bn-BD');
         var yearEndStr = yearEnd.toLocaleDateString('bn-BD');
         
-        var yearlyTxns = personalTransactions.filter(function(t) {
-            var txnDate = new Date(t.date);
-            return txnDate >= yearStart && txnDate <= yearEnd;
-        });
+        // ★★★ সঠিক ডেট পার্সিং ★★★
+        var yearlyTxns = [];
+        for (var i = 0; i < personalTransactions.length; i++) {
+            var t = personalTransactions[i];
+            var parts = t.date.split('/');
+            if (parts.length === 3) {
+                var day = parseInt(convertToEnglish(parts[0]));
+                var month = parseInt(convertToEnglish(parts[1])) - 1;
+                var year = parseInt(convertToEnglish(parts[2]));
+                var txnDate = new Date(year, month, day);
+                if (txnDate >= yearStart && txnDate <= yearEnd) {
+                    yearlyTxns.push(t);
+                }
+            }
+        }
         
         var yearlyIncome = 0, yearlyExpense = 0;
         for (var i = 0; i < yearlyTxns.length; i++) {
