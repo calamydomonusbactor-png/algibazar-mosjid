@@ -494,13 +494,19 @@
                     </div>
                 </div>
                 <div id="reportWeekly" class="tab-content">
-                    <p style="color:#999;">কোনো ডাটা নেই</p>
+                    <div id="weeklyReportContainer">
+                        <p style="color:#999;">কোনো ডাটা নেই</p>
+                    </div>
                 </div>
                 <div id="reportMonthly" class="tab-content">
-                    <p style="color:#999;">কোনো ডাটা নেই</p>
+                    <div id="monthlyReportContainer2">
+                        <p style="color:#999;">কোনো ডাটা নেই</p>
+                    </div>
                 </div>
                 <div id="reportYearly" class="tab-content">
-                    <p style="color:#999;">কোনো ডাটা নেই</p>
+                    <div id="yearlyReportContainer">
+                        <p style="color:#999;">কোনো ডাটা নেই</p>
+                    </div>
                 </div>
                 <button class="btn btn-warning btn-sm no-print" onclick="printGeneralReport()" style="margin-top:8px;">
                     <i class="fas fa-print"></i> প্রিন্ট রিপোর্ট
@@ -616,7 +622,7 @@
         <span class="modal-close" onclick="closeChangePassword()">&times;</span>
         <h3><i class="fas fa-key"></i> পাসওয়ার্ড পরিবর্তন</h3>
         <div class="notification" id="passwordChangeSuccess">
-            <i class="fas fa-check-circle"></i> পাসওয়ার্ড পরিবর্তন করা হয়েছে!
+            <i class="fas fa-check-circle"></i> পাসওয়ার্ড পরিবর্তন করা হয়েছে!
         </div>
         <div class="form-group"><label>বর্তমান</label><input type="password" id="currentPassword" placeholder="বর্তমান পাসওয়ার্ড"></div>
         <div class="form-group"><label>নতুন</label><input type="password" id="newPassword" placeholder="নতুন পাসওয়ার্ড"></div>
@@ -770,8 +776,8 @@
         }
         console.log('💾 Firebase-এ সেভ হচ্ছে:', path);
         database.ref(path).set(data)
-            .then(() => { console.log('✅ Firebase-এ সেভ সফল:', path); })
-            .catch((error) => { console.error('❌ Firebase সেভ ত্রুটি:', error); });
+            .then(function() { console.log('✅ Firebase-এ সেভ সফল:', path); })
+            .catch(function(error) { console.error('❌ Firebase সেভ ত্রুটি:', error); });
     }
 
     // =========================================
@@ -785,12 +791,12 @@
         }
         console.log('📥 Firebase থেকে লোড হচ্ছে:', path);
         database.ref(path).once('value')
-            .then((snapshot) => {
-                const data = snapshot.val();
+            .then(function(snapshot) {
+                var data = snapshot.val();
                 console.log('✅ Firebase থেকে লোড সফল:', path);
                 callback(data);
             })
-            .catch((error) => {
+            .catch(function(error) {
                 console.error('❌ Firebase লোড ত্রুটি:', error);
                 callback(null);
             });
@@ -801,13 +807,13 @@
     // =========================================
     function listenToFirebase(path, callback) {
         console.log('👂 Firebase লিসেনার শুরু:', path);
-        database.ref(path).on('value', (snapshot) => {
-            const data = snapshot.val();
+        database.ref(path).on('value', function(snapshot) {
+            var data = snapshot.val();
             if (data !== null && data !== undefined) {
                 console.log('🔄 Firebase রিয়েল-টাইম আপডেট:', path);
                 callback(data);
             }
-        }, (error) => {
+        }, function(error) {
             console.error('❌ Firebase লিসেনার ত্রুটি:', error);
         });
     }
@@ -1037,13 +1043,13 @@
         document.getElementById('loginPage').style.display = 'block';
         document.getElementById('loginPage').classList.add('active');
         document.getElementById('publicView').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'none');
+        document.getElementById('dashboard').style.display = 'none';
         console.log('✅ লগইন পেজ খোলা হয়েছে');
     }
 
     function openPublicView() {
         document.getElementById('homePage').style.display = 'none';
-        document.getElementById('publicView').style.display = 'block');
+        document.getElementById('publicView').style.display = 'block';
         document.getElementById('publicView').classList.add('active');
         document.getElementById('loginPage').style.display = 'none';
         document.getElementById('dashboard').style.display = 'none';
@@ -1110,29 +1116,51 @@
     function showTab(tab, menuItem) {
         console.log('📌 ট্যাব পরিবর্তন:', tab);
         var menuItems = document.querySelectorAll('.dash-menu-item');
-        for (var i = 0; i < menuItems.length; i++) { menuItems[i].classList.remove('active'); }
-        if (menuItem) { menuItem.classList.add('active'); } else {
+        for (var i = 0; i < menuItems.length; i++) {
+            menuItems[i].classList.remove('active');
+        }
+        if (menuItem) {
+            menuItem.classList.add('active');
+        } else {
             var items = document.querySelectorAll('.dash-menu-item');
             for (var j = 0; j < items.length; j++) {
-                if (items[j].dataset.tab === tab) { items[j].classList.add('active'); break; }
+                if (items[j].dataset.tab === tab) {
+                    items[j].classList.add('active');
+                    break;
+                }
             }
         }
         var tabContents = document.querySelectorAll('.tab-content');
-        for (var k = 0; k < tabContents.length; k++) { tabContents[k].classList.remove('active'); }
+        for (var k = 0; k < tabContents.length; k++) {
+            tabContents[k].classList.remove('active');
+        }
         var tabMap = {
-            'donation': 'tabDonation', 'addMember': 'tabAddMember', 'manageMembers': 'tabManageMembers',
-            'expense': 'tabExpense', 'reports': 'tabReports', 'personalReport': 'tabPersonalReport',
-            'updates': 'tabUpdates', 'members': 'tabMembers'
+            'donation': 'tabDonation',
+            'addMember': 'tabAddMember',
+            'manageMembers': 'tabManageMembers',
+            'expense': 'tabExpense',
+            'reports': 'tabReports',
+            'personalReport': 'tabPersonalReport',
+            'updates': 'tabUpdates',
+            'members': 'tabMembers'
         };
         var target = document.getElementById(tabMap[tab]);
-        if (target) { target.classList.add('active'); }
+        if (target) {
+            target.classList.add('active');
+        }
         var contentArea = document.getElementById('contentArea');
-        if (contentArea) { contentArea.scrollTop = 0; }
-        if (tab === 'personalReport') { updatePersonalReports(); }
-        if (tab === 'manageMembers') { loadMemberSelect(); }
+        if (contentArea) {
+            contentArea.scrollTop = 0;
+        }
+        if (tab === 'personalReport') {
+            updatePersonalReports();
+        }
+        if (tab === 'manageMembers') {
+            loadMemberSelect();
+        }
     }
 
-    // ★★★★★ সাপ্তাহিক রিপোর্ট ঠিক করা হয়েছে ★★★★★
+    // ★★★★★ রিপোর্ট ট্যাব পরিবর্তন ★★★★★
     function switchReportTab(type, btnElement) {
         console.log('📊 রিপোর্ট ট্যাব পরিবর্তন:', type);
         
@@ -1144,11 +1172,11 @@
         for (var j = 0; j < reportBtns.length; j++) {
             reportBtns[j].classList.remove('active');
         }
-        var reportMap = { 
-            'daily': 'reportDaily', 
-            'weekly': 'reportWeekly', 
-            'monthly': 'reportMonthly', 
-            'yearly': 'reportYearly' 
+        var reportMap = {
+            'daily': 'reportDaily',
+            'weekly': 'reportWeekly',
+            'monthly': 'reportMonthly',
+            'yearly': 'reportYearly'
         };
         document.getElementById(reportMap[type]).classList.add('active');
         btnElement.classList.add('active');
@@ -1169,10 +1197,19 @@
 
     function switchPersonalReportTab(type, btnElement) {
         var contents = document.querySelectorAll('#tabPersonalReport .tab-content');
-        for (var i = 0; i < contents.length; i++) { contents[i].classList.remove('active'); }
+        for (var i = 0; i < contents.length; i++) {
+            contents[i].classList.remove('active');
+        }
         var btns = document.querySelectorAll('#tabPersonalReport .tab-btn');
-        for (var j = 0; j < btns.length; j++) { btns[j].classList.remove('active'); }
-        var map = { 'daily': 'personalDaily', 'weekly': 'personalWeekly', 'monthly': 'personalMonthly', 'yearly': 'personalYearly' };
+        for (var j = 0; j < btns.length; j++) {
+            btns[j].classList.remove('active');
+        }
+        var map = {
+            'daily': 'personalDaily',
+            'weekly': 'personalWeekly',
+            'monthly': 'personalMonthly',
+            'yearly': 'personalYearly'
+        };
         document.getElementById(map[type]).classList.add('active');
         btnElement.classList.add('active');
         updatePersonalReports();
@@ -1730,8 +1767,8 @@
             transactions: weeklyTxns.length
         };
         
-        // ★★★★★ UI আপডেট ★★★★★
-        var container = document.getElementById('reportWeekly');
+        // ★★★★★ UI আপডেট (কমিটির রিপোর্ট) ★★★★★
+        var container = document.getElementById('weeklyReportContainer');
         if (container) {
             var html = '';
             html += '<div class="report-summary">';
@@ -1756,6 +1793,28 @@
             }
             container.innerHTML = html;
             console.log('✅ সাপ্তাহিক রিপোর্ট UI আপডেট করা হয়েছে!');
+        }
+        
+        // ★★★★★ ব্যক্তিগত রিপোর্টের জন্যও UI আপডেট ★★★★★
+        var personalContainer = document.querySelector('#personalWeekly .table-responsive tbody');
+        if (personalContainer) {
+            var html = '';
+            if (weeklyTxns.length === 0) {
+                html = '<tr><td colspan="4" style="text-align:center; color:#999;">কোনো লেনদেন নেই</td></tr>';
+            } else {
+                var total = 0;
+                for (var i = 0; i < weeklyTxns.length; i++) {
+                    var t = weeklyTxns[i];
+                    if (t.collectorName === currentUser.name) {
+                        total += t.amount;
+                        html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount.toLocaleString() + '</td><td>' + t.purpose + '</td></tr>';
+                    }
+                }
+                if (html === '') {
+                    html = '<tr><td colspan="4" style="text-align:center; color:#999;">আপনার কোনো লেনদেন নেই</td></tr>';
+                }
+            }
+            personalContainer.innerHTML = html;
         }
     }
 
@@ -1786,7 +1845,8 @@
         var isMonthEnd = (currentDate === new Date(currentYear, currentMonth + 1, 0).getDate());
         var monthStatus = isMonthEnd ? '✅ মাস শেষ (ফাইনাল রিপোর্ট)' : '📊 চলমান মাস';
         
-        var container = document.getElementById('reportMonthly');
+        // কমিটির রিপোর্ট
+        var container = document.getElementById('monthlyReportContainer2');
         if (container) {
             var html = '';
             html += '<div class="report-summary">';
@@ -1869,7 +1929,7 @@
             else monthlySummary[monthKey].expense += Math.abs(t.amount);
         }
         
-        var container = document.getElementById('reportYearly');
+        var container = document.getElementById('yearlyReportContainer');
         if (container) {
             var html = '';
             html += '<div class="report-summary">';
@@ -1962,6 +2022,7 @@
             return t.collectorRole === userRole && t.collectorName === userName;
         });
         
+        // দৈনিক
         var dailyTxns = userTransactions.filter(function(t) { return t.date === todayStr; });
         var dailyTotal = dailyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
         document.getElementById('personalDailyTotal').textContent = dailyTotal.toLocaleString();
@@ -1978,6 +2039,7 @@
             dailyBody.innerHTML = html;
         }
         
+        // সাপ্তাহিক
         var weekAgo = new Date(today);
         weekAgo.setDate(weekAgo.getDate() - 7);
         var weekAgoStr = weekAgo.toLocaleDateString('bn-BD');
@@ -1997,6 +2059,7 @@
             weeklyBody.innerHTML = html;
         }
         
+        // মাসিক
         var currentMonth = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
         var monthlyTxns = userTransactions.filter(function(t) { return t.month === currentMonth; });
         var monthlyTotal = monthlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
@@ -2014,6 +2077,7 @@
             monthlyBody.innerHTML = html;
         }
         
+        // বার্ষিক
         var year = today.getFullYear();
         var yearlyTxns = userTransactions.filter(function(t) { return t.year === year; });
         var yearlyTotal = yearlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
@@ -2146,9 +2210,9 @@
         var tabName = '';
         var reportContent = '';
         if (tabId === 'reportDaily') { tabName = 'দৈনিক রিপোর্ট'; var table = document.querySelector('#reportDaily table'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; }
-        else if (tabId === 'reportWeekly') { tabName = 'সাপ্তাহিক রিপোর্ট'; reportContent = document.querySelector('#reportWeekly')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
-        else if (tabId === 'reportMonthly') { tabName = 'মাসিক রিপোর্ট'; reportContent = document.querySelector('#reportMonthly')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
-        else if (tabId === 'reportYearly') { tabName = 'বার্ষিক রিপোর্ট'; reportContent = document.querySelector('#reportYearly')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
+        else if (tabId === 'reportWeekly') { tabName = 'সাপ্তাহিক রিপোর্ট'; reportContent = document.getElementById('weeklyReportContainer')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
+        else if (tabId === 'reportMonthly') { tabName = 'মাসিক রিপোর্ট'; reportContent = document.getElementById('monthlyReportContainer2')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
+        else if (tabId === 'reportYearly') { tabName = 'বার্ষিক রিপোর্ট'; reportContent = document.getElementById('yearlyReportContainer')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
         var printWindow = window.open('', '_blank', 'width=800,height=600');
         printWindow.document.write(
             '<html><head><title>' + tabName + '</title>' +
@@ -2165,15 +2229,84 @@
     }
 
     function printA4Report() {
-        // ... (আপনার আগের কোড)
+        var income = document.getElementById('pubTotalIncome')?.textContent || '০';
+        var expense = document.getElementById('pubTotalExpense')?.textContent || '০';
+        var balance = document.getElementById('pubBalance')?.textContent || '০';
+        var month = document.getElementById('reportMonthSelect')?.value || 'আগস্ট ২০২৬';
+        var monthData = monthlyReports[month] || { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
+        var d = monthData.details;
+        var printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(
+            '<html><head><title>A4 জাবেদা</title>' +
+            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:40px; max-width:900px; margin:auto; } .header { text-align:center; margin-bottom:25px; border-bottom:3px solid #1a472a; padding-bottom:20px; } .header h1 { color:#1a472a; font-size:2rem; margin:0; } .header p { color:#555; font-size:1.1rem; margin:5px 0; } .header .sub-title { color:#1a472a; font-size:1.3rem; font-weight:bold; margin-top:8px; } .info-row { display:flex; justify-content:space-between; margin:10px 0; font-size:1rem; } table { width:100%; border-collapse:collapse; margin:15px 0; } th, td { padding:10px 15px; text-align:left; border:1px solid #333; } th { background:#1a472a; color:white; } tr:nth-child(even) { background:#f5f5f5; } .total-row { font-weight:bold; background:#e8f5e9; } .balance-row { font-weight:bold; background:#d4edda; font-size:1.1rem; } .footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } .signature { display:flex; justify-content:space-between; margin-top:30px; } .signature div { text-align:center; } .signature .line { border-top:1px solid #333; width:200px; margin:5px auto; } @media print { .no-print { display:none !important; } }</style>' +
+            '</head><body>' +
+            '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><div class="sub-title">📊 মাসিক আয়-ব্যয় জাবেদা - ' + month + '</div></div>' +
+            '<div class="info-row"><span><strong>প্রিন্ট:</strong> ' + new Date().toLocaleDateString('bn-BD') + '</span><span><strong>সময়:</strong> ' + new Date().toLocaleTimeString('bn-BD') + '</span></div>' +
+            '<table><thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead><tbody>' +
+            '<tr><td>মাসিক চাঁদা</td><td>' + (d.monthly || 0).toLocaleString() + '</td><td>-</td></tr>' +
+            '<tr><td>বিশেষ অনুদান</td><td>' + (d.special || 0).toLocaleString() + '</td><td>-</td></tr>' +
+            '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + (d.electric || 0).toLocaleString() + '</td></tr>' +
+            '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + (d.salary || 0).toLocaleString() + '</td></tr>' +
+            '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + (d.development || 0).toLocaleString() + '</td></tr>' +
+            '<tr class="total-row"><td>মোট</td><td>' + (monthData.income || 0).toLocaleString() + '</td><td>' + (monthData.expense || 0).toLocaleString() + '</td></tr>' +
+            '<tr class="balance-row"><td>উদ্বৃত্ত</td><td colspan="2">' + ((monthData.income || 0) - (monthData.expense || 0)).toLocaleString() + ' টাকা</td></tr>' +
+            '</tbody></table>' +
+            '<div style="margin:15px 0; padding:10px; background:#f8f9fa; border-radius:5px;"><p><strong>📌 সর্বমোট সংগ্রহ:</strong> ' + income + ' টাকা</p><p><strong>📌 সর্বমোট খরচ:</strong> ' + expense + ' টাকা</p><p><strong>📌 সর্বমোট উদ্বৃত্ত:</strong> ' + balance + ' টাকা</p></div>' +
+            '<div class="signature"><div><p><strong>ক্যাশিয়ার</strong></p><div class="line"></div><p>স্বাক্ষর</p></div><div><p><strong>সেক্রেটারি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div><div><p><strong>সভাপতি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div></div>' +
+            '<div class="footer"><p>🔹 আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত</p></div>' +
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button></div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
     }
 
     function printPersonalReport() {
-        // ... (আপনার আগের কোড)
+        if (!currentUser) { alert('আপনি লগইন করা নেই!'); return; }
+        var activeTab = document.querySelector('#tabPersonalReport .tab-content.active');
+        if (!activeTab) { alert('প্রথমে একটি ব্যক্তিগত রিপোর্ট ট্যাব নির্বাচন করুন'); return; }
+        var tabId = activeTab.id;
+        var tabName = '';
+        var reportContent = '';
+        var summaryHtml = '';
+        if (tabId === 'personalDaily') { tabName = 'দৈনিক সংগ্রহ'; var table = document.querySelector('#personalDaily table'); var summary = document.querySelector('#personalDaily .report-summary'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; summaryHtml = summary ? summary.outerHTML : ''; }
+        else if (tabId === 'personalWeekly') { tabName = 'সাপ্তাহিক সংগ্রহ'; var table = document.querySelector('#personalWeekly table'); var summary = document.querySelector('#personalWeekly .report-summary'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; summaryHtml = summary ? summary.outerHTML : ''; }
+        else if (tabId === 'personalMonthly') { tabName = 'মাসিক সংগ্রহ'; var table = document.querySelector('#personalMonthly table'); var summary = document.querySelector('#personalMonthly .report-summary'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; summaryHtml = summary ? summary.outerHTML : ''; }
+        else if (tabId === 'personalYearly') { tabName = 'বার্ষিক সংগ্রহ'; var table = document.querySelector('#personalYearly table'); var summary = document.querySelector('#personalYearly .report-summary'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; summaryHtml = summary ? summary.outerHTML : ''; }
+        var printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(
+            '<html><head><title>ব্যক্তিগত রিপোর্ট</title>' +
+            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; } .header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; } .header h1 { color:#1a472a; margin:0; } .header p { color:#555; margin:3px 0; } .user-info { background:#e8f5e9; padding:10px 15px; border-radius:5px; margin:10px 0; border-left:4px solid #1a472a; } .user-info h3 { color:#1a472a; margin:0; } table { width:100%; border-collapse:collapse; margin-top:10px; } th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; } th { background:#1a472a; color:white; } .report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; } .footer { text-align:center; margin-top:25px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } .summary-box { background:#e8f5e9; padding:10px 15px; border-radius:5px; margin:10px 0; border-left:4px solid #2d7d46; } @media print { .no-print { display:none !important; } }</style>' +
+            '</head><body>' +
+            '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><h2 style="color:#1a472a;">👤 ব্যক্তিগত সংগ্রহ</h2></div>' +
+            '<div class="user-info"><h3>👤 ' + currentUser.name + ' (' + currentUser.role + ')</h3></div>' +
+            '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<h3 style="color:#1a472a;">' + tabName + '</h3>' +
+            (summaryHtml ? '<div class="summary-box">' + summaryHtml + '</div>' : '') +
+            '<div>' + reportContent + '</div>' +
+            '<div class="footer"><p>🔹 ' + currentUser.name + ' এর ব্যক্তিগত অনুদান সংগ্রহ</p></div>' +
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button></div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
     }
 
     function printMemberList() {
-        // ... (আপনার আগের কোড)
+        var table = document.querySelector('#tabMembers table');
+        if (!table) { alert('কোনো মুসল্লি তালিকা পাওয়া যায়নি!'); return; }
+        var printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(
+            '<html><head><title>মুসল্লি তালিকা</title>' +
+            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; } .header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; } .header h1 { color:#1a472a; margin:0; } .header p { color:#555; margin:3px 0; } table { width:100%; border-collapse:collapse; margin-top:10px; } th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; } th { background:#1a472a; color:white; } .badge-success { background:#d4edda; color:#155724; padding:2px 8px; border-radius:20px; font-size:0.7rem; } .badge-danger { background:#f8d7da; color:#721c24; padding:2px 8px; border-radius:20px; font-size:0.7rem; } .report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; } .footer { text-align:center; margin-top:25px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } .total-count { background:#e8f5e9; padding:8px 15px; border-radius:5px; margin:10px 0; text-align:center; font-weight:bold; } @media print { .no-print { display:none !important; } }</style>' +
+            '</head><body>' +
+            '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><h2 style="color:#1a472a;">📋 মুসল্লি তালিকা</h2></div>' +
+            '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
+            '<div class="total-count">মোট মুসল্লি: ' + members.length + ' জন</div>' +
+            '<div>' + table.outerHTML + '</div>' +
+            '<div class="footer"><p>🔹 আলগী বাজার জামে মসজিদের স্থায়ী মুসল্লি</p></div>' +
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button></div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
     }
 
     // =========================================
@@ -2228,7 +2361,32 @@
     }
 
     function devUpdateUser() {
-        // ... (আপনার আগের কোড)
+        var role = document.getElementById('devUserRole').value;
+        var newName = document.getElementById('devNewUserName').value.trim();
+        var newPass = document.getElementById('devNewPassword').value.trim();
+        if (newName) {
+            users[role].name = newName;
+            if (currentUser && currentUser.role === role) {
+                currentUser.name = newName;
+                document.getElementById('userRoleDisplay').innerHTML = '<i class="fas fa-user"></i> ' + newName + ' (' + role + ')';
+                document.getElementById('personalReportUser').textContent = newName + ' (' + role + ')';
+            }
+        }
+        if (newPass && newPass.length >= 4) {
+            users[role].password = newPass;
+            if (currentUser && currentUser.role === role) {
+                currentUser.password = newPass;
+            }
+            alert('✅ পাসওয়ার্ড পরিবর্তন করা হয়েছে!');
+        }
+        if (newName) {
+            document.getElementById('devNewUserName').value = '';
+            loadDevUserList();
+            loadCommitteeUpdates();
+            alert('✅ "' + role + '" আপডেট করা হয়েছে!');
+        }
+        if (newPass) { document.getElementById('devNewPassword').value = ''; }
+        saveAllData();
     }
 
     function updateDevInfo() {
@@ -2242,49 +2400,148 @@
     // ===== ★★★★★ ব্যাকআপ সিস্টেম ★★★★★ =====
     // =========================================
     function backupData() {
-        // ... (আপনার আগের কোড)
+        if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
+        try {
+            var data = { users, members, updates, personalTransactions, monthlyReports, reportData, totalIncome, totalExpense, nextSerial, nextMemo, exportedAt: new Date().toISOString(), version: '1.0' };
+            var json = JSON.stringify(data, null, 2);
+            var blob = new Blob([json], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var dateStr = new Date().toLocaleDateString('bn-BD').replace(/\//g, '-');
+            var fileName = 'mosjid_backup_' + dateStr + '.json';
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+            alert('✅ ব্যাকআপ ডাউনলোড শুরু হয়েছে!\nফাইলের নাম: ' + fileName);
+        } catch (error) {
+            alert('❌ ব্যাকআপ ডাউনলোড করতে সমস্যা:\n' + error.message);
+        }
     }
 
     function restoreData(event) {
-        // ... (আপনার আগের কোড)
+        var file = event.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                var data = JSON.parse(e.target.result);
+                if (!data.version) { alert('❌ এই ফাইলটি সঠিক ব্যাকআপ নয়!'); return; }
+                if (!confirm('⚠️ ব্যাকআপ রিস্টোর করবেন? বর্তমান ডাটা মুছে যাবে!')) return;
+                users = data.users || users;
+                members = data.members || [];
+                updates = data.updates || [];
+                personalTransactions = data.personalTransactions || [];
+                monthlyReports = data.monthlyReports || {};
+                reportData = data.reportData || { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
+                totalIncome = data.totalIncome || 0;
+                totalExpense = data.totalExpense || 0;
+                nextSerial = data.nextSerial || 1;
+                nextMemo = data.nextMemo || 1001;
+                loadMemberTable();
+                loadMemberSelect();
+                loadCommitteeUpdates();
+                loadPublicUpdates();
+                updateAllReports();
+                updatePersonalReports();
+                loadMonthlyReport();
+                saveAllData();
+                alert('✅ ব্যাকআপ রিস্টোর সম্পূর্ণ!');
+                toggleDevPanel();
+            } catch(err) { alert('❌ ফাইলটি সঠিক নয়: ' + err.message); }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
     }
 
     function devResetAll() {
-        // ... (আপনার আগের কোড)
+        if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
+        if (!confirm('⚠️ সাবধান! সব ডাটা মুছে যাবে!')) return;
+        if (!confirm('আবারও নিশ্চিত করুন!')) return;
+        members = []; updates = []; personalTransactions = []; monthlyReports = {};
+        reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
+        totalIncome = 0; totalExpense = 0; nextSerial = 1; nextMemo = 1001;
+        loadMemberTable(); loadMemberSelect(); loadCommitteeUpdates(); loadPublicUpdates();
+        updateAllReports(); updatePersonalReports(); loadMonthlyReport(); updateDevInfo();
+        saveAllData();
+        alert('✅ সব ডাটা সফলভাবে রিসেট করা হয়েছে!');
+        toggleDevPanel();
     }
 
     function devResetIncomeExpense() {
-        // ... (আপনার আগের কোড)
+        if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
+        if (!confirm('শুধু আয়-ব্যয় রিসেট করবেন? (মুসল্লি ও বকেয়া থাকবে)')) return;
+        personalTransactions = []; monthlyReports = {};
+        reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
+        totalIncome = 0; totalExpense = 0; nextMemo = 1001;
+        updateAllReports(); updatePersonalReports(); loadMonthlyReport(); updateDevInfo();
+        saveAllData();
+        alert('✅ আয়-ব্যয় রিসেট করা হয়েছে! বকেয়া অপরিবর্তিত আছে।');
+        toggleDevPanel();
     }
 
     // =========================================
     // ===== ★★★★★ পাসওয়ার্ড ফরগেট ★★★★★ =====
     // =========================================
     function showForgotPassword() {
-        // ... (আপনার আগের কোড)
+        var html = '<div id="forgotPasswordModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; display:flex; align-items:center; justify-content:center;"><div style="background:white; padding:30px; border-radius:18px; max-width:400px; width:95%; box-shadow:0 20px 60px rgba(0,0,0,0.3);"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3 style="color:#1a472a; margin:0;"><i class="fas fa-key"></i> পাসওয়ার্ড রিসেট</h3><button onclick="closeForgotPassword()" style="background:#dc3545; color:white; border:none; padding:5px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">✕</button></div><p style="color:#666; font-size:0.9rem; margin-bottom:15px;">আপনার ইউজারনাম নির্বাচন করে নতুন পাসওয়ার্ড সেট করুন।</p><div class="form-group"><label>ইউজারনাম</label><select id="forgotUserSelect" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"><option value="cashier">ক্যাশিয়ার</option><option value="secretary">সেক্রেটারি</option><option value="president">সভাপতি</option></select></div><div class="form-group"><label>নতুন পাসওয়ার্ড</label><input type="password" id="forgotNewPassword" placeholder="নতুন পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"></div><div class="form-group"><label>পাসওয়ার্ড নিশ্চিত</label><input type="password" id="forgotConfirmPassword" placeholder="আবার পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"></div><button onclick="resetPassword()" style="width:100%; padding:12px; background:#2d7d46; color:white; border:none; border-radius:8px; font-size:1.1rem; font-weight:bold; cursor:pointer;"><i class="fas fa-save"></i> পাসওয়ার্ড রিসেট করুন</button><div style="margin-top:10px; text-align:center; font-size:0.8rem; color:#999;">💡 ডেভেলপারের সাথে যোগাযোগ করুন: মসজিদ কমিটি</div></div></div>';
+        var container = document.getElementById('forgotPasswordModalContainer');
+        if (!container) { var div = document.createElement('div'); div.id = 'forgotPasswordModalContainer'; div.innerHTML = html; document.body.appendChild(div); }
+        else { container.innerHTML = html; }
     }
 
     function closeForgotPassword() {
-        // ... (আপনার আগের কোড)
+        var container = document.getElementById('forgotPasswordModalContainer');
+        if (container) { container.remove(); }
     }
 
     function resetPassword() {
-        // ... (আপনার আগের কোড)
+        var username = document.getElementById('forgotUserSelect').value;
+        var newPass = document.getElementById('forgotNewPassword').value;
+        var confirmPass = document.getElementById('forgotConfirmPassword').value;
+        if (!newPass || newPass.length < 4) { alert('পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!'); return; }
+        if (newPass !== confirmPass) { alert('পাসওয়ার্ড দুইটি মিলছে না!'); return; }
+        if (users[username]) {
+            users[username].password = newPass;
+            if (currentUser && currentUser.username === username) { currentUser.password = newPass; }
+            saveAllData();
+            alert('✅ "' + username + '" এর পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!');
+            closeForgotPassword();
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginPassword').focus();
+        } else { alert('❌ ইউজার পাওয়া যায়নি!'); }
     }
 
     // =========================================
     // ===== ★★★★★ পাসওয়ার্ড চেঞ্জ ★★★★★ =====
     // =========================================
     function openChangePassword() {
-        // ... (আপনার আগের কোড)
+        document.getElementById('changePasswordModal').style.display = 'block';
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        document.getElementById('passwordChangeSuccess').classList.remove('show');
     }
-
     function closeChangePassword() {
-        // ... (আপনার আগের কোড)
+        document.getElementById('changePasswordModal').style.display = 'none';
     }
-
     function changePassword() {
-        // ... (আপনার আগের কোড)
+        var current = document.getElementById('currentPassword').value;
+        var newPass = document.getElementById('newPassword').value;
+        var confirm = document.getElementById('confirmPassword').value;
+        if (!currentUser) { alert('আপনি লগইন করা নেই!'); return; }
+        if (current !== currentUser.password) { alert('বর্তমান পাসওয়ার্ড ভুল!'); return; }
+        if (newPass.length < 4) { alert('নতুন পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!'); return; }
+        if (newPass !== confirm) { alert('পাসওয়ার্ড মিলছে না!'); return; }
+        users[currentUser.username].password = newPass;
+        currentUser.password = newPass;
+        document.getElementById('passwordChangeSuccess').classList.add('show');
+        setTimeout(function() {
+            document.getElementById('passwordChangeSuccess').classList.remove('show');
+            closeChangePassword();
+        }, 3000);
+        saveAllData();
     }
 
     // =========================================
