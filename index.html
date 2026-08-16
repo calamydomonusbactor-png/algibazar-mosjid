@@ -706,12 +706,22 @@
             return;
         }
         
+        // ইউজার চেক করুন
         if (users[username] && users[username].password === password) {
-            currentUser = { name: users[username].name, role: users[username].role, username: username, password: password };
+            currentUser = { 
+                name: users[username].name, 
+                role: users[username].role, 
+                username: username, 
+                password: password 
+            };
             isLoggedIn = true;
+            
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('loginPage').classList.remove('active');
+            
             showDashboard(currentUser);
+            
+            console.log('✅ লগইন সফল! ইউজার:', currentUser.name);
         } else {
             alert('❌ ভুল পাসওয়ার্ড! ডিফল্ট পাসওয়ার্ড: 123456');
             document.getElementById('loginPassword').value = '';
@@ -1400,10 +1410,7 @@
     }
 
     // =========================================
-    // ===== ★★★★★ অনুদান (সঠিক সমাধান) ★★★★★ =====
-    // =========================================
-       // =========================================
-    // ===== ★★★★★ অনুদান গ্রহণ (সম্পূর্ণ ঠিক করা) ★★★★★ =====
+    // ===== ★★★★★ অনুদান (ডাবল চেক + প্রিন্ট) ★★★★★ =====
     // =========================================
     function submitDonation() {
         var amount = document.getElementById('donationAmount').value;
@@ -1419,33 +1426,21 @@
                 var memberEng = convertToEnglish(members[i].mobile);
                 var searchEng = convertToEnglish(searchMobile);
                 if (members[i].mobile === searchMobile || memberEng === searchEng) {
-                    name = members[i].name; 
-                    serial = members[i].serial; 
-                    address = members[i].address; 
-                    mobile = members[i].mobile;
-                    memberIndex = i; 
-                    found = true; 
-                    break;
+                    name = members[i].name; serial = members[i].serial; address = members[i].address; mobile = members[i].mobile;
+                    memberIndex = i; found = true; break;
                 }
             }
-            if (!found) { 
-                alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!'); 
-                return; 
-            }
+            if (!found) { alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!'); return; }
         } else {
             name = document.getElementById('guestName').value || 'অতিথি';
-            serial = 'N/A'; 
-            address = document.getElementById('guestAddress').value || 'N/A';
+            serial = 'N/A'; address = document.getElementById('guestAddress').value || 'N/A';
             mobile = document.getElementById('guestMobile').value || 'N/A';
         }
         
-        if (!amount || amount <= 0) { 
-            alert('দয়া করে সঠিক পরিমাণ লিখুন'); 
-            return; 
-        }
+        if (!amount || amount <= 0) { alert('দয়া করে সঠিক পরিমাণ লিখুন'); return; }
         amount = parseInt(amount);
         
-        // ★★★ চেক করুন: এই মুসল্লির এই মাসের অনুদান ইতিমধ্যে কেউ গ্রহণ করেছে কিনা (যে কেউ) ★★★
+        // ★★★ ডাবল চেক: এই মুসল্লির এই মাসের অনুদান ইতিমধ্যে কেউ গ্রহণ করেছে কিনা (যে কেউ) ★★★
         if (memberIndex >= 0 && purpose !== 'অগ্রিম') {
             for (var i = 0; i < personalTransactions.length; i++) {
                 var t = personalTransactions[i];
@@ -1453,22 +1448,24 @@
                 if (t.memberMobile === mobile && t.purpose === purpose && t.amount > 0) {
                     var collectorName = t.collectorName || 'অজানা';
                     var collectorRole = t.collectorRole || 'কমিটি সদস্য';
-                    alert('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান ইতিমধ্যে ' + collectorRole + ' ' + collectorName + ' গ্রহণ করেছেন!\n\nআপনি আর এই মাসের অনুদান গ্রহণ করতে পারবেন না।');
-                    showNotification('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান আগেই ' + collectorRole + ' ' + collectorName + ' গ্রহণ করেছেন!', 'warning');
+                    var roleName = collectorRole === 'cashier' ? 'ক্যাশিয়ার' : collectorRole === 'secretary' ? 'সেক্রেটারি' : collectorRole === 'president' ? 'সভাপতি' : collectorRole;
+                    alert('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান ইতিমধ্যে ' + roleName + ' ' + collectorName + ' গ্রহণ করেছেন!\n\nআপনি আর এই মাসের অনুদান গ্রহণ করতে পারবেন না।');
+                    showNotification('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান আগেই ' + roleName + ' ' + collectorName + ' গ্রহণ করেছেন!', 'warning');
                     return;
                 }
             }
         }
         
-        // অগ্রিম চেক - অগ্রিমের জন্য আলাদা চেক
+        // অগ্রিম চেক
         if (memberIndex >= 0 && purpose === 'অগ্রিম') {
             for (var i = 0; i < personalTransactions.length; i++) {
                 var t = personalTransactions[i];
                 if (t.memberMobile === mobile && t.isAdvance === true && t.advanceParentId) {
                     var collectorName = t.collectorName || 'অজানা';
                     var collectorRole = t.collectorRole || 'কমিটি সদস্য';
-                    alert('⚠️ ' + name + ' এর অগ্রিম অনুদান ইতিমধ্যে ' + collectorRole + ' ' + collectorName + ' গ্রহণ করেছেন!');
-                    showNotification('⚠️ ' + name + ' এর অগ্রিম অনুদান আগেই ' + collectorRole + ' ' + collectorName + ' গ্রহণ করেছেন!', 'warning');
+                    var roleName = collectorRole === 'cashier' ? 'ক্যাশিয়ার' : collectorRole === 'secretary' ? 'সেক্রেটারি' : collectorRole === 'president' ? 'সভাপতি' : collectorRole;
+                    alert('⚠️ ' + name + ' এর অগ্রিম অনুদান ইতিমধ্যে ' + roleName + ' ' + collectorName + ' গ্রহণ করেছেন!');
+                    showNotification('⚠️ ' + name + ' এর অগ্রিম অনুদান আগেই ' + roleName + ' ' + collectorName + ' গ্রহণ করেছেন!', 'warning');
                     return;
                 }
             }
@@ -1490,17 +1487,11 @@
         var yearNum = now.getFullYear();
         
         var transaction = {
-            memberName: name, 
-            memberSerial: serial, 
-            memberMobile: mobile,
-            amount: amount, 
-            purpose: purpose,
+            memberName: name, memberSerial: serial, memberMobile: mobile,
+            amount: amount, purpose: purpose,
             collectorName: currentUser ? currentUser.name : 'ক্যাশিয়ার',
             collectorRole: currentUser ? currentUser.role : 'cashier',
-            date: dateStr, 
-            time: timeStr, 
-            month: monthStr, 
-            year: yearNum,
+            date: dateStr, time: timeStr, month: monthStr, year: yearNum,
             isAdvance: purpose === 'অগ্রিম'
         };
         
@@ -1515,19 +1506,14 @@
                 var idx = (currentMonthIndex + m + 1) % 12;
                 var yr = currentYear + Math.floor((currentMonthIndex + m + 1) / 12);
                 personalTransactions.push({
-                    memberName: name, 
-                    memberSerial: serial, 
-                    memberMobile: mobile,
+                    memberName: name, memberSerial: serial, memberMobile: mobile,
                     amount: advanceAmountPerMonth,
                     purpose: bengaliMonths[idx] + ' ' + yr,
                     collectorName: currentUser ? currentUser.name : 'ক্যাশিয়ার',
                     collectorRole: currentUser ? currentUser.role : 'cashier',
-                    date: dateStr, 
-                    time: timeStr,
-                    month: bengaliMonths[idx] + ' ' + yr, 
-                    year: yr,
-                    isAdvance: true, 
-                    advanceParentId: advanceParentId
+                    date: dateStr, time: timeStr,
+                    month: bengaliMonths[idx] + ' ' + yr, year: yr,
+                    isAdvance: true, advanceParentId: advanceParentId
                 });
             }
             if (!monthlyReports[monthStr]) {
@@ -1541,81 +1527,6 @@
             saveAllData();
             showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
             currentReceipt = {
-                name: name, 
-                serial: serial, 
-                address: address, 
-                mobile: mobile,
-                amount: amount, 
-                purpose: 'অগ্রিম (১২ মাস)',
-                collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
-                collectorRole: currentUser ? currentUser.role : 'cashier',
-                date: dateStr, 
-                time: timeStr, 
-                memo: nextMemo++
-            };
-            showReceipt(currentReceipt);
-            document.getElementById('receiptPreview').style.display = 'block';
-            return;
-        }
-        
-        personalTransactions.push(transaction);
-        var today = dateStr;
-        var foundToday = false;
-        for (var i = 0; i < reportData.daily.length; i++) {
-            if (reportData.daily[i].date === today) {
-                reportData.daily[i].income += amount;
-                foundToday = true;
-                break;
-            }
-        }
-        if (!foundToday) reportData.daily.unshift({ date: today, income: amount, expense: 0 });
-        
-        reportData.weekly.income += amount;
-        var currentMonth = monthStr;
-        var foundMonth = false;
-        for (var i = 0; i < reportData.monthly.length; i++) {
-            if (reportData.monthly[i].month === currentMonth) {
-                reportData.monthly[i].income += amount;
-                foundMonth = true;
-                break;
-            }
-        }
-        if (!foundMonth) reportData.monthly.unshift({ month: currentMonth, income: amount, expense: 0 });
-        reportData.yearly.income += amount;
-        
-        if (!monthlyReports[currentMonth]) {
-            monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
-        }
-        monthlyReports[currentMonth].income += amount;
-        monthlyReports[currentMonth].details.monthly += amount;
-        
-        currentReceipt = {
-            name: name, 
-            serial: serial, 
-            address: address, 
-            mobile: mobile,
-            amount: amount, 
-            purpose: purpose,
-            collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
-            collectorRole: currentUser ? currentUser.role : 'cashier',
-            date: dateStr, 
-            time: timeStr, 
-            memo: nextMemo++
-        };
-        
-        showReceipt(currentReceipt);
-        document.getElementById('receiptPreview').style.display = 'block';
-        
-        updateAllReports();
-        updatePublicStats();
-        updatePersonalReports();
-        loadMemberTable();
-        loadMemberSelect();
-        showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
-        saveAllData();
-    }
-            showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
-            currentReceipt = {
                 name: name, serial: serial, address: address, mobile: mobile,
                 amount: amount, purpose: 'অগ্রিম (১২ মাস)',
                 collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
@@ -1623,7 +1534,6 @@
                 date: dateStr, time: timeStr, memo: nextMemo++
             };
             showReceipt(currentReceipt);
-            // ★★★ প্রিন্ট অপশন দেখান ★★★
             document.getElementById('receiptPreview').style.display = 'block';
             return;
         }
@@ -1668,7 +1578,6 @@
         };
         
         showReceipt(currentReceipt);
-        // ★★★ প্রিন্ট অপশন দেখান ★★★
         document.getElementById('receiptPreview').style.display = 'block';
         
         updateAllReports();
@@ -1697,7 +1606,6 @@
             '<div class="receipt-line"></div>' +
             '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
         
-        // ★★★ প্রিন্ট অপশন দেখান ★★★
         document.getElementById('receiptPreview').style.display = 'block';
     }
 
