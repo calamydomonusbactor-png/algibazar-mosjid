@@ -483,10 +483,8 @@
                     <button class="tab-btn" onclick="switchReportTab('monthly', this)">মাসিক</button>
                     <button class="tab-btn" onclick="switchReportTab('yearly', this)">বার্ষিক</button>
                 </div>
-                
-                <!-- ===== দৈনিক রিপোর্ট ===== -->
                 <div id="reportDaily" class="tab-content active">
-                    <div class="table-responsive" style="max-height:200px;">
+                    <div class="table-responsive" style="max-height:250px;">
                         <table>
                             <thead><tr><th>তারিখ</th><th>আয়</th><th>ব্যয়</th><th>উদ্বৃত্ত</th></tr></thead>
                             <tbody id="reportDailyBody">
@@ -495,37 +493,15 @@
                         </table>
                     </div>
                 </div>
-                
-                <!-- ===== সাপ্তাহিক রিপোর্ট ===== -->
                 <div id="reportWeekly" class="tab-content">
-                    <div id="weeklyReportContainer">
-                        <div class="report-summary">
-                            <h4>📊 সাপ্তাহিক রিপোর্ট</h4>
-                            <p style="color:#999;">কোনো ডাটা নেই</p>
-                        </div>
-                    </div>
+                    <p style="color:#999;">কোনো ডাটা নেই</p>
                 </div>
-                
-                <!-- ===== মাসিক রিপোর্ট ===== -->
                 <div id="reportMonthly" class="tab-content">
-                    <div id="monthlyReportContainer">
-                        <div class="report-summary">
-                            <h4>📊 মাসিক রিপোর্ট</h4>
-                            <p style="color:#999;">কোনো ডাটা নেই</p>
-                        </div>
-                    </div>
+                    <p style="color:#999;">কোনো ডাটা নেই</p>
                 </div>
-                
-                <!-- ===== বার্ষিক রিপোর্ট ===== -->
                 <div id="reportYearly" class="tab-content">
-                    <div id="yearlyReportContainer">
-                        <div class="report-summary">
-                            <h4>📊 বার্ষিক রিপোর্ট</h4>
-                            <p style="color:#999;">কোনো ডাটা নেই</p>
-                        </div>
-                    </div>
+                    <p style="color:#999;">কোনো ডাটা নেই</p>
                 </div>
-                
                 <button class="btn btn-warning btn-sm no-print" onclick="printGeneralReport()" style="margin-top:8px;">
                     <i class="fas fa-print"></i> প্রিন্ট রিপোর্ট
                 </button>
@@ -865,12 +841,7 @@
     var updates = [];
     var personalTransactions = [];
     var monthlyReports = {};
-    var reportData = { 
-        daily: [], 
-        weekly: { startDate: '', endDate: '', income: 0, expense: 0, note: '' },
-        monthly: [], 
-        yearly: { year: 0, income: 0, expense: 0, startDate: '', endDate: '', monthlySummary: {} } 
-    };
+    var reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
     var nextSerial = 1, nextMemo = 1001, totalIncome = 0, totalExpense = 0;
 
     // =========================================
@@ -878,6 +849,7 @@
     // =========================================
     function saveAllData() {
         try {
+            // লোকাল স্টোরেজে সেভ
             var data = { 
                 users: users,
                 members: members,
@@ -895,6 +867,7 @@
             console.log('✅ ডাটা লোকাল স্টোরেজে সেভ করা হয়েছে');
             console.log('📊 personalTransactions:', personalTransactions.length);
             
+            // Firebase-এ সেভ
             saveToFirebase('members', members);
             saveToFirebase('updates', updates);
             saveToFirebase('personalTransactions', personalTransactions);
@@ -925,12 +898,7 @@
                 updates = data.updates || [];
                 personalTransactions = data.personalTransactions || [];
                 monthlyReports = data.monthlyReports || {};
-                reportData = data.reportData || { 
-                    daily: [], 
-                    weekly: { startDate: '', endDate: '', income: 0, expense: 0, note: '' },
-                    monthly: [], 
-                    yearly: { year: 0, income: 0, expense: 0, startDate: '', endDate: '', monthlySummary: {} } 
-                };
+                reportData = data.reportData || { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
                 totalIncome = data.totalIncome || 0;
                 totalExpense = data.totalExpense || 0;
                 nextSerial = data.nextSerial || 1;
@@ -973,7 +941,7 @@
         loadFromFirebase('personalTransactions', function(data) {
             if (data && Array.isArray(data)) {
                 personalTransactions = data;
-                updateAllReports();
+                updatePersonalReports();
                 console.log('✅ personalTransactions লোড করা হয়েছে:', personalTransactions.length);
             } else {
                 personalTransactions = [];
@@ -985,13 +953,18 @@
                 reportData = data;
                 updateAllReports();
                 console.log('✅ reportData লোড করা হয়েছে');
+            } else {
+                reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
             }
         });
         
         loadFromFirebase('monthlyReports', function(data) {
             if (data) {
                 monthlyReports = data;
+                loadMonthlyReport();
                 console.log('✅ monthlyReports লোড করা হয়েছে');
+            } else {
+                monthlyReports = {};
             }
         });
         
@@ -1047,14 +1020,14 @@
                 updates = data;
                 loadCommitteeUpdates();
                 loadPublicUpdates();
-                console.log('🔄 updates রিয়েল-타임 আপডেট!');
+                console.log('🔄 updates রিয়েল-টাইম আপডেট!');
             }
         });
         
         listenToFirebase('personalTransactions', function(data) {
             if (data && Array.isArray(data)) {
                 personalTransactions = data;
-                updateAllReports();
+                updatePersonalReports();
                 console.log('🔄 personalTransactions রিয়েল-টাইম আপডেট!');
             }
         });
@@ -1064,6 +1037,14 @@
                 reportData = data;
                 updateAllReports();
                 console.log('🔄 reportData রিয়েল-টাইম আপডেট!');
+            }
+        });
+        
+        listenToFirebase('monthlyReports', function(data) {
+            if (data) {
+                monthlyReports = data;
+                loadMonthlyReport();
+                console.log('🔄 monthlyReports রিয়েল-টাইম আপডেট!');
             }
         });
         
@@ -1119,6 +1100,7 @@
         document.getElementById('dashboard').style.display = 'none';
         loadPublicUpdates();
         updatePublicStats();
+        loadMonthlyReport();
         console.log('✅ পাবলিক ভিউ খোলা হয়েছে');
     }
 
@@ -1199,7 +1181,6 @@
         if (contentArea) { contentArea.scrollTop = 0; }
         if (tab === 'personalReport') { updatePersonalReports(); }
         if (tab === 'manageMembers') { loadMemberSelect(); }
-        if (tab === 'reports') { updateAllReports(); }
     }
 
     function switchReportTab(type, btnElement) {
@@ -1210,7 +1191,11 @@
         var reportMap = { 'daily': 'reportDaily', 'weekly': 'reportWeekly', 'monthly': 'reportMonthly', 'yearly': 'reportYearly' };
         document.getElementById(reportMap[type]).classList.add('active');
         btnElement.classList.add('active');
-        updateAllReports();
+        // ★★★★★ ট্যাব পরিবর্তনের সময় রিপোর্ট আপডেট ★★★★★
+        updateReportData(type);
+        if (type === 'weekly') updateWeeklyReport();
+        if (type === 'monthly') updateMonthlyReport();
+        if (type === 'yearly') updateYearlyReport();
     }
 
     function switchPersonalReportTab(type, btnElement) {
@@ -1503,267 +1488,7 @@
     }
 
     // =========================================
-    // ===== ★★★★★ সাপ্তাহিক রিপোর্ট (আপডেটেড) ★★★★★ =====
-    // =========================================
-    function updateWeeklyReport() {
-        var today = new Date();
-        var currentDate = today.getDate();
-        var dayOfWeek = today.getDay(); // 0=রবি, 1=সোম, ..., 5=শুক্র, 6=শনি
-        
-        // সপ্তাহের শুরু (শনিবার) এবং শেষ (শুক্রবার) বের করা
-        var weekStart = new Date(today);
-        var weekEnd = new Date(today);
-        
-        // শনিবার থেকে শুরু
-        if (dayOfWeek === 6) {
-            weekStart.setDate(currentDate);
-        } else {
-            var daysToSaturday = (dayOfWeek + 1) % 7;
-            weekStart.setDate(currentDate - daysToSaturday);
-        }
-        
-        // শুক্রবার পর্যন্ত শেষ
-        var daysToFriday = (5 - dayOfWeek + 7) % 7;
-        weekEnd.setDate(currentDate + daysToFriday);
-        
-        if (dayOfWeek === 5) {
-            weekEnd = new Date(today);
-        }
-        
-        var weekStartStr = weekStart.toLocaleDateString('bn-BD');
-        var weekEndStr = weekEnd.toLocaleDateString('bn-BD');
-        var isWeekEnd = (dayOfWeek === 5); // শুক্রবার হলে সপ্তাহ শেষ
-        
-        // এই সপ্তাহের লেনদেন ফিল্টার
-        var weeklyTxns = personalTransactions.filter(function(t) {
-            var txnDate = new Date(t.date);
-            return txnDate >= weekStart && txnDate <= weekEnd;
-        });
-        
-        var weeklyIncome = 0;
-        var weeklyExpense = 0;
-        
-        for (var i = 0; i < weeklyTxns.length; i++) {
-            if (weeklyTxns[i].amount > 0) {
-                weeklyIncome += weeklyTxns[i].amount;
-            } else {
-                weeklyExpense += Math.abs(weeklyTxns[i].amount);
-            }
-        }
-        
-        // রিপোর্ট ডাটা আপডেট
-        reportData.weekly = {
-            startDate: weekStartStr,
-            endDate: weekEndStr,
-            income: weeklyIncome,
-            expense: weeklyExpense,
-            isWeekEnd: isWeekEnd,
-            note: 'হিসাবের সময়কাল: ' + weekStartStr + ' থেকে ' + weekEndStr + (isWeekEnd ? ' (সপ্তাহ শেষ - ফাইনাল রিপোর্ট)' : '')
-        };
-        
-        // UI আপডেট
-        var container = document.getElementById('weeklyReportContainer');
-        if (container) {
-            var html = '<div class="report-summary">';
-            html += '<h4>📊 সাপ্তাহিক রিপোर्ट</h4>';
-            html += '<p><strong>হিসাবের সময়কাল:</strong> ' + weekStartStr + ' থেকে ' + weekEndStr + '</p>';
-            html += '<p><strong>মোট আয়:</strong> ' + weeklyIncome.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>মোট ব্যয়:</strong> ' + weeklyExpense.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (weeklyIncome - weeklyExpense).toLocaleString() + ' টাকা</p>';
-            if (isWeekEnd) {
-                html += '<p style="font-size:0.8rem; color:#28a745; font-weight:bold;">✅ সপ্তাহ শেষ (ফাইনাল রিপোর্ট)। কাল থেকে নতুন সপ্তাহ শুরু হবে।</p>';
-            }
-            html += '</div>';
-            container.innerHTML = html;
-        }
-    }
-
-    // =========================================
-    // ===== ★★★★★ মাসিক রিপোর্ট (আপডেটেড) ★★★★★ =====
-    // =========================================
-    function updateMonthlyReport() {
-        var today = new Date();
-        var currentYear = today.getFullYear();
-        var currentMonth = today.getMonth();
-        var currentDate = today.getDate();
-        
-        var monthStart = new Date(currentYear, currentMonth, 1);
-        var monthEnd = new Date(today);
-        
-        var monthStartStr = monthStart.toLocaleDateString('bn-BD');
-        var monthEndStr = monthEnd.toLocaleDateString('bn-BD');
-        var monthName = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
-        
-        var isMonthEnd = (currentDate === new Date(currentYear, currentMonth + 1, 0).getDate());
-        
-        // এই মাসের লেনদেন ফিল্টার
-        var monthlyTxns = personalTransactions.filter(function(t) {
-            var txnDate = new Date(t.date);
-            return txnDate >= monthStart && txnDate <= monthEnd;
-        });
-        
-        var monthlyIncome = 0;
-        var monthlyExpense = 0;
-        
-        for (var i = 0; i < monthlyTxns.length; i++) {
-            if (monthlyTxns[i].amount > 0) {
-                monthlyIncome += monthlyTxns[i].amount;
-            } else {
-                monthlyExpense += Math.abs(monthlyTxns[i].amount);
-            }
-        }
-        
-        // UI আপডেট
-        var container = document.getElementById('monthlyReportContainer');
-        if (container) {
-            var html = '<div class="report-summary">';
-            html += '<h4>📊 মাসিক রিপোর্ট - ' + monthName + '</h4>';
-            html += '<p><strong>হিসাবের সময়কাল:</strong> ' + monthStartStr + ' থেকে ' + monthEndStr + '</p>';
-            html += '<p><strong>মোট আয়:</strong> ' + monthlyIncome.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>মোট ব্যয়:</strong> ' + monthlyExpense.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (monthlyIncome - monthlyExpense).toLocaleString() + ' টাকা</p>';
-            if (isMonthEnd) {
-                html += '<p style="font-size:0.8rem; color:#28a745; font-weight:bold;">✅ মাস শেষ (ফাইনাল রিপোর্ট)। আগামীকাল থেকে নতুন মাস শুরু হবে।</p>';
-            }
-            html += '</div>';
-            container.innerHTML = html;
-        }
-        
-        // রিপোর্ট ডাটা আপডেট
-        var foundMonth = false;
-        for (var i = 0; i < reportData.monthly.length; i++) {
-            if (reportData.monthly[i].month === monthName) {
-                reportData.monthly[i].income = monthlyIncome;
-                reportData.monthly[i].expense = monthlyExpense;
-                reportData.monthly[i].startDate = monthStartStr;
-                reportData.monthly[i].endDate = monthEndStr;
-                reportData.monthly[i].isComplete = isMonthEnd;
-                foundMonth = true;
-                break;
-            }
-        }
-        if (!foundMonth) {
-            reportData.monthly.push({
-                month: monthName,
-                income: monthlyIncome,
-                expense: monthlyExpense,
-                startDate: monthStartStr,
-                endDate: monthEndStr,
-                isComplete: isMonthEnd
-            });
-        }
-    }
-
-    // =========================================
-    // ===== ★★★★★ বার্ষিক রিপোর্ট (আপডেটেড) ★★★★★ =====
-    // =========================================
-    function updateYearlyReport() {
-        var today = new Date();
-        var currentYear = today.getFullYear();
-        
-        var yearStart = new Date(currentYear, 0, 1);
-        var yearEnd = new Date(today);
-        
-        var yearStartStr = yearStart.toLocaleDateString('bn-BD');
-        var yearEndStr = yearEnd.toLocaleDateString('bn-BD');
-        
-        // এই বছরের লেনদেন ফিল্টার
-        var yearlyTxns = personalTransactions.filter(function(t) {
-            var txnDate = new Date(t.date);
-            return txnDate >= yearStart && txnDate <= yearEnd;
-        });
-        
-        var yearlyIncome = 0;
-        var yearlyExpense = 0;
-        var monthlySummary = {};
-        
-        for (var i = 0; i < yearlyTxns.length; i++) {
-            var t = yearlyTxns[i];
-            var monthKey = t.month || new Date(t.date).toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
-            if (!monthlySummary[monthKey]) {
-                monthlySummary[monthKey] = { income: 0, expense: 0 };
-            }
-            if (t.amount > 0) {
-                yearlyIncome += t.amount;
-                monthlySummary[monthKey].income += t.amount;
-            } else {
-                yearlyExpense += Math.abs(t.amount);
-                monthlySummary[monthKey].expense += Math.abs(t.amount);
-            }
-        }
-        
-        // UI আপডেট
-        var container = document.getElementById('yearlyReportContainer');
-        if (container) {
-            var html = '<div class="report-summary">';
-            html += '<h4>📊 বার্ষিক রিপোর্ট - ' + currentYear + '</h4>';
-            html += '<p><strong>হিসাবের সময়কাল:</strong> ' + yearStartStr + ' থেকে ' + yearEndStr + '</p>';
-            html += '<p><strong>মোট আয়:</strong> ' + yearlyIncome.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>মোট ব্যয়:</strong> ' + yearlyExpense.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (yearlyIncome - yearlyExpense).toLocaleString() + ' টাকা</p>';
-            html += '</div>';
-            
-            // মাসভিত্তিক রিপোর্ট
-            var monthNames = Object.keys(monthlySummary);
-            if (monthNames.length > 0) {
-                html += '<div style="margin-top:10px;"><h5 style="color:#1a472a;">📋 মাসভিত্তিক সংগ্রহ:</h5>';
-                for (var i = 0; i < monthNames.length; i++) {
-                    var m = monthNames[i];
-                    var data = monthlySummary[m];
-                    html += '<p style="font-size:0.85rem; margin:3px 0;"><strong>' + m + ':</strong> আয় ' + data.income.toLocaleString() + ' টাকা, ব্যয় ' + data.expense.toLocaleString() + ' টাকা</p>';
-                }
-                html += '</div>';
-            }
-            
-            container.innerHTML = html;
-        }
-        
-        // রিপোর্ট ডাটা আপডেট
-        reportData.yearly = {
-            year: currentYear,
-            income: yearlyIncome,
-            expense: yearlyExpense,
-            startDate: yearStartStr,
-            endDate: yearEndStr,
-            monthlySummary: monthlySummary
-        };
-    }
-
-    // =========================================
-    // ===== ★★★★★ সব রিপোর্ট আপডেট ★★★★★ =====
-    // =========================================
-    function updateAllReports() {
-        updateReportData('daily');
-        updateWeeklyReport();
-        updateMonthlyReport();
-        updateYearlyReport();
-        updatePublicStats();
-        updateDevInfo();
-        console.log('✅ সব রিপোর্ট আপডেট করা হয়েছে!');
-    }
-
-    // =========================================
-    // ===== ★★★★★ দৈনিক রিপোর্ট ★★★★★ =====
-    // =========================================
-    function updateReportData(type) {
-        if (type === 'daily') {
-            var tbody = document.getElementById('reportDailyBody');
-            var html = '';
-            if (reportData.daily.length === 0) {
-                html = '<tr><td colspan="4" style="text-align:center; color:#999;">কোনো ডাটা নেই</td></tr>';
-            } else {
-                for (var i = 0; i < reportData.daily.length; i++) {
-                    var d = reportData.daily[i];
-                    var balance = d.income - d.expense;
-                    html += '<tr><td>' + d.date + '</td><td>' + d.income.toLocaleString() + '</td><td>' + d.expense.toLocaleString() + '</td><td>' + balance.toLocaleString() + '</td></tr>';
-                }
-            }
-            tbody.innerHTML = html;
-        }
-    }
-
-    // =========================================
-    // ===== ★★★★★ অনুদান গ্রহণ ★★★★★ =====
+    // ===== ★★★★★ অনুদান গ্রহণ (সম্পূর্ণ) ★★★★★ =====
     // =========================================
     function submitDonation() {
         var amount = document.getElementById('donationAmount').value;
@@ -1859,6 +1584,11 @@
                     isAdvance: true, advanceParentId: Date.now()
                 });
             }
+            if (!monthlyReports[monthStr]) {
+                monthlyReports[monthStr] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
+            }
+            monthlyReports[monthStr].income += amount;
+            monthlyReports[monthStr].details.monthly += amount;
             updateAllReports();
             updatePublicStats();
             updatePersonalReports();
@@ -1876,8 +1606,6 @@
         }
         
         personalTransactions.push(transaction);
-        
-        // দৈনিক রিপোর্ট আপডেট
         var today = dateStr;
         var foundToday = false;
         for (var i = 0; i < reportData.daily.length; i++) {
@@ -1889,11 +1617,24 @@
         }
         if (!foundToday) { reportData.daily.unshift({ date: today, income: amount, expense: 0 }); }
         
-        updateAllReports();
-        updatePublicStats();
-        updatePersonalReports();
-        loadMemberTable();
-        loadMemberSelect();
+        reportData.weekly.income += amount;
+        var currentMonth = monthStr;
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === currentMonth) {
+                reportData.monthly[i].income += amount;
+                foundMonth = true;
+                break;
+            }
+        }
+        if (!foundMonth) { reportData.monthly.unshift({ month: currentMonth, income: amount, expense: 0 }); }
+        reportData.yearly.income += amount;
+        
+        if (!monthlyReports[currentMonth]) {
+            monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
+        }
+        monthlyReports[currentMonth].income += amount;
+        monthlyReports[currentMonth].details.monthly += amount;
         
         currentReceipt = {
             name: name, serial: serial, address: address, mobile: mobile,
@@ -1904,6 +1645,11 @@
         };
         
         showReceipt(currentReceipt);
+        updateAllReports();
+        updatePublicStats();
+        updatePersonalReports();
+        loadMemberTable();
+        loadMemberSelect();
         showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
         saveAllData();
         console.log('✅ অনুদান সেভ করা হয়েছে!');
@@ -1925,9 +1671,12 @@
             '<div><strong>গ্রহণ:</strong> ' + data.collector + ' (' + data.collectorRole + ')</div>' +
             '<div><strong>তারিখ:</strong> ' + data.date + ' | ' + data.time + '</div>' +
             '<div class="receipt-line"></div>' +
-            '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
+            '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন。</div>';
     }
 
+    // =========================================
+    // ===== ★★★★★ প্রিন্ট রশিদ ★★★★★ =====
+    // =========================================
     function printReceipt() {
         if (!currentReceipt) {
             alert('প্রথমে অনুদান গ্রহণ করুন');
@@ -1935,6 +1684,7 @@
         }
         
         var content = document.getElementById('receiptContent').innerHTML;
+        
         var printWindow = window.open('', '_blank', 'width=400,height=600');
         
         if (!printWindow) {
@@ -1968,40 +1718,280 @@
     }
 
     // =========================================
-    // ===== ★★★★★ অন্যান্য ফাংশন ★★★★★ =====
+    // ===== ★★★★★ রিপোর্ট ফাংশন (সম্পূর্ণ ঠিক করা) ★★★★★ =====
     // =========================================
-    function submitExpense() {
-        if (!currentUser || currentUser.role !== 'cashier') {
-            alert('শুধুমাত্র ক্যাশিয়ার খরচ যোগ করতে পারেন!');
-            return;
+    
+    // 1. দৈনিক রিপোর্ট (সঠিক)
+    function updateReportData(type) {
+        if (type === 'daily') {
+            var tbody = document.getElementById('reportDailyBody');
+            var html = '';
+            
+            // ★★★★★ আজকের তারিখের লেনদেন ফিল্টার ★★★★★
+            var today = new Date().toLocaleDateString('bn-BD');
+            var todayTxns = personalTransactions.filter(function(t) {
+                return t.date === today;
+            });
+            
+            if (todayTxns.length === 0) {
+                html = '<tr><td colspan="4" style="text-align:center; color:#999;">আজকে কোনো লেনদেন নেই</td></tr>';
+            } else {
+                var totalIncome = 0, totalExpense = 0;
+                for (var i = 0; i < todayTxns.length; i++) {
+                    var t = todayTxns[i];
+                    if (t.amount > 0) totalIncome += t.amount;
+                    else totalExpense += Math.abs(t.amount);
+                    html += '<tr><td>' + t.date + '</td><td>' + (t.amount > 0 ? t.amount.toLocaleString() : '-') + '</td><td>' + (t.amount < 0 ? Math.abs(t.amount).toLocaleString() : '-') + '</td><td>' + (t.amount > 0 ? t.amount.toLocaleString() : (-t.amount).toLocaleString()) + '</td></tr>';
+                }
+                var balance = totalIncome - totalExpense;
+                html += '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + totalIncome.toLocaleString() + '</td><td>' + totalExpense.toLocaleString() + '</td><td>' + balance.toLocaleString() + '</td></tr>';
+            }
+            tbody.innerHTML = html;
         }
-        var category = document.getElementById('expenseCategory').value;
-        var amount = document.getElementById('expenseAmount').value;
-        var note = document.getElementById('expenseNote').value;
-        if (!amount || amount <= 0) { alert('দয়া করে সঠিক পরিমাণ লিখুন'); return; }
-        amount = parseInt(amount);
-        totalExpense += amount;
+    }
+
+    // 2. সাপ্তাহিক রিপোর্ট (শনিবার-শুক্রবার)
+    function updateWeeklyReport() {
+        var today = new Date();
+        var currentDate = today.getDate();
+        var dayOfWeek = today.getDay(); // 0=রবি, 5=শুক্র, 6=শনি
         
-        var today = new Date().toLocaleDateString('bn-BD');
-        var foundToday = false;
-        for (var i = 0; i < reportData.daily.length; i++) {
-            if (reportData.daily[i].date === today) {
-                reportData.daily[i].expense += amount;
-                foundToday = true;
+        // সপ্তাহের শুরু (শনিবার) এবং শেষ (শুক্রবার)
+        var weekStart = new Date(today);
+        var weekEnd = new Date(today);
+        
+        var daysToSaturday = (dayOfWeek + 1) % 7;
+        weekStart.setDate(currentDate - daysToSaturday);
+        
+        var daysToFriday = (5 - dayOfWeek + 7) % 7;
+        weekEnd.setDate(currentDate + daysToFriday);
+        
+        if (dayOfWeek === 5) {
+            weekEnd = new Date(today);
+        }
+        
+        var weekStartStr = weekStart.toLocaleDateString('bn-BD');
+        var weekEndStr = weekEnd.toLocaleDateString('bn-BD');
+        
+        // ★★★★★ এই সপ্তাহের লেনদেন ফিল্টার ★★★★★
+        var weeklyTxns = personalTransactions.filter(function(t) {
+            var txnDate = new Date(t.date);
+            return txnDate >= weekStart && txnDate <= weekEnd;
+        });
+        
+        var weeklyIncome = 0, weeklyExpense = 0;
+        for (var i = 0; i < weeklyTxns.length; i++) {
+            if (weeklyTxns[i].amount > 0) weeklyIncome += weeklyTxns[i].amount;
+            else weeklyExpense += Math.abs(weeklyTxns[i].amount);
+        }
+        
+        // ★★★★★ UI আপডেট ★★★★★
+        var container = document.getElementById('reportWeekly');
+        if (container) {
+            var html = '';
+            html += '<div class="report-summary">';
+            html += '<h4>📊 সাপ্তাহিক রিপোর্ট</h4>';
+            html += '<p><strong>সময়কাল:</strong> ' + weekStartStr + ' - ' + weekEndStr + '</p>';
+            html += '<p><strong>মোট আয়:</strong> ' + weeklyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + weeklyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (weeklyIncome - weeklyExpense).toLocaleString() + ' টাকা</p>';
+            html += '</div>';
+            
+            if (weeklyTxns.length > 0) {
+                html += '<div class="table-responsive" style="max-height:150px;"><table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead><tbody>';
+                for (var i = 0; i < weeklyTxns.length; i++) {
+                    var t = weeklyTxns[i];
+                    html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount.toLocaleString() + ' টাকা</td><td>' + t.purpose + '</td></tr>';
+                }
+                html += '</tbody></table></div>';
+            } else {
+                html += '<p style="color:#999; text-align:center; padding:10px;">এই সপ্তাহে কোনো লেনদেন নেই</p>';
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // ★★★★★ রিপোর্ট ডাটা আপডেট ★★★★★
+        reportData.weekly = {
+            startDate: weekStartStr,
+            endDate: weekEndStr,
+            income: weeklyIncome,
+            expense: weeklyExpense,
+            transactions: weeklyTxns.length
+        };
+    }
+
+    // 3. মাসিক রিপোর্ট (সঠিক)
+    function updateMonthlyReport() {
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        var currentMonth = today.getMonth();
+        var currentDate = today.getDate();
+        
+        var monthStart = new Date(currentYear, currentMonth, 1);
+        var monthEnd = new Date(today);
+        
+        var monthStartStr = monthStart.toLocaleDateString('bn-BD');
+        var monthEndStr = monthEnd.toLocaleDateString('bn-BD');
+        var monthName = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        
+        // ★★★★★ এই মাসের লেনদেন ফিল্টার ★★★★★
+        var monthlyTxns = personalTransactions.filter(function(t) {
+            var txnDate = new Date(t.date);
+            return txnDate >= monthStart && txnDate <= monthEnd;
+        });
+        
+        var monthlyIncome = 0, monthlyExpense = 0;
+        for (var i = 0; i < monthlyTxns.length; i++) {
+            if (monthlyTxns[i].amount > 0) monthlyIncome += monthlyTxns[i].amount;
+            else monthlyExpense += Math.abs(monthlyTxns[i].amount);
+        }
+        
+        var isMonthEnd = (currentDate === new Date(currentYear, currentMonth + 1, 0).getDate());
+        var monthStatus = isMonthEnd ? '✅ মাস শেষ (ফাইনাল রিপোর্ট)' : '📊 চলমান মাস';
+        
+        // ★★★★★ UI আপডেট ★★★★★
+        var container = document.getElementById('reportMonthly');
+        if (container) {
+            var html = '';
+            html += '<div class="report-summary">';
+            html += '<h4>📊 ' + monthName + ' - ' + monthStatus + '</h4>';
+            html += '<p><strong>মোট আয়:</strong> ' + monthlyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + monthlyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (monthlyIncome - monthlyExpense).toLocaleString() + ' টাকা</p>';
+            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + monthStartStr + ' থেকে ' + monthEndStr + '</p>';
+            if (isMonthEnd) {
+                html += '<p style="font-size:0.8rem; color:#28a745; font-weight:bold;">✅ মাসিক হিসাব সমাপ্ত। নতুন মাস শুরু হয়েছে।</p>';
+            }
+            html += '</div>';
+            
+            if (monthlyTxns.length > 0) {
+                html += '<div class="table-responsive" style="max-height:150px;"><table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead><tbody>';
+                for (var i = 0; i < monthlyTxns.length; i++) {
+                    var t = monthlyTxns[i];
+                    html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount.toLocaleString() + ' টাকা</td><td>' + t.purpose + '</td></tr>';
+                }
+                html += '</tbody></table></div>';
+            } else {
+                html += '<p style="color:#999; text-align:center; padding:10px;">এই মাসে কোনো লেনদেন নেই</p>';
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // ★★★★★ রিপোর্ট ডাটা আপডেট ★★★★★
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === monthName) {
+                reportData.monthly[i].income = monthlyIncome;
+                reportData.monthly[i].expense = monthlyExpense;
+                reportData.monthly[i].startDate = monthStartStr;
+                reportData.monthly[i].endDate = monthEndStr;
+                reportData.monthly[i].isComplete = isMonthEnd;
+                reportData.monthly[i].transactions = monthlyTxns.length;
+                foundMonth = true;
                 break;
             }
         }
-        if (!foundToday) { reportData.daily.unshift({ date: today, income: 0, expense: amount }); }
+        if (!foundMonth) {
+            reportData.monthly.push({
+                month: monthName,
+                income: monthlyIncome,
+                expense: monthlyExpense,
+                startDate: monthStartStr,
+                endDate: monthEndStr,
+                isComplete: isMonthEnd,
+                transactions: monthlyTxns.length
+            });
+        }
+    }
+
+    // 4. বার্ষিক রিপোর্ট (সঠিক)
+    function updateYearlyReport() {
+        var today = new Date();
+        var currentYear = today.getFullYear();
         
-        updateAllReports();
+        var yearStart = new Date(currentYear, 0, 1);
+        var yearEnd = new Date(today);
+        
+        var yearStartStr = yearStart.toLocaleDateString('bn-BD');
+        var yearEndStr = yearEnd.toLocaleDateString('bn-BD');
+        
+        // ★★★★★ এই বছরের লেনদেন ফিল্টার ★★★★★
+        var yearlyTxns = personalTransactions.filter(function(t) {
+            var txnDate = new Date(t.date);
+            return txnDate >= yearStart && txnDate <= yearEnd;
+        });
+        
+        var yearlyIncome = 0, yearlyExpense = 0;
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            if (yearlyTxns[i].amount > 0) yearlyIncome += yearlyTxns[i].amount;
+            else yearlyExpense += Math.abs(yearlyTxns[i].amount);
+        }
+        
+        // মাসভিত্তিক গ্রুপিং
+        var monthlySummary = {};
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            var t = yearlyTxns[i];
+            var monthKey = t.month || new Date(t.date).toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+            if (!monthlySummary[monthKey]) monthlySummary[monthKey] = { income: 0, expense: 0 };
+            if (t.amount > 0) monthlySummary[monthKey].income += t.amount;
+            else monthlySummary[monthKey].expense += Math.abs(t.amount);
+        }
+        
+        // ★★★★★ UI আপডেট ★★★★★
+        var container = document.getElementById('reportYearly');
+        if (container) {
+            var html = '';
+            html += '<div class="report-summary">';
+            html += '<h4>📊 বার্ষিক রিপোর্ট - ' + currentYear + '</h4>';
+            html += '<p><strong>মোট আয়:</strong> ' + yearlyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + yearlyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (yearlyIncome - yearlyExpense).toLocaleString() + ' টাকা</p>';
+            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + yearStartStr + ' থেকে ' + yearEndStr + '</p>';
+            html += '</div>';
+            
+            var monthNames = Object.keys(monthlySummary);
+            if (monthNames.length > 0) {
+                html += '<div style="margin-top:10px;"><h5 style="color:#1a472a;">📋 মাসভিত্তিক সংগ্রহ:</h5>';
+                for (var i = 0; i < monthNames.length; i++) {
+                    var m = monthNames[i];
+                    var data = monthlySummary[m];
+                    html += '<p style="font-size:0.85rem; margin:3px 0;"><strong>' + m + ':</strong> আয় ' + data.income.toLocaleString() + ' টাকা, ব্যয় ' + data.expense.toLocaleString() + ' টাকা</p>';
+                }
+                html += '</div>';
+            } else {
+                html += '<p style="color:#999; text-align:center; padding:10px;">এই বছরে কোনো লেনদেন নেই</p>';
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // ★★★★★ রিপোর্ট ডাটা আপডেট ★★★★★
+        reportData.yearly = {
+            year: currentYear,
+            income: yearlyIncome,
+            expense: yearlyExpense,
+            startDate: yearStartStr,
+            endDate: yearEndStr,
+            monthlySummary: monthlySummary,
+            transactions: yearlyTxns.length
+        };
+    }
+
+    // 5. সব রিপোর্ট আপডেট
+    function updateAllReports() {
+        updateReportData('daily');
+        updateWeeklyReport();
+        updateMonthlyReport();
+        updateYearlyReport();
         updatePublicStats();
-        
-        document.getElementById('expenseSuccess').classList.add('show');
-        document.getElementById('expenseSuccess').textContent = '✅ ' + category + ' - ' + amount + ' টাকা খরচ যুক্ত! (' + note + ')';
-        setTimeout(function() { document.getElementById('expenseSuccess').classList.remove('show'); }, 4000);
-        document.getElementById('expenseAmount').value = '';
-        document.getElementById('expenseNote').value = '';
-        saveAllData();
+        updateDevInfo();
+        console.log('✅ সব রিপোর্ট আপডেট করা হয়েছে!');
+        console.log('📊 daily:', personalTransactions.filter(function(t) { return t.date === new Date().toLocaleDateString('bn-BD'); }).length);
+        console.log('📊 weekly:', reportData.weekly);
+        console.log('📊 monthly:', reportData.monthly.length);
+        console.log('📊 yearly:', reportData.yearly);
     }
 
     function updatePublicStats() {
@@ -2010,6 +2000,29 @@
         document.getElementById('pubTotalExpense').textContent = totalExpense.toLocaleString();
         document.getElementById('pubBalance').textContent = balance.toLocaleString();
         updateDevInfo();
+    }
+
+    function loadMonthlyReport() {
+        var month = document.getElementById('reportMonthSelect').value;
+        var container = document.getElementById('monthlyReportContainer');
+        var data = monthlyReports[month];
+        if (data && data.income > 0) {
+            var d = data.details || { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 };
+            container.innerHTML = 
+                '<div class="table-responsive" style="max-height:180px;">' +
+                '<table><thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead>' +
+                '<tbody>' +
+                '<tr><td>মাসিক চাঁদা</td><td>' + (d.monthly || 0).toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিশেষ অনুদান</td><td>' + (d.special || 0).toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + (d.electric || 0).toLocaleString() + '</td></tr>' +
+                '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + (d.salary || 0).toLocaleString() + '</td></tr>' +
+                '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + (d.development || 0).toLocaleString() + '</td></tr>' +
+                '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + data.income.toLocaleString() + '</td><td>' + data.expense.toLocaleString() + '</td></tr>' +
+                '<tr style="font-weight:bold; background:#d4edda;"><td>উদ্বৃত্ত</td><td colspan="2">' + (data.income - data.expense).toLocaleString() + ' টাকা</td></tr>' +
+                '</tbody></table></div>';
+        } else {
+            container.innerHTML = '<p style="color:#999; text-align:center; padding:15px;">এই মাসের কোনো তথ্য নেই</p>';
+        }
     }
 
     function updatePersonalReports() {
@@ -2100,6 +2113,60 @@
         }
     }
 
+    // =========================================
+    // ===== ★★★★★ অন্যান্য ফাংশন ★★★★★ =====
+    // =========================================
+    function submitExpense() {
+        if (!currentUser || currentUser.role !== 'cashier') {
+            alert('শুধুমাত্র ক্যাশিয়ার খরচ যোগ করতে পারেন!');
+            return;
+        }
+        var category = document.getElementById('expenseCategory').value;
+        var amount = document.getElementById('expenseAmount').value;
+        var note = document.getElementById('expenseNote').value;
+        if (!amount || amount <= 0) { alert('দয়া করে সঠিক পরিমাণ লিখুন'); return; }
+        amount = parseInt(amount);
+        totalExpense += amount;
+        var today = new Date().toLocaleDateString('bn-BD');
+        var foundToday = false;
+        for (var i = 0; i < reportData.daily.length; i++) {
+            if (reportData.daily[i].date === today) {
+                reportData.daily[i].expense += amount;
+                foundToday = true;
+                break;
+            }
+        }
+        if (!foundToday) { reportData.daily.unshift({ date: today, income: 0, expense: amount }); }
+        reportData.weekly.expense += amount;
+        var currentMonth = new Date().toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === currentMonth) {
+                reportData.monthly[i].expense += amount;
+                foundMonth = true;
+                break;
+            }
+        }
+        if (!foundMonth) { reportData.monthly.unshift({ month: currentMonth, income: 0, expense: amount }); }
+        reportData.yearly.expense += amount;
+        if (!monthlyReports[currentMonth]) {
+            monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
+        }
+        monthlyReports[currentMonth].expense += amount;
+        if (category === 'বিদ্যুৎ বিল') monthlyReports[currentMonth].details.electric += amount;
+        else if (category === 'ইমাম বেতন' || category === 'মুয়াজ্জিন বেতন') monthlyReports[currentMonth].details.salary += amount;
+        else if (category === 'উন্নয়ন কাজ') monthlyReports[currentMonth].details.development += amount;
+        else monthlyReports[currentMonth].details.other = (monthlyReports[currentMonth].details.other || 0) + amount;
+        updateAllReports();
+        updatePublicStats();
+        document.getElementById('expenseSuccess').classList.add('show');
+        document.getElementById('expenseSuccess').textContent = '✅ ' + category + ' - ' + amount + ' টাকা খরচ যুক্ত! (' + note + ')';
+        setTimeout(function() { document.getElementById('expenseSuccess').classList.remove('show'); }, 4000);
+        document.getElementById('expenseAmount').value = '';
+        document.getElementById('expenseNote').value = '';
+        saveAllData();
+    }
+
     function submitUpdate() {
         var title = document.getElementById('updateTitle').value;
         var desc = document.getElementById('updateDesc').value;
@@ -2142,32 +2209,23 @@
         container.innerHTML = html;
     }
 
+    // =========================================
+    // ===== ★★★★★ প্রিন্ট ফাংশন ★★★★★ =====
+    // =========================================
     function printGeneralReport() {
         var activeTab = document.querySelector('#tabReports .tab-content.active');
         if (!activeTab) { alert('প্রথমে একটি রিপোর্ট ট্যাব নির্বাচন করুন'); return; }
         var tabId = activeTab.id;
         var tabName = '';
         var reportContent = '';
-        
-        if (tabId === 'reportDaily') {
-            tabName = 'দৈনিক রিপোর্ট';
-            var table = document.querySelector('#reportDaily table');
-            reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>';
-        } else if (tabId === 'reportWeekly') {
-            tabName = 'সাপ্তাহিক রিপোর্ট';
-            reportContent = document.getElementById('weeklyReportContainer')?.innerHTML || '<p>কোনো ডাটা নেই</p>';
-        } else if (tabId === 'reportMonthly') {
-            tabName = 'মাসিক রিপোর্ট';
-            reportContent = document.getElementById('monthlyReportContainer')?.innerHTML || '<p>কোনো ডাটা নেই</p>';
-        } else if (tabId === 'reportYearly') {
-            tabName = 'বার্ষিক রিপোর্ট';
-            reportContent = document.getElementById('yearlyReportContainer')?.innerHTML || '<p>কোনো ডাটা নেই</p>';
-        }
-        
+        if (tabId === 'reportDaily') { tabName = 'দৈনিক রিপোর্ট'; var table = document.querySelector('#reportDaily table'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; }
+        else if (tabId === 'reportWeekly') { tabName = 'সাপ্তাহিক রিপোর্ট'; reportContent = document.querySelector('#reportWeekly')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
+        else if (tabId === 'reportMonthly') { tabName = 'মাসিক রিপোর্ট'; reportContent = document.querySelector('#reportMonthly')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
+        else if (tabId === 'reportYearly') { tabName = 'বার্ষিক রিপোর্ট'; reportContent = document.querySelector('#reportYearly')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
         var printWindow = window.open('', '_blank', 'width=800,height=600');
         printWindow.document.write(
             '<html><head><title>' + tabName + '</title>' +
-            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:1000px; margin:auto; } .header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; } .header h1 { color:#1a472a; margin:0; } .header p { color:#555; margin:5px 0; } .report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:15px; } .footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } @media print { .no-print { display:none !important; } }</style>' +
+            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:1000px; margin:auto; } .header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; } .header h1 { color:#1a472a; margin:0; } .header p { color:#555; margin:5px 0; } table { width:100%; border-collapse:collapse; margin-top:10px; } th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; } th { background:#1a472a; color:white; } .report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:15px; } .footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } @media print { .no-print { display:none !important; } }</style>' +
             '</head><body>' +
             '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><h2 style="color:#1a472a;">' + tabName + '</h2></div>' +
             '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
@@ -2347,6 +2405,9 @@
         document.getElementById('devTotalExpense').textContent = totalExpense.toLocaleString();
     }
 
+    // =========================================
+    // ===== ★★★★★ ব্যাকআপ সিস্টেম ★★★★★ =====
+    // =========================================
     function backupData() {
         if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
         try {
@@ -2382,7 +2443,7 @@
                 updates = data.updates || [];
                 personalTransactions = data.personalTransactions || [];
                 monthlyReports = data.monthlyReports || {};
-                reportData = data.reportData || { daily: [], weekly: { startDate: '', endDate: '', income: 0, expense: 0, note: '' }, monthly: [], yearly: { year: 0, income: 0, expense: 0, startDate: '', endDate: '', monthlySummary: {} } };
+                reportData = data.reportData || { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
                 totalIncome = data.totalIncome || 0;
                 totalExpense = data.totalExpense || 0;
                 nextSerial = data.nextSerial || 1;
@@ -2393,6 +2454,7 @@
                 loadPublicUpdates();
                 updateAllReports();
                 updatePersonalReports();
+                loadMonthlyReport();
                 saveAllData();
                 alert('✅ ব্যাকআপ রিস্টোর সম্পূর্ণ!');
                 toggleDevPanel();
@@ -2407,10 +2469,10 @@
         if (!confirm('⚠️ সাবধান! সব ডাটা মুছে যাবে!')) return;
         if (!confirm('আবারও নিশ্চিত করুন!')) return;
         members = []; updates = []; personalTransactions = []; monthlyReports = {};
-        reportData = { daily: [], weekly: { startDate: '', endDate: '', income: 0, expense: 0, note: '' }, monthly: [], yearly: { year: 0, income: 0, expense: 0, startDate: '', endDate: '', monthlySummary: {} } };
+        reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
         totalIncome = 0; totalExpense = 0; nextSerial = 1; nextMemo = 1001;
         loadMemberTable(); loadMemberSelect(); loadCommitteeUpdates(); loadPublicUpdates();
-        updateAllReports(); updatePersonalReports(); updateDevInfo();
+        updateAllReports(); updatePersonalReports(); loadMonthlyReport(); updateDevInfo();
         saveAllData();
         alert('✅ সব ডাটা সফলভাবে রিসেট করা হয়েছে!');
         toggleDevPanel();
@@ -2420,14 +2482,17 @@
         if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
         if (!confirm('শুধু আয়-ব্যয় রিসেট করবেন? (মুসল্লি ও বকেয়া থাকবে)')) return;
         personalTransactions = []; monthlyReports = {};
-        reportData = { daily: [], weekly: { startDate: '', endDate: '', income: 0, expense: 0, note: '' }, monthly: [], yearly: { year: 0, income: 0, expense: 0, startDate: '', endDate: '', monthlySummary: {} } };
+        reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
         totalIncome = 0; totalExpense = 0; nextMemo = 1001;
-        updateAllReports(); updatePersonalReports(); updateDevInfo();
+        updateAllReports(); updatePersonalReports(); loadMonthlyReport(); updateDevInfo();
         saveAllData();
         alert('✅ আয়-ব্যয় রিসেট করা হয়েছে! বকেয়া অপরিবর্তিত আছে।');
         toggleDevPanel();
     }
 
+    // =========================================
+    // ===== ★★★★★ পাসওয়ার্ড ফরগেট ★★★★★ =====
+    // =========================================
     function showForgotPassword() {
         var html = '<div id="forgotPasswordModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; display:flex; align-items:center; justify-content:center;"><div style="background:white; padding:30px; border-radius:18px; max-width:400px; width:95%; box-shadow:0 20px 60px rgba(0,0,0,0.3);"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3 style="color:#1a472a; margin:0;"><i class="fas fa-key"></i> পাসওয়ার্ড রিসেট</h3><button onclick="closeForgotPassword()" style="background:#dc3545; color:white; border:none; padding:5px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">✕</button></div><p style="color:#666; font-size:0.9rem; margin-bottom:15px;">আপনার ইউজারনাম নির্বাচন করে নতুন পাসওয়ার্ড সেট করুন।</p><div class="form-group"><label>ইউজারনাম</label><select id="forgotUserSelect" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"><option value="cashier">ক্যাশিয়ার</option><option value="secretary">সেক্রেটারি</option><option value="president">সভাপতি</option></select></div><div class="form-group"><label>নতুন পাসওয়ার্ড</label><input type="password" id="forgotNewPassword" placeholder="নতুন পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"></div><div class="form-group"><label>পাসওয়ার্ড নিশ্চিত</label><input type="password" id="forgotConfirmPassword" placeholder="আবার পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"></div><button onclick="resetPassword()" style="width:100%; padding:12px; background:#2d7d46; color:white; border:none; border-radius:8px; font-size:1.1rem; font-weight:bold; cursor:pointer;"><i class="fas fa-save"></i> পাসওয়ার্ড রিসেট করুন</button><div style="margin-top:10px; text-align:center; font-size:0.8rem; color:#999;">💡 ডেভেলপারের সাথে যোগাযোগ করুন: মসজিদ কমিটি</div></div></div>';
         var container = document.getElementById('forgotPasswordModalContainer');
@@ -2457,6 +2522,9 @@
         } else { alert('❌ ইউজার পাওয়া যায়নি!'); }
     }
 
+    // =========================================
+    // ===== ★★★★★ পাসওয়ার্ড চেঞ্জ ★★★★★ =====
+    // =========================================
     function openChangePassword() {
         document.getElementById('changePasswordModal').style.display = 'block';
         document.getElementById('currentPassword').value = '';
@@ -2485,6 +2553,9 @@
         saveAllData();
     }
 
+    // =========================================
+    // ===== ★★★★★ অনলাইন স্ট্যাটাস ★★★★★ =====
+    // =========================================
     function updateOnlineStatus() {
         var status = document.getElementById('onlineStatus');
         if (navigator.onLine) {
@@ -2506,9 +2577,13 @@
         console.log('🚀 অ্যাপ লোড হচ্ছে...');
         
         testFirebaseConnection();
+        
         loadAllData();
+        
         loadAllDataFromFirebase();
+        
         listenToAllFirebase();
+        
         generateMonthList();
         updateOnlineStatus();
         loadMemberTable();
@@ -2518,6 +2593,7 @@
         updateAllReports();
         updatePublicStats();
         updatePersonalReports();
+        loadMonthlyReport();
         
         console.log('✅ অ্যাপ লোড সম্পূর্ণ!');
     });
