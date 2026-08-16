@@ -1728,9 +1728,7 @@
         }
     }
 
-    // ★★★★★ 2. সাপ্তাহিক রিপোর্ট ★★★★★
-        // ★★★★★ 2. সাপ্তাহিক রিপোর্ট (ঠিক করা) ★★★★★
-     // ★★★★★ সাপ্তাহিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
+    // ★★★★★ 2. সাপ্তাহিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
     function updateWeeklyReport() {
         var today = new Date();
         var currentDate = today.getDate();
@@ -1815,8 +1813,7 @@
         }
     }
 
-    // 3. মাসিক রিপোর্ট
-    f    // ★★★★★ মাসিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
+    // ★★★★★ 3. মাসিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
     function updateMonthlyReport() {
         var today = new Date();
         var currentYear = today.getFullYear();
@@ -1910,9 +1907,7 @@
         }
     }
 
-    // 4. বার্ষিক রিপোর্ট
-    function updateYearlyReport() {
-        // ★★★★★ বার্ষিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
+    // ★★★★★ 4. বার্ষিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
     function updateYearlyReport() {
         var today = new Date();
         var currentYear = today.getFullYear();
@@ -2043,7 +2038,7 @@
         }
     }
 
-    // ★★★★★ ব্যক্তিগত রিপোর্ট আপডেট (সম্পূর্ণ নতুন) ★★★★★
+    // ★★★★★ ব্যক্তিগত রিপোর্ট আপডেট (সম্পূর্ণ ঠিক করা) ★★★★★
     function updatePersonalReports() {
         if (!currentUser) {
             console.log('❌ currentUser নেই');
@@ -2083,7 +2078,7 @@
             dailyBody.innerHTML = html;
         }
         
-        // ===== ★★★★★ সাপ্তাহিক (সম্পূর্ণ নতুন) ★★★★★ =====
+        // ===== ★★★★★ সাপ্তাহিক (সম্পূর্ণ ঠিক করা) ★★★★★ =====
         var currentDay = today.getDay();
         var currentDate = today.getDate();
         
@@ -2107,23 +2102,21 @@
         
         console.log('📅 সাপ্তাহিক সময়কাল:', weekStartStr, 'থেকে', weekEndStr);
         
-        // ★★★★★ এই সপ্তাহের লেনদেন ফিল্টার ★★★★★
+        // ★★★ সঠিক ডেট পার্সিং ★★★
         var weeklyTxns = [];
-for (var i = 0; i < userTransactions.length; i++) {
-    var t = userTransactions[i];
-    var parts = t.date.split('/');
-    if (parts.length === 3) {
-        // ★★★ এই ৩ লাইন পরিবর্তন করুন ★★★
-        var day = parseInt(convertToEnglish(parts[0]));   // বাংলা থেকে ইংরেজি
-        var month = parseInt(convertToEnglish(parts[1])) - 1;
-        var year = parseInt(convertToEnglish(parts[2]));
-        var txnDate = new Date(year, month, day);
-        
-        if (txnDate >= weekStart && txnDate <= weekEnd) {
-            weeklyTxns.push(t);
+        for (var i = 0; i < userTransactions.length; i++) {
+            var t = userTransactions[i];
+            var parts = t.date.split('/');
+            if (parts.length === 3) {
+                var day = parseInt(convertToEnglish(parts[0]));
+                var month = parseInt(convertToEnglish(parts[1])) - 1;
+                var year = parseInt(convertToEnglish(parts[2]));
+                var txnDate = new Date(year, month, day);
+                if (txnDate >= weekStart && txnDate <= weekEnd) {
+                    weeklyTxns.push(t);
+                }
+            }
         }
-    }
-}
         
         console.log('📊 সাপ্তাহিক লেনদেন পাওয়া গেছে:', weeklyTxns.length, 'টি');
         
