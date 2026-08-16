@@ -476,7 +476,7 @@
             
             <!-- ===== REPORTS TAB ===== -->
             <div id="tabReports" class="tab-content">
-                <h3><i class="fas fa-chart-bar"></i> সাধারণ রিপোর্ট</h3>
+                <h3><i class="fas fa-chart-bar"></i> রিপোর্ট</h3>
                 <div class="tab-bar">
                     <button class="tab-btn active" onclick="switchReportTab('daily', this)">দৈনিক</button>
                     <button class="tab-btn" onclick="switchReportTab('weekly', this)">সাপ্তাহিক</button>
@@ -1714,17 +1714,10 @@
     }
 
     // =========================================
-    // ===== ★★★★★ রিপোর্ট ফাংশন ★★★★★ =====
+    // ===== ★★★★★ রিপোর্ট ফাংশন (আপডেটেড) ★★★★★ =====
     // =========================================
-    function updateAllReports() {
-        updateReportData('daily');
-        updateReportData('weekly');
-        updateReportData('monthly');
-        updateReportData('yearly');
-        updatePublicStats();
-        updateDevInfo();
-    }
-
+    
+    // 1. দৈনিক রিপোর্ট
     function updateReportData(type) {
         if (type === 'daily') {
             var tbody = document.getElementById('reportDailyBody');
@@ -1739,41 +1732,217 @@
                 }
             }
             tbody.innerHTML = html;
-        } else if (type === 'weekly') {
-            var el = document.querySelector('#reportWeekly p');
-            if (el) {
-                if (reportData.weekly.income === 0 && reportData.weekly.expense === 0) {
-                    el.textContent = 'কোনো ডাটা নেই';
-                    el.style.color = '#999';
-                } else {
-                    el.textContent = 'সপ্তাহ ১ (আগস্ট ২০২৬): আয় ' + reportData.weekly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.weekly.expense.toLocaleString() + ' টাকা';
-                    el.style.color = '#333';
-                }
-            }
-        } else if (type === 'monthly') {
-            var container = document.getElementById('reportMonthly');
+        }
+    }
+
+    // 2. সাপ্তাহিক রিপোর্ট (শনিবার-শুক্রবার)
+    function updateWeeklyReport() {
+        var today = new Date();
+        var currentDate = today.getDate();
+        var dayOfWeek = today.getDay(); // 0=রবি, 5=শুক্র, 6=শনি
+        
+        // সপ্তাহের শুরু (শনিবার) এবং শেষ (শুক্রবার)
+        var weekStart = new Date(today);
+        var weekEnd = new Date(today);
+        
+        // শনিবার পর্যন্ত পিছিয়ে যান
+        var daysToSaturday = (dayOfWeek + 1) % 7;
+        weekStart.setDate(currentDate - daysToSaturday);
+        
+        // শুক্রবার পর্যন্ত এগিয়ে যান
+        var daysToFriday = (5 - dayOfWeek + 7) % 7;
+        weekEnd.setDate(currentDate + daysToFriday);
+        
+        // যদি আজ শুক্রবার হয়, তাহলে আজই শেষ দিন
+        if (dayOfWeek === 5) {
+            weekEnd = new Date(today);
+        }
+        
+        var weekStartStr = weekStart.toLocaleDateString('bn-BD');
+        var weekEndStr = weekEnd.toLocaleDateString('bn-BD');
+        
+        // এই সপ্তাহের লেনদেন ফিল্টার
+        var weeklyTxns = personalTransactions.filter(function(t) {
+            var txnDate = new Date(t.date);
+            return txnDate >= weekStart && txnDate <= weekEnd;
+        });
+        
+        var weeklyIncome = 0, weeklyExpense = 0;
+        for (var i = 0; i < weeklyTxns.length; i++) {
+            if (weeklyTxns[i].amount > 0) weeklyIncome += weeklyTxns[i].amount;
+            else weeklyExpense += Math.abs(weeklyTxns[i].amount);
+        }
+        
+        // UI আপডেট
+        var el = document.querySelector('#reportWeekly p');
+        if (el) {
+            el.textContent = 'সপ্তাহ (' + weekStartStr + ' - ' + weekEndStr + '): আয় ' + weeklyIncome.toLocaleString() + ' টাকা, ব্যয় ' + weeklyExpense.toLocaleString() + ' টাকা';
+            el.style.color = '#333';
+        }
+        
+        // রিপোর্ট ডাটা আপডেট
+        reportData.weekly = {
+            startDate: weekStartStr,
+            endDate: weekEndStr,
+            income: weeklyIncome,
+            expense: weeklyExpense,
+            note: 'হিসাবের সময়কাল: ' + weekStartStr + ' থেকে ' + weekEndStr
+        };
+    }
+
+    // 3. মাসিক রিপোর্ট
+    function updateMonthlyReport() {
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        var currentMonth = today.getMonth();
+        var currentDate = today.getDate();
+        
+        var monthStart = new Date(currentYear, currentMonth, 1);
+        var monthEnd = new Date(today);
+        
+        var monthStartStr = monthStart.toLocaleDateString('bn-BD');
+        var monthEndStr = monthEnd.toLocaleDateString('bn-BD');
+        var monthName = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        
+        var monthlyTxns = personalTransactions.filter(function(t) {
+            var txnDate = new Date(t.date);
+            return txnDate >= monthStart && txnDate <= monthEnd;
+        });
+        
+        var monthlyIncome = 0, monthlyExpense = 0;
+        for (var i = 0; i < monthlyTxns.length; i++) {
+            if (monthlyTxns[i].amount > 0) monthlyIncome += monthlyTxns[i].amount;
+            else monthlyExpense += Math.abs(monthlyTxns[i].amount);
+        }
+        
+        var isMonthEnd = (currentDate === new Date(currentYear, currentMonth + 1, 0).getDate());
+        var monthStatus = isMonthEnd ? '✅ মাস শেষ (ফাইনাল রিপোর্ট)' : '📊 চলমান মাস';
+        
+        // UI আপডেট
+        var container = document.getElementById('reportMonthly');
+        if (container) {
             var html = '';
-            if (reportData.monthly.length === 0) {
-                html = '<p style="color:#999;">কোনো ডাটা নেই</p>';
-            } else {
-                for (var i = 0; i < reportData.monthly.length; i++) {
-                    var m = reportData.monthly[i];
-                    html += '<p><strong>' + m.month + ':</strong> আয় ' + m.income.toLocaleString() + ' টাকা, ব্যয় ' + m.expense.toLocaleString() + ' টাকা</p>';
+            html += '<div class="report-summary">';
+            html += '<h4>📊 ' + monthName + ' - ' + monthStatus + '</h4>';
+            html += '<p><strong>মোট আয়:</strong> ' + monthlyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + monthlyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (monthlyIncome - monthlyExpense).toLocaleString() + ' টাকা</p>';
+            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + monthStartStr + ' থেকে ' + monthEndStr + '</p>';
+            if (isMonthEnd) {
+                html += '<p style="font-size:0.8rem; color:#28a745; font-weight:bold;">✅ মাসিক হিসাব সমাপ্ত। নতুন মাস শুরু হয়েছে।</p>';
+            }
+            html += '</div>';
+            
+            var previousMonths = reportData.monthly || [];
+            if (previousMonths.length > 0) {
+                html += '<div style="margin-top:10px;"><h5 style="color:#1a472a;">📋 পূর্ববর্তী মাস:</h5>';
+                for (var i = 0; i < previousMonths.length; i++) {
+                    var m = previousMonths[i];
+                    html += '<p style="font-size:0.85rem; margin:3px 0;"><strong>' + m.month + ':</strong> আয় ' + m.income.toLocaleString() + ' টাকা, ব্যয় ' + m.expense.toLocaleString() + ' টাকা</p>';
                 }
+                html += '</div>';
             }
             container.innerHTML = html;
-        } else if (type === 'yearly') {
-            var el = document.querySelector('#reportYearly p');
-            if (el) {
-                if (reportData.yearly.income === 0 && reportData.yearly.expense === 0) {
-                    el.textContent = 'কোনো ডাটা নেই';
-                    el.style.color = '#999';
-                } else {
-                    el.textContent = '২০২৬: মোট আয় ' + reportData.yearly.income.toLocaleString() + ' টাকা, ব্যয় ' + reportData.yearly.expense.toLocaleString() + ' টাকা';
-                    el.style.color = '#333';
-                }
+        }
+        
+        // রিপোর্ট ডাটা আপডেট
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === monthName) {
+                reportData.monthly[i].income = monthlyIncome;
+                reportData.monthly[i].expense = monthlyExpense;
+                reportData.monthly[i].startDate = monthStartStr;
+                reportData.monthly[i].endDate = monthEndStr;
+                reportData.monthly[i].isComplete = isMonthEnd;
+                foundMonth = true;
+                break;
             }
         }
+        if (!foundMonth) {
+            reportData.monthly.push({
+                month: monthName,
+                income: monthlyIncome,
+                expense: monthlyExpense,
+                startDate: monthStartStr,
+                endDate: monthEndStr,
+                isComplete: isMonthEnd
+            });
+        }
+    }
+
+    // 4. বার্ষিক রিপোর্ট
+    function updateYearlyReport() {
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        
+        var yearStart = new Date(currentYear, 0, 1);
+        var yearEnd = new Date(today);
+        
+        var yearStartStr = yearStart.toLocaleDateString('bn-BD');
+        var yearEndStr = yearEnd.toLocaleDateString('bn-BD');
+        
+        var yearlyTxns = personalTransactions.filter(function(t) {
+            var txnDate = new Date(t.date);
+            return txnDate >= yearStart && txnDate <= yearEnd;
+        });
+        
+        var yearlyIncome = 0, yearlyExpense = 0;
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            if (yearlyTxns[i].amount > 0) yearlyIncome += yearlyTxns[i].amount;
+            else yearlyExpense += Math.abs(yearlyTxns[i].amount);
+        }
+        
+        var monthlySummary = {};
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            var t = yearlyTxns[i];
+            var monthKey = t.month || new Date(t.date).toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+            if (!monthlySummary[monthKey]) monthlySummary[monthKey] = { income: 0, expense: 0 };
+            if (t.amount > 0) monthlySummary[monthKey].income += t.amount;
+            else monthlySummary[monthKey].expense += Math.abs(t.amount);
+        }
+        
+        var el = document.querySelector('#reportYearly');
+        if (el) {
+            var html = '';
+            html += '<div class="report-summary">';
+            html += '<h4>📊 বার্ষিক রিপোর্ট - ' + currentYear + '</h4>';
+            html += '<p><strong>মোট আয়:</strong> ' + yearlyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + yearlyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (yearlyIncome - yearlyExpense).toLocaleString() + ' টাকা</p>';
+            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + yearStartStr + ' থেকে ' + yearEndStr + '</p>';
+            html += '</div>';
+            
+            var monthNames = Object.keys(monthlySummary);
+            if (monthNames.length > 0) {
+                html += '<div style="margin-top:10px;"><h5 style="color:#1a472a;">📋 মাসভিত্তিক সংগ্রহ:</h5>';
+                for (var i = 0; i < monthNames.length; i++) {
+                    var m = monthNames[i];
+                    var data = monthlySummary[m];
+                    html += '<p style="font-size:0.85rem; margin:3px 0;"><strong>' + m + ':</strong> আয় ' + data.income.toLocaleString() + ' টাকা, ব্যয় ' + data.expense.toLocaleString() + ' টাকা</p>';
+                }
+                html += '</div>';
+            }
+            el.innerHTML = html;
+        }
+        
+        reportData.yearly = {
+            year: currentYear,
+            income: yearlyIncome,
+            expense: yearlyExpense,
+            startDate: yearStartStr,
+            endDate: yearEndStr,
+            monthlySummary: monthlySummary
+        };
+    }
+
+    // 5. সব রিপোর্ট আপডেট
+    function updateAllReports() {
+        updateReportData('daily');
+        updateWeeklyReport();
+        updateMonthlyReport();
+        updateYearlyReport();
+        updatePublicStats();
+        updateDevInfo();
     }
 
     function updatePublicStats() {
