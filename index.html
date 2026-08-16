@@ -1487,6 +1487,9 @@
     // =========================================
     // ===== ★★★★★ অনুদান গ্রহণ (ডাবল চেক ঠিক করা) ★★★★★ =====
     // =========================================
+        // =========================================
+    // ===== ★★★★★ অনুদান গ্রহণ (প্রিন্ট সহ) ★★★★★ =====
+    // =========================================
     function submitDonation() {
         var amount = document.getElementById('donationAmount').value;
         var purpose = document.getElementById('donationPurpose').value;
@@ -1523,11 +1526,10 @@
         if (!amount || amount <= 0) { alert('দয়া করে সঠিক পরিমাণ লিখুন'); return; }
         amount = parseInt(amount);
         
-        // ★★★ ডাবল চেক: এই মুসল্লির এই মাসের অনুদান ইতিমধ্যে কেউ গ্রহণ করেছে কিনা (যে কেউ) ★★★
+        // ★★★ ডাবল চেক: এই মুসল্লির এই মাসের অনুদান ইতিমধ্যে কেউ গ্রহণ করেছে কিনা ★★★
         if (memberIndex >= 0 && purpose !== 'অগ্রিম') {
             for (var i = 0; i < personalTransactions.length; i++) {
                 var t = personalTransactions[i];
-                // একই মুসল্লি, একই মাস, এবং অনুদান (amount > 0 মানে খরচ নয়)
                 if (t.memberMobile === mobile && t.purpose === purpose && t.amount > 0) {
                     var collectorName = t.collectorName || 'অজানা';
                     var collectorRole = t.collectorRole || 'কমিটি সদস্য';
@@ -1608,6 +1610,75 @@
             updatePersonalReports();
             saveAllData();
             showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
+            
+            // ★★★ রশিদ তৈরি ও প্রিন্ট অপশন দেখান ★★★
+            currentReceipt = {
+                name: name, serial: serial, address: address, mobile: mobile,
+                amount: amount, purpose: 'অগ্রিম (১২ মাস)',
+                collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
+                collectorRole: currentUser ? currentUser.role : 'cashier',
+                date: dateStr, time: timeStr, memo: nextMemo++
+            };
+            showReceipt(currentReceipt);
+            // ★★★ প্রিন্ট অপশন দেখান ★★★
+            document.getElementById('receiptPreview').style.display = 'block';
+            return;
+        }
+        
+        personalTransactions.push(transaction);
+        var today = dateStr;
+        var foundToday = false;
+        for (var i = 0; i < reportData.daily.length; i++) {
+            if (reportData.daily[i].date === today) {
+                reportData.daily[i].income += amount;
+                foundToday = true;
+                break;
+            }
+        }
+        if (!foundToday) { reportData.daily.unshift({ date: today, income: amount, expense: 0 }); }
+        
+        reportData.weekly.income += amount;
+        var currentMonth = monthStr;
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === currentMonth) {
+                reportData.monthly[i].income += amount;
+                foundMonth = true;
+                break;
+            }
+        }
+        if (!foundMonth) { reportData.monthly.unshift({ month: currentMonth, income: amount, expense: 0 }); }
+        reportData.yearly.income += amount;
+        
+        if (!monthlyReports[currentMonth]) {
+            monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
+        }
+        monthlyReports[currentMonth].income += amount;
+        monthlyReports[currentMonth].details.monthly += amount;
+        
+        // ★★★ রশিদ তৈরি ও প্রিন্ট অপশন দেখান ★★★
+        currentReceipt = {
+            name: name, serial: serial, address: address, mobile: mobile,
+            amount: amount, purpose: purpose,
+            collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
+            collectorRole: currentUser ? currentUser.role : 'cashier',
+            date: dateStr, time: timeStr, memo: nextMemo++
+        };
+        
+        showReceipt(currentReceipt);
+        // ★★★ প্রিন্ট অপশন দেখান ★★★
+        document.getElementById('receiptPreview').style.display = 'block';
+        
+        updateAllReports();
+        updatePublicStats();
+        updatePersonalReports();
+        loadMemberTable();
+        loadMemberSelect();
+        showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
+        saveAllData();
+        console.log('✅ অনুদান সেভ করা হয়েছে!');
+    }
+            showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
             currentReceipt = {
                 name: name, serial: serial, address: address, mobile: mobile,
                 amount: amount, purpose: 'অগ্রিম (১২ মাস)',
@@ -1660,22 +1731,26 @@
             date: dateStr, time: timeStr, memo: nextMemo++
         };
         
-        showReceipt(currentReceipt);
+        s    function showReceipt(data) {
+        document.getElementById('receiptContent').innerHTML = 
+            '<div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>' +
+            '<div style="text-align:center; font-size:0.7rem;">ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</div>' +
+            '<div class="receipt-line"></div>' +
+            '<div><strong>মেমো:</strong> ' + data.memo + '</div>' +
+            '<div><strong>সিরিয়াল:</strong> ' + data.serial + '</div>' +
+            '<div><strong>নাম:</strong> ' + data.name + '</div>' +
+            '<div><strong>ঠিকানা:</strong> ' + data.address + '</div>' +
+            '<div><strong>বাবদ:</strong> ' + data.purpose + '</div>' +
+            '<div><strong>টাকা:</strong> ' + data.amount + '</div>' +
+            '<div class="receipt-line"></div>' +
+            '<div><strong>গ্রহণ:</strong> ' + data.collector + ' (' + data.collectorRole + ')</div>' +
+            '<div><strong>তারিখ:</strong> ' + data.date + ' | ' + data.time + '</div>' +
+            '<div class="receipt-line"></div>' +
+            '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
+        
         // ★★★ প্রিন্ট অপশন দেখান ★★★
         document.getElementById('receiptPreview').style.display = 'block';
-        
-        updateAllReports();
-        updatePublicStats();
-        updatePersonalReports();
-        loadMemberTable();
-        loadMemberSelect();
-        showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
-        saveAllData();
-        console.log('✅ অনুদান সেভ করা হয়েছে!');
     }
-
-    function showReceipt(data) {
-        document.getElementById('receiptPreview').style.display = 'block';
         document.getElementById('receiptContent').innerHTML = 
             '<div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>' +
             '<div style="text-align:center; font-size:0.7rem;">ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</div>' +
