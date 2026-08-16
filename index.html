@@ -4,17 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>আলগী বাজার জামে মসজিদ</title>
-    
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuCAmuCBrOCBvOCBjOCBqOCBqOCBqOCCteCBoOCBvOCBhOCBqCDigKIg4oCiIiwKICAic2hvcnRfbmFtZSI6ICLggZrggbzggYzggagv4oGt4oCiIiwKICAiZGVzY3JpcHRpb24iOiAi4KaV4KeN4Ka44Ka+4KaV4KeN4KaH4KawLCDgpoXgpqHguZ3gppXgp43gpqHgpqTgppXgp43gpp8g4KaV4Ka84KawIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmZmZmZmYiLAogICJ0aGVtZV9jb2xvciI6ICIjMWE0NzJhIiwKICAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAnJTNFJTNDcmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgZmlsbD0nJTIzMWE0NzJhJy8lM0UlM0N0ZXh0IHg9JzUwJyB5PSc1MCcgZm9udC1zaXplPSc2MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZHk9Jy4zNScgZmlsbD0nd2hpdGUnJTNF8J+ljf8lM0MvdGV4dCUzRSUzQy9zdmclM0UiLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgICB9CiAgXQp9">
-    <meta name="theme-color" content="#1a472a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 16px; }
@@ -175,17 +167,6 @@
             <h1>আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1>
             <p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p>
         </div>
-        
-        <div id="syncStatus" class="sync-status synced">✅ সিঙ্কড</div>
-        
-        <div id="installPrompt" class="install-prompt">
-            <span class="close-prompt" onclick="document.getElementById('installPrompt').classList.remove('show')">&times;</span>
-            <i class="fas fa-mobile-alt" style="font-size:1.5rem;"></i>
-            <p style="margin:4px 0; font-weight:bold;">📱 অ্যাপটি ইনস্টল করুন!</p>
-            <p style="font-size:0.85rem; opacity:0.9;">হোম স্ক্রিনে যোগ করে সহজে ব্যবহার করুন</p>
-            <button id="installAppBtn">ইনস্টল করুন</button>
-        </div>
-        
         <div class="role-selector">
             <div class="role-card" onclick="openPublicView()">
                 <i class="fas fa-users"></i>
@@ -213,14 +194,9 @@
         </div>
         <div class="form-group">
             <label>পাসওয়ার্ড</label>
-            <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড লিখুন" value="">
+            <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড লিখুন">
         </div>
         <button onclick="handleLogin()">লগইন করুন</button>
-        <div style="margin-top:12px; text-align:center;">
-            <a href="#" onclick="showForgotPassword()" style="color:#2d7d46; text-decoration:underline; font-size:0.85rem; cursor:pointer;">
-                <i class="fas fa-key"></i> পাসওয়ার্ড ভুলে গেছেন?
-            </a>
-        </div>
         <div style="margin-top:8px; font-size:0.8rem; color:#999; text-align:center;">💡 ডিফল্ট পাসওয়ার্ড: <strong>123456</strong></div>
         <div class="back-btn" onclick="goHome()">← হোমে ফিরে যান</div>
     </div>
@@ -321,7 +297,6 @@
             <div id="tabDonation" class="tab-content active">
                 <h3><i class="fas fa-hand-holding-heart"></i> অনুদান গ্রহণ</h3>
                 <div id="donationSuccess" class="notification"></div>
-                
                 <div class="form-group" style="margin-bottom:6px;">
                     <label>মুসল্লি ধরন</label>
                     <select id="memberType" onchange="toggleMemberFields()" style="padding:5px 8px;">
@@ -329,7 +304,6 @@
                         <option value="guest">অস্থায়ী/অতিথি</option>
                     </select>
                 </div>
-                
                 <div id="permanentFields">
                     <div class="inline-flex">
                         <input type="text" id="searchMobile" placeholder="মোবাইল নম্বর" style="flex:1; padding:5px 8px; border:2px solid #ddd; border-radius:5px; font-size:0.82rem;">
@@ -341,7 +315,6 @@
                         <p><strong>চাঁদা:</strong> - | <strong>বকেয়া:</strong> -</p>
                     </div>
                 </div>
-                
                 <div id="guestFields" style="display:none;">
                     <div class="form-row">
                         <div class="form-group"><label>নাম *</label><input type="text" id="guestName" placeholder="অতিথির নাম"></div>
@@ -349,7 +322,6 @@
                     </div>
                     <div class="form-group"><label>ঠিকানা</label><input type="text" id="guestAddress" placeholder="ঠিকানা"></div>
                 </div>
-                
                 <div class="form-row">
                     <div class="form-group">
                         <label>বাবদ *</label>
@@ -360,11 +332,9 @@
                         <input type="number" id="donationAmount" placeholder="টাকা" value="500">
                     </div>
                 </div>
-                
                 <button class="btn btn-success" onclick="submitDonation()">
                     <i class="fas fa-save"></i> গ্রহণ করুন & প্রিন্ট
                 </button>
-                
                 <div id="receiptPreview" style="display:none; margin-top:10px;">
                     <h4 style="font-size:0.85rem;">📄 রশিদ</h4>
                     <div class="receipt-preview" id="receiptContent"></div>
@@ -377,9 +347,7 @@
             <!-- ===== ADD MEMBER TAB ===== -->
             <div id="tabAddMember" class="tab-content">
                 <h3><i class="fas fa-user-plus"></i> নতুন মুসল্লি যোগ</h3>
-                <div class="notification" id="addMemberSuccess">
-                    <i class="fas fa-check-circle"></i> নতুন মুসল্লি যোগ করা হয়েছে!
-                </div>
+                <div class="notification" id="addMemberSuccess"><i class="fas fa-check-circle"></i> নতুন মুসল্লি যোগ করা হয়েছে!</div>
                 <div class="form-row">
                     <div class="form-group"><label>নাম *</label><input type="text" id="newMemberName" placeholder="পূর্ণ নাম"></div>
                     <div class="form-group"><label>মোবাইল *</label><input type="text" id="newMemberMobile" placeholder="মোবাইল"></div>
@@ -393,17 +361,13 @@
                     <input type="number" id="newMemberDue" placeholder="বকেয়া (টাকা)" value="0">
                     <small style="color:#666; font-size:0.75rem;">🔹 এপস চালুর আগের বকেয়া এখানে দিন</small>
                 </div>
-                <button class="btn btn-success" onclick="addNewMember()">
-                    <i class="fas fa-save"></i> মুসল্লি যোগ করুন
-                </button>
+                <button class="btn btn-success" onclick="addNewMember()"><i class="fas fa-save"></i> মুসল্লি যোগ করুন</button>
             </div>
             
             <!-- ===== MANAGE MEMBERS TAB ===== -->
             <div id="tabManageMembers" class="tab-content">
                 <h3><i class="fas fa-user-edit"></i> মুসল্লি ব্যবস্থাপনা</h3>
-                <div class="notification" id="manageSuccess">
-                    <i class="fas fa-check-circle"></i> পরিবর্তন সফল!
-                </div>
+                <div class="notification" id="manageSuccess"><i class="fas fa-check-circle"></i> পরিবর্তন সফল!</div>
                 <div style="margin-bottom:10px;">
                     <label>মুসল্লি নির্বাচন</label>
                     <select id="memberSelect" onchange="loadMemberForEdit()" style="width:100%; padding:6px 10px; border:2px solid #ddd; border-radius:6px; font-size:0.85rem;">
@@ -419,17 +383,10 @@
                         <div class="form-group"><label>ঠিকানা *</label><input type="text" id="editMemberAddress"></div>
                         <div class="form-group"><label>চাঁদা *</label><input type="number" id="editMemberCommitment"></div>
                     </div>
-                    <div class="form-group">
-                        <label>বকেয়া</label>
-                        <input type="number" id="editMemberDue" placeholder="বকেয়া">
-                    </div>
+                    <div class="form-group"><label>বকেয়া</label><input type="number" id="editMemberDue" placeholder="বকেয়া"></div>
                     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                        <button class="btn btn-primary" onclick="updateMember()">
-                            <i class="fas fa-save"></i> আপডেট
-                        </button>
-                        <button class="btn btn-danger" onclick="deleteMember()">
-                            <i class="fas fa-trash"></i> বাদ দিন
-                        </button>
+                        <button class="btn btn-primary" onclick="updateMember()"><i class="fas fa-save"></i> আপডেট</button>
+                        <button class="btn btn-danger" onclick="deleteMember()"><i class="fas fa-trash"></i> বাদ দিন</button>
                     </div>
                 </div>
                 <div id="noMemberSelected" style="margin-top:12px; color:#999; text-align:center; padding:15px;">
@@ -440,9 +397,7 @@
             <!-- ===== EXPENSE TAB ===== -->
             <div id="tabExpense" class="tab-content">
                 <h3><i class="fas fa-money-bill-wave"></i> খরচ যোগ</h3>
-                <div class="notification" id="expenseSuccess">
-                    <i class="fas fa-check-circle"></i> খরচ যোগ করা হয়েছে!
-                </div>
+                <div class="notification" id="expenseSuccess"><i class="fas fa-check-circle"></i> খরচ যোগ করা হয়েছে!</div>
                 <div id="expenseAccessDenied" style="display:none; background:#f8d7da; padding:10px; border-radius:6px; color:#721c24; margin:6px 0;">
                     <i class="fas fa-exclamation-triangle"></i> <strong>অ্যাক্সেস অস্বীকৃত!</strong> শুধু ক্যাশিয়ার খরচ যোগ করতে পারেন।
                 </div>
@@ -464,13 +419,8 @@
                             <input type="number" id="expenseAmount" placeholder="টাকা" value="5000">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>বিবরণ</label>
-                        <textarea id="expenseNote" placeholder="বিস্তারিত" style="height:35px;"></textarea>
-                    </div>
-                    <button class="btn btn-danger" onclick="submitExpense()">
-                        <i class="fas fa-plus-circle"></i> খরচ যোগ করুন
-                    </button>
+                    <div class="form-group"><label>বিবরণ</label><textarea id="expenseNote" placeholder="বিস্তারিত" style="height:35px;"></textarea></div>
+                    <button class="btn btn-danger" onclick="submitExpense()"><i class="fas fa-plus-circle"></i> খরচ যোগ করুন</button>
                 </div>
             </div>
             
@@ -485,28 +435,18 @@
                 </div>
                 <div id="reportDaily" class="tab-content active">
                     <div class="table-responsive" style="max-height:250px;">
-                        <table>
-                            <thead><tr><th>তারিখ</th><th>আয়</th><th>ব্যয়</th><th>উদ্বৃত্ত</th></tr></thead>
-                            <tbody id="reportDailyBody">
-                                <tr><td colspan="4" style="text-align:center; color:#999;">কোনো ডাটা নেই</td></tr>
-                            </tbody>
-                        </table>
+                        <table><thead><tr><th>তারিখ</th><th>আয়</th><th>ব্যয়</th><th>উদ্বৃত্ত</th></tr></thead>
+                        <tbody id="reportDailyBody"><tr><td colspan="4" style="text-align:center; color:#999;">কোনো ডাটা নেই</td></tr></tbody></table>
                     </div>
                 </div>
                 <div id="reportWeekly" class="tab-content">
-                    <div id="weeklyReportContainer">
-                        <p style="color:#999;">কোনো ডাটা নেই</p>
-                    </div>
+                    <div id="weeklyReportContainer"><p style="color:#999;">কোনো ডাটা নেই</p></div>
                 </div>
                 <div id="reportMonthly" class="tab-content">
-                    <div id="monthlyReportContainer2">
-                        <p style="color:#999;">কোনো ডাটা নেই</p>
-                    </div>
+                    <div id="monthlyReportContainer2"><p style="color:#999;">কোনো ডাটা নেই</p></div>
                 </div>
                 <div id="reportYearly" class="tab-content">
-                    <div id="yearlyReportContainer">
-                        <p style="color:#999;">কোনো ডাটা নেই</p>
-                    </div>
+                    <div id="yearlyReportContainer"><p style="color:#999;">কোনো ডাটা নেই</p></div>
                 </div>
                 <button class="btn btn-warning btn-sm no-print" onclick="printGeneralReport()" style="margin-top:8px;">
                     <i class="fas fa-print"></i> প্রিন্ট রিপোর্ট
@@ -575,20 +515,10 @@
             <!-- ===== UPDATES TAB ===== -->
             <div id="tabUpdates" class="tab-content">
                 <h3><i class="fas fa-bullhorn"></i> আপডেট পোস্ট</h3>
-                <div class="notification" id="updateSuccess">
-                    <i class="fas fa-check-circle"></i> আপডেট পোস্ট করা হয়েছে!
-                </div>
-                <div class="form-group">
-                    <label>শিরোনাম *</label>
-                    <input type="text" id="updateTitle" placeholder="শিরোনাম">
-                </div>
-                <div class="form-group">
-                    <label>বিস্তারিত *</label>
-                    <textarea id="updateDesc" placeholder="বিস্তারিত" style="height:40px;"></textarea>
-                </div>
-                <button class="btn btn-primary" onclick="submitUpdate()">
-                    <i class="fas fa-upload"></i> পোস্ট করুন
-                </button>
+                <div class="notification" id="updateSuccess"><i class="fas fa-check-circle"></i> আপডেট পোস্ট করা হয়েছে!</div>
+                <div class="form-group"><label>শিরোনাম *</label><input type="text" id="updateTitle" placeholder="শিরোনাম"></div>
+                <div class="form-group"><label>বিস্তারিত *</label><textarea id="updateDesc" placeholder="বিস্তারিত" style="height:40px;"></textarea></div>
+                <button class="btn btn-primary" onclick="submitUpdate()"><i class="fas fa-upload"></i> পোস্ট করুন</button>
                 <div style="margin-top:10px;">
                     <h4 style="font-size:0.85rem;">পূর্ববর্তী</h4>
                     <div id="committeeUpdates"></div>
@@ -600,9 +530,7 @@
                 <h3><i class="fas fa-address-book"></i> মুসল্লি তালিকা</h3>
                 <div class="table-responsive" style="max-height:250px;">
                     <table>
-                        <thead>
-                            <tr><th>সিরিয়াল</th><th>নাম</th><th>ঠিকানা</th><th>মোবাইল</th><th>চাঁদা</th><th>বকেয়া</th></tr>
-                        </thead>
+                        <thead><tr><th>সিরিয়াল</th><th>নাম</th><th>ঠিকানা</th><th>মোবাইল</th><th>চাঁদা</th><th>বকেয়া</th></tr></thead>
                         <tbody id="memberTableBody"></tbody>
                     </table>
                 </div>
@@ -610,10 +538,8 @@
                     <i class="fas fa-print"></i> তালিকা প্রিন্ট
                 </button>
             </div>
-            
         </div>
     </div>
-
 </div>
 
 <!-- ===== CHANGE PASSWORD MODAL ===== -->
@@ -621,115 +547,13 @@
     <div class="modal-content">
         <span class="modal-close" onclick="closeChangePassword()">&times;</span>
         <h3><i class="fas fa-key"></i> পাসওয়ার্ড পরিবর্তন</h3>
-        <div class="notification" id="passwordChangeSuccess">
-            <i class="fas fa-check-circle"></i> পাসওয়ার্ড পরিবর্তন করা হয়েছে!
-        </div>
+        <div class="notification" id="passwordChangeSuccess"><i class="fas fa-check-circle"></i> পাসওয়ার্ড পরিবর্তন করা হয়েছে!</div>
         <div class="form-group"><label>বর্তমান</label><input type="password" id="currentPassword" placeholder="বর্তমান পাসওয়ার্ড"></div>
         <div class="form-group"><label>নতুন</label><input type="password" id="newPassword" placeholder="নতুন পাসওয়ার্ড"></div>
         <div class="form-group"><label>নতুন নিশ্চিত</label><input type="password" id="confirmPassword" placeholder="আবার লিখুন"></div>
-        <button class="btn btn-primary" onclick="changePassword()" style="width:100%;">
-            <i class="fas fa-save"></i> পরিবর্তন করুন
-        </button>
+        <button class="btn btn-primary" onclick="changePassword()" style="width:100%;"><i class="fas fa-save"></i> পরিবর্তন করুন</button>
     </div>
 </div>
-
-<!-- ===== ONLINE/OFFLINE STATUS ===== -->
-<div id="onlineStatus" class="online-status online">🟢 অনলাইন</div>
-
-<!-- ===== DEVELOPER BUTTON ===== -->
-<button class="dev-trigger" onclick="toggleDevPanel()" title="ডেভেলপার প্যানেল">
-    <i class="fas fa-code"></i>
-</button>
-
-<!-- ===== DEVELOPER PANEL ===== -->
-<div class="dev-overlay" id="devOverlay" onclick="toggleDevPanel()"></div>
-<div class="dev-panel" id="devPanel">
-    <button class="close-btn" onclick="toggleDevPanel()">✕ বন্ধ</button>
-    <h3><i class="fas fa-code"></i> 👨‍💻 ডেভেলপার প্যানেল</h3>
-    <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">🔒 এই প্যানেল শুধুমাত্র ডেভেলপার ব্যবহার করতে পারবেন।</p>
-    
-    <div id="devLock" style="background:#f8f9fa; padding:15px; border-radius:10px; margin-bottom:15px;">
-        <p style="font-weight:bold;">🔐 ডেভেলপার ভেরিফিকেশন</p>
-        <div class="inline-flex">
-            <input type="password" id="devPassword" placeholder="ডেভেলপার পাসওয়ার্ড দিন" style="flex:1; padding:8px 12px; border:2px solid #ddd; border-radius:6px;">
-            <button class="btn btn-primary btn-sm" onclick="unlockDevPanel()">আনলক</button>
-        </div>
-        <small style="color:#999;">💡 ডিফল্ট পাসওয়ার্ড: <strong>●●●●●●●●</strong> (শুধু ডেভেলপার জানবেন)</small>
-    </div>
-    
-    <div id="devContent" style="display:none;">
-        <div class="section">
-            <h4><i class="fas fa-users-cog"></i> ইউজার ম্যানেজমেন্ট</h4>
-            <div class="row">
-                <div class="form-group">
-                    <label>রোল</label>
-                    <select id="devUserRole">
-                        <option value="cashier">ক্যাশিয়ার</option>
-                        <option value="secretary">সেক্রেটারি</option>
-                        <option value="president">সভাপতি</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>নতুন নাম</label>
-                    <input type="text" id="devNewUserName" placeholder="নাম লিখুন">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <label>নতুন পাসওয়ার্ড</label>
-                    <input type="password" id="devNewPassword" placeholder="নতুন পাসওয়ার্ড (ঐচ্ছিক)">
-                </div>
-                <div class="form-group" style="display:flex; align-items:flex-end;">
-                    <button class="btn btn-primary btn-sm" onclick="devUpdateUser()" style="width:100%;">
-                        <i class="fas fa-save"></i> আপডেট করুন
-                    </button>
-                </div>
-            </div>
-            <hr style="margin:10px 0;">
-            <div id="devUserList"></div>
-        </div>
-        
-        <div class="section">
-            <h4><i class="fas fa-database"></i> ডাটা ম্যানেজমেন্ট</h4>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button class="btn btn-success btn-sm" onclick="backupData()">
-                    <i class="fas fa-download"></i> ব্যাকআপ ডাউনলোড
-                </button>
-                <button class="btn btn-info btn-sm" onclick="document.getElementById('restoreFileInput').click()">
-                    <i class="fas fa-upload"></i> ব্যাকআপ রিস্টোর
-                </button>
-                <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreData(event)">
-                <button class="btn btn-danger btn-sm" onclick="devResetAll()">
-                    <i class="fas fa-trash"></i> সব রিসেট
-                </button>
-                <button class="btn btn-warning btn-sm" onclick="devResetIncomeExpense()">
-                    <i class="fas fa-undo"></i> আয়-ব্যয় রিসেট
-                </button>
-            </div>
-            
-            <div style="margin-top:10px; padding:10px; background:#e8f5e9; border-radius:6px; border-left:4px solid #2d7d46;">
-                <p style="font-size:0.85rem; margin:2px 0;">
-                    <i class="fas fa-cloud-upload-alt" style="color:#1a472a;"></i>
-                    <strong>Google Drive-এ ব্যাকআপ রাখতে:</strong>
-                </p>
-                <ol style="font-size:0.8rem; color:#555; margin-left:20px; padding-left:0;">
-                    <li>"ব্যাকআপ ডাউনলোড" ক্লিক করে JSON ফাইল ডাউনলোড করুন</li>
-                    <li>Google Drive-এ যান → "নতুন" → "ফাইল আপলোড"</li>
-                    <li>ডাউনলোড করা JSON ফাইলটি সিলেক্ট করুন</li>
-                </ol>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h4><i class="fas fa-info-circle"></i> সিস্টেম ইনফো</h4>
-            <p><strong>মোট মুসল্লি:</strong> <span id="devTotalMembers">০</span> জন</p>
-            <p><strong>মোট লেনদেন:</strong> <span id="devTotalTransactions">০</span> টি</p>
-            <p><strong>মোট আয়:</strong> <span id="devTotalIncome">০</span> টাকা</p>
-            <p><strong>মোট ব্যয়:</strong> <span id="devTotalExpense">০</span> টাকা</p>
-        </div>
-    </div>
-</div>
-
 
 <script>
     // =========================================
@@ -745,78 +569,8 @@
         appId: "1:60515683618:web:dbc87800452fe729d9e97b",
         measurementId: "G-D85W6F8Q26"
     };
-
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
-
-    // =========================================
-    // ===== ★★★★★ FIREBASE কানেকশন টেস্ট ★★★★★ =====
-    // =========================================
-    function testFirebaseConnection() {
-        database.ref('.info/connected').on('value', function(snap) {
-            if (snap.val() === true) {
-                console.log('✅ Firebase সংযুক্ত!');
-                document.getElementById('syncStatus').textContent = '✅ সিঙ্কড';
-                document.getElementById('syncStatus').className = 'sync-status synced';
-            } else {
-                console.log('❌ Firebase সংযুক্ত নয়!');
-                document.getElementById('syncStatus').textContent = '📡 অফলাইন';
-                document.getElementById('syncStatus').className = 'sync-status offline';
-            }
-        });
-    }
-
-    // =========================================
-    // ===== ★★★★★ FIREBASE-এ ডাটা সেভ ★★★★★ =====
-    // =========================================
-    function saveToFirebase(path, data) {
-        if (!navigator.onLine) {
-            console.warn('📡 অফলাইন, ডাটা সেভ করা সম্ভব নয়');
-            return;
-        }
-        console.log('💾 Firebase-এ সেভ হচ্ছে:', path);
-        database.ref(path).set(data)
-            .then(function() { console.log('✅ Firebase-এ সেভ সফল:', path); })
-            .catch(function(error) { console.error('❌ Firebase সেভ ত্রুটি:', error); });
-    }
-
-    // =========================================
-    // ===== ★★★★★ FIREBASE থেকে ডাটা লোড ★★★★★ =====
-    // =========================================
-    function loadFromFirebase(path, callback) {
-        if (!navigator.onLine) {
-            console.warn('📡 অফলাইন, ডাটা লোড করা সম্ভব নয়');
-            callback(null);
-            return;
-        }
-        console.log('📥 Firebase থেকে লোড হচ্ছে:', path);
-        database.ref(path).once('value')
-            .then(function(snapshot) {
-                var data = snapshot.val();
-                console.log('✅ Firebase থেকে লোড সফল:', path);
-                callback(data);
-            })
-            .catch(function(error) {
-                console.error('❌ Firebase লোড ত্রুটি:', error);
-                callback(null);
-            });
-    }
-
-    // =========================================
-    // ===== ★★★★★ রিয়েল-টাইম লিসেনার ★★★★★ =====
-    // =========================================
-    function listenToFirebase(path, callback) {
-        console.log('👂 Firebase লিসেনার শুরু:', path);
-        database.ref(path).on('value', function(snapshot) {
-            var data = snapshot.val();
-            if (data !== null && data !== undefined) {
-                console.log('🔄 Firebase রিয়েল-টাইম আপডেট:', path);
-                callback(data);
-            }
-        }, function(error) {
-            console.error('❌ Firebase লিসেনার ত্রুটি:', error);
-        });
-    }
 
     // =========================================
     // ===== ★★★★★ গ্লোবাল ভেরিয়েবল ★★★★★ =====
@@ -825,8 +579,6 @@
     var currentReceipt = null;
     var isLoggedIn = false;
     var editingMemberIndex = -1;
-    var DEV_PASSWORD = 'admin@123';
-    var isDevUnlocked = false;
 
     var users = {
         'cashier': { name: 'ক্যাশিয়ার', role: 'cashier', password: '123456' },
@@ -856,21 +608,24 @@
     }
 
     // =========================================
-    // ===== ★★★★★ ডাটা সেভ ★★★★★ =====
+    // ===== ★★★★★ FIREBASE ফাংশন ★★★★★ =====
     // =========================================
+    function saveToFirebase(path, data) {
+        if (!navigator.onLine) return;
+        database.ref(path).set(data).catch(function(e){ console.log('Firebase error:', e); });
+    }
+
+    function loadFromFirebase(path, callback) {
+        if (!navigator.onLine) { callback(null); return; }
+        database.ref(path).once('value').then(function(snapshot) {
+            callback(snapshot.val());
+        }).catch(function(e){ callback(null); });
+    }
+
     function saveAllData() {
         try {
-            var data = { 
-                users: users, members: members, updates: updates,
-                personalTransactions: personalTransactions,
-                monthlyReports: monthlyReports, reportData: reportData,
-                totalIncome: totalIncome, totalExpense: totalExpense,
-                nextSerial: nextSerial, nextMemo: nextMemo,
-                savedAt: new Date().toISOString() 
-            };
+            var data = { users, members, updates, personalTransactions, monthlyReports, reportData, totalIncome, totalExpense, nextSerial, nextMemo };
             localStorage.setItem('mosjidData', JSON.stringify(data));
-            console.log('✅ ডাটা লোকাল স্টোরেজে সেভ করা হয়েছে');
-            
             saveToFirebase('members', members);
             saveToFirebase('updates', updates);
             saveToFirebase('personalTransactions', personalTransactions);
@@ -880,12 +635,9 @@
             saveToFirebase('totalExpense', totalExpense);
             saveToFirebase('nextSerial', nextSerial);
             saveToFirebase('nextMemo', nextMemo);
-        } catch(e) { console.log('❌ ডাটা সেভ সমস্যা:', e); }
+        } catch(e) { console.log('Save error:', e); }
     }
 
-    // =========================================
-    // ===== ★★★★★ ডাটা লোড ★★★★★ =====
-    // =========================================
     function loadAllData() {
         try {
             var saved = localStorage.getItem('mosjidData');
@@ -901,145 +653,14 @@
                 totalExpense = data.totalExpense || 0;
                 nextSerial = data.nextSerial || 1;
                 nextMemo = data.nextMemo || 1001;
-                console.log('✅ ডাটা লোকাল স্টোরেজ থেকে লোড করা হয়েছে');
                 return true;
             }
-        } catch(e) { console.log('❌ ডাটা লোড সমস্যা:', e); }
+        } catch(e) { console.log('Load error:', e); }
         return false;
     }
 
-    function loadAllDataFromFirebase() {
-        console.log('📥 সব ডাটা Firebase থেকে লোড হচ্ছে...');
-        
-        loadFromFirebase('members', function(data) {
-            if (data && Array.isArray(data)) {
-                members = data;
-                loadMemberTable();
-                loadMemberSelect();
-                updateDevInfo();
-            }
-        });
-        
-        loadFromFirebase('updates', function(data) {
-            if (data && Array.isArray(data)) {
-                updates = data;
-                loadCommitteeUpdates();
-                loadPublicUpdates();
-            }
-        });
-        
-        loadFromFirebase('personalTransactions', function(data) {
-            if (data && Array.isArray(data)) {
-                personalTransactions = data;
-                updatePersonalReports();
-            } else {
-                personalTransactions = [];
-            }
-        });
-        
-        loadFromFirebase('reportData', function(data) {
-            if (data) {
-                reportData = data;
-                updateAllReports();
-            } else {
-                reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
-            }
-        });
-        
-        loadFromFirebase('monthlyReports', function(data) {
-            if (data) {
-                monthlyReports = data;
-                loadMonthlyReport();
-            } else {
-                monthlyReports = {};
-            }
-        });
-        
-        loadFromFirebase('totalIncome', function(data) {
-            if (data !== null && data !== undefined) {
-                totalIncome = data;
-                updatePublicStats();
-                updateDevInfo();
-            }
-        });
-        
-        loadFromFirebase('totalExpense', function(data) {
-            if (data !== null && data !== undefined) {
-                totalExpense = data;
-                updatePublicStats();
-                updateDevInfo();
-            }
-        });
-        
-        loadFromFirebase('nextSerial', function(data) {
-            if (data !== null && data !== undefined) { nextSerial = data; }
-        });
-        
-        loadFromFirebase('nextMemo', function(data) {
-            if (data !== null && data !== undefined) { nextMemo = data; }
-        });
-    }
-
-    function listenToAllFirebase() {
-        console.log('👂 রিয়েল-টাইম লিসেনার চালু হচ্ছে...');
-        
-        listenToFirebase('members', function(data) {
-            if (data && Array.isArray(data)) {
-                members = data;
-                loadMemberTable();
-                loadMemberSelect();
-                updateDevInfo();
-            }
-        });
-        
-        listenToFirebase('updates', function(data) {
-            if (data && Array.isArray(data)) {
-                updates = data;
-                loadCommitteeUpdates();
-                loadPublicUpdates();
-            }
-        });
-        
-        listenToFirebase('personalTransactions', function(data) {
-            if (data && Array.isArray(data)) {
-                personalTransactions = data;
-                updatePersonalReports();
-            }
-        });
-        
-        listenToFirebase('reportData', function(data) {
-            if (data) {
-                reportData = data;
-                updateAllReports();
-            }
-        });
-        
-        listenToFirebase('monthlyReports', function(data) {
-            if (data) {
-                monthlyReports = data;
-                loadMonthlyReport();
-            }
-        });
-        
-        listenToFirebase('totalIncome', function(data) {
-            if (data !== null && data !== undefined) {
-                totalIncome = data;
-                updatePublicStats();
-                updateDevInfo();
-            }
-        });
-        
-        listenToFirebase('totalExpense', function(data) {
-            if (data !== null && data !== undefined) {
-                totalExpense = data;
-                updatePublicStats();
-                updateDevInfo();
-            }
-        });
-    }
-
     // =========================================
-    // ===== ★★★★★ নেভিগেশন ফাংশন ★★★★★ =====
+    // ===== ★★★★★ নেভিগেশন ★★★★★ =====
     // =========================================
     function goHome() {
         document.getElementById('homePage').style.display = 'block';
@@ -1049,7 +670,6 @@
         document.getElementById('loginPage').classList.remove('active');
         document.getElementById('publicView').classList.remove('active');
         document.getElementById('dashboard').classList.remove('active');
-        console.log('✅ হোম পেজে ফিরে গেছেন');
     }
 
     function showLogin() {
@@ -1058,7 +678,8 @@
         document.getElementById('loginPage').classList.add('active');
         document.getElementById('publicView').style.display = 'none';
         document.getElementById('dashboard').style.display = 'none';
-        console.log('✅ লগইন পেজ খোলা হয়েছে');
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('loginPassword').focus();
     }
 
     function openPublicView() {
@@ -1070,16 +691,21 @@
         loadPublicUpdates();
         updatePublicStats();
         loadMonthlyReport();
-        console.log('✅ পাবলিক ভিউ খোলা হয়েছে');
     }
 
     // =========================================
-    // ===== ★★★★★ লগইন ফাংশন ★★★★★ =====
+    // ===== ★★★★★ লগইন ★★★★★ =====
     // =========================================
     function handleLogin() {
         var username = document.getElementById('loginUserSelect').value;
-        var password = document.getElementById('loginPassword').value.trim();
-        if (!password) { alert('দয়া করে পাসওয়ার্ড লিখুন!'); return; }
+        var password = document.getElementById('loginPassword').value;
+        
+        if (password === '' || password === null) {
+            alert('দয়া করে পাসওয়ার্ড লিখুন!');
+            document.getElementById('loginPassword').focus();
+            return;
+        }
+        
         if (users[username] && users[username].password === password) {
             currentUser = { name: users[username].name, role: users[username].role, username: username, password: password };
             isLoggedIn = true;
@@ -1087,7 +713,9 @@
             document.getElementById('loginPage').classList.remove('active');
             showDashboard(currentUser);
         } else {
-            alert('ভুল পাসওয়ার্ড!');
+            alert('❌ ভুল পাসওয়ার্ড! ডিফল্ট পাসওয়ার্ড: 123456');
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginPassword').focus();
         }
     }
 
@@ -1096,6 +724,7 @@
         document.getElementById('dashboard').classList.add('active');
         document.getElementById('userRoleDisplay').innerHTML = '<i class="fas fa-user"></i> ' + user.name + ' (' + user.role + ')';
         document.getElementById('personalReportUser').textContent = user.name + ' (' + user.role + ')';
+        
         if (user.role === 'cashier') {
             document.getElementById('expenseForm').style.display = 'block';
             document.getElementById('expenseAccessDenied').style.display = 'none';
@@ -1103,15 +732,16 @@
             document.getElementById('expenseForm').style.display = 'none';
             document.getElementById('expenseAccessDenied').style.display = 'block';
         }
+        
         var defaultTab = document.querySelector('.dash-menu-item.active');
-        if (!defaultTab) { defaultTab = document.querySelector('.dash-menu-item'); }
-        if (defaultTab) { showTab(defaultTab.dataset.tab, defaultTab); }
+        if (!defaultTab) defaultTab = document.querySelector('.dash-menu-item');
+        if (defaultTab) showTab(defaultTab.dataset.tab, defaultTab);
+        
         loadMemberTable();
         loadCommitteeUpdates();
         loadMemberSelect();
         updateAllReports();
         updatePersonalReports();
-        console.log('✅ ড্যাশবোর্ড খোলা হয়েছে');
     }
 
     function logout() {
@@ -1121,116 +751,461 @@
         document.getElementById('dashboard').classList.remove('active');
         goHome();
         saveAllData();
-        console.log('✅ লগআউট করা হয়েছে');
     }
 
     // =========================================
-    // ===== ★★★★★ ট্যাব ম্যানেজমেন্ট ★★★★★ =====
+    // ===== ★★★★★ ট্যাব ★★★★★ =====
     // =========================================
     function showTab(tab, menuItem) {
-        console.log('📌 ট্যাব পরিবর্তন:', tab);
         var menuItems = document.querySelectorAll('.dash-menu-item');
-        for (var i = 0; i < menuItems.length; i++) {
-            menuItems[i].classList.remove('active');
-        }
-        if (menuItem) {
-            menuItem.classList.add('active');
-        } else {
-            var items = document.querySelectorAll('.dash-menu-item');
-            for (var j = 0; j < items.length; j++) {
-                if (items[j].dataset.tab === tab) {
-                    items[j].classList.add('active');
-                    break;
-                }
-            }
-        }
+        for (var i = 0; i < menuItems.length; i++) menuItems[i].classList.remove('active');
+        if (menuItem) menuItem.classList.add('active');
+        
         var tabContents = document.querySelectorAll('.tab-content');
-        for (var k = 0; k < tabContents.length; k++) {
-            tabContents[k].classList.remove('active');
-        }
+        for (var i = 0; i < tabContents.length; i++) tabContents[i].classList.remove('active');
+        
         var tabMap = {
-            'donation': 'tabDonation',
-            'addMember': 'tabAddMember',
-            'manageMembers': 'tabManageMembers',
-            'expense': 'tabExpense',
-            'reports': 'tabReports',
-            'personalReport': 'tabPersonalReport',
-            'updates': 'tabUpdates',
-            'members': 'tabMembers'
+            'donation': 'tabDonation', 'addMember': 'tabAddMember',
+            'manageMembers': 'tabManageMembers', 'expense': 'tabExpense',
+            'reports': 'tabReports', 'personalReport': 'tabPersonalReport',
+            'updates': 'tabUpdates', 'members': 'tabMembers'
         };
         var target = document.getElementById(tabMap[tab]);
-        if (target) {
-            target.classList.add('active');
-        }
-        var contentArea = document.getElementById('contentArea');
-        if (contentArea) {
-            contentArea.scrollTop = 0;
-        }
-        if (tab === 'personalReport') {
-            updatePersonalReports();
-        }
-        if (tab === 'manageMembers') {
-            loadMemberSelect();
-        }
+        if (target) target.classList.add('active');
+        
+        if (tab === 'personalReport') updatePersonalReports();
+        if (tab === 'manageMembers') loadMemberSelect();
     }
 
-    // ★★★★★ রিপোর্ট ট্যাব পরিবর্তন ★★★★★
     function switchReportTab(type, btnElement) {
-        console.log('📊 রিপোর্ট ট্যাব পরিবর্তন:', type);
-        
-        var reportContents = document.querySelectorAll('#tabReports .tab-content');
-        for (var i = 0; i < reportContents.length; i++) {
-            reportContents[i].classList.remove('active');
-        }
-        var reportBtns = document.querySelectorAll('#tabReports .tab-btn');
-        for (var j = 0; j < reportBtns.length; j++) {
-            reportBtns[j].classList.remove('active');
-        }
-        var reportMap = {
-            'daily': 'reportDaily',
-            'weekly': 'reportWeekly',
-            'monthly': 'reportMonthly',
-            'yearly': 'reportYearly'
-        };
-        document.getElementById(reportMap[type]).classList.add('active');
+        var contents = document.querySelectorAll('#tabReports .tab-content');
+        for (var i = 0; i < contents.length; i++) contents[i].classList.remove('active');
+        var btns = document.querySelectorAll('#tabReports .tab-btn');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
         btnElement.classList.add('active');
         
-        // ★★★★★ ট্যাব পরিবর্তনের সময় রিপোর্ট আপডেট ★★★★★
-        if (type === 'daily') {
-            updateReportData('daily');
-        } else if (type === 'weekly') {
-            updateWeeklyReport();
-        } else if (type === 'monthly') {
-            updateMonthlyReport();
-        } else if (type === 'yearly') {
-            updateYearlyReport();
-        }
+        var map = { 'daily': 'reportDaily', 'weekly': 'reportWeekly', 'monthly': 'reportMonthly', 'yearly': 'reportYearly' };
+        document.getElementById(map[type]).classList.add('active');
         
-        console.log('✅ ' + type + ' রিপোর্ট আপডেট করা হয়েছে!');
+        if (type === 'daily') updateReportData('daily');
+        else if (type === 'weekly') updateWeeklyReport();
+        else if (type === 'monthly') updateMonthlyReport();
+        else if (type === 'yearly') updateYearlyReport();
     }
 
     function switchPersonalReportTab(type, btnElement) {
         var contents = document.querySelectorAll('#tabPersonalReport .tab-content');
-        for (var i = 0; i < contents.length; i++) {
-            contents[i].classList.remove('active');
-        }
+        for (var i = 0; i < contents.length; i++) contents[i].classList.remove('active');
         var btns = document.querySelectorAll('#tabPersonalReport .tab-btn');
-        for (var j = 0; j < btns.length; j++) {
-            btns[j].classList.remove('active');
-        }
-        var map = {
-            'daily': 'personalDaily',
-            'weekly': 'personalWeekly',
-            'monthly': 'personalMonthly',
-            'yearly': 'personalYearly'
-        };
-        document.getElementById(map[type]).classList.add('active');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
         btnElement.classList.add('active');
+        var map = { 'daily': 'personalDaily', 'weekly': 'personalWeekly', 'monthly': 'personalMonthly', 'yearly': 'personalYearly' };
+        document.getElementById(map[type]).classList.add('active');
         updatePersonalReports();
     }
 
     // =========================================
-    // ===== ★★★★★ মাস লিস্ট জেনারেট ★★★★★ =====
+    // ===== ★★★★★ রিপোর্ট ফাংশন ★★★★★ =====
+    // =========================================
+    
+    function updateReportData(type) {
+        if (type === 'daily') {
+            var tbody = document.getElementById('reportDailyBody');
+            var today = new Date().toLocaleDateString('bn-BD');
+            var todayTxns = personalTransactions.filter(function(t) { return t.date === today; });
+            var html = '';
+            if (todayTxns.length === 0) {
+                html = '<tr><td colspan="4" style="text-align:center; color:#999;">আজকে কোনো লেনদেন নেই</td></tr>';
+            } else {
+                var totalIncome = 0, totalExpense = 0;
+                for (var i = 0; i < todayTxns.length; i++) {
+                    var t = todayTxns[i];
+                    if (t.amount > 0) totalIncome += t.amount;
+                    else totalExpense += Math.abs(t.amount);
+                    html += '<tr><td>' + t.date + '</td><td>' + (t.amount > 0 ? t.amount : '-') + '</td><td>' + (t.amount < 0 ? Math.abs(t.amount) : '-') + '</td><td>' + (t.amount > 0 ? t.amount : (-t.amount)) + '</td></tr>';
+                }
+                var balance = totalIncome - totalExpense;
+                html += '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + totalIncome + '</td><td>' + totalExpense + '</td><td>' + balance + '</td></tr>';
+            }
+            tbody.innerHTML = html;
+        }
+    }
+
+    // সাপ্তাহিক রিপোর্ট
+    function updateWeeklyReport() {
+        var today = new Date();
+        var currentDate = today.getDate();
+        var dayOfWeek = today.getDay();
+        
+        var weekStart = new Date(today);
+        var weekEnd = new Date(today);
+        var daysToSaturday = (dayOfWeek + 1) % 7;
+        weekStart.setDate(currentDate - daysToSaturday);
+        weekStart.setHours(0, 0, 0, 0);
+        var daysToFriday = (5 - dayOfWeek + 7) % 7;
+        weekEnd.setDate(currentDate + daysToFriday);
+        weekEnd.setHours(23, 59, 59, 999);
+        if (dayOfWeek === 5) { weekEnd = new Date(today); weekEnd.setHours(23, 59, 59, 999); }
+        
+        var weekStartStr = weekStart.getDate() + '/' + (weekStart.getMonth() + 1) + '/' + weekStart.getFullYear();
+        var weekEndStr = weekEnd.getDate() + '/' + (weekEnd.getMonth() + 1) + '/' + weekEnd.getFullYear();
+        
+        // সঠিক ডেট পার্সিং - convertToEnglish ব্যবহার করে
+        var weeklyTxns = [];
+        for (var i = 0; i < personalTransactions.length; i++) {
+            var t = personalTransactions[i];
+            var parts = t.date.split('/');
+            if (parts.length === 3) {
+                var day = parseInt(convertToEnglish(parts[0]));
+                var month = parseInt(convertToEnglish(parts[1])) - 1;
+                var year = parseInt(convertToEnglish(parts[2]));
+                var txnDate = new Date(year, month, day);
+                if (txnDate >= weekStart && txnDate <= weekEnd) {
+                    weeklyTxns.push(t);
+                }
+            }
+        }
+        
+        var weeklyIncome = 0, weeklyExpense = 0;
+        for (var i = 0; i < weeklyTxns.length; i++) {
+            if (weeklyTxns[i].amount > 0) weeklyIncome += weeklyTxns[i].amount;
+            else weeklyExpense += Math.abs(weeklyTxns[i].amount);
+        }
+        
+        reportData.weekly = { startDate: weekStartStr, endDate: weekEndStr, income: weeklyIncome, expense: weeklyExpense, transactions: weeklyTxns.length };
+        
+        var container = document.getElementById('weeklyReportContainer');
+        if (container) {
+            var html = '<div class="report-summary">';
+            html += '<h4>📊 সাপ্তাহিক রিপোর্ট</h4>';
+            html += '<p><strong>সময়কাল:</strong> ' + weekStartStr + ' - ' + weekEndStr + '</p>';
+            html += '<p><strong>মোট আয়:</strong> ' + weeklyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + weeklyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (weeklyIncome - weeklyExpense).toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট লেনদেন:</strong> ' + weeklyTxns.length + ' টি</p>';
+            html += '</div>';
+            
+            if (weeklyTxns.length > 0) {
+                html += '<div class="table-responsive" style="max-height:180px;"><table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead><tbody>';
+                for (var i = 0; i < weeklyTxns.length; i++) {
+                    var t = weeklyTxns[i];
+                    html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount.toLocaleString() + ' টাকা</td><td>' + t.purpose + '</td></tr>';
+                }
+                html += '</tbody></table></div>';
+            } else {
+                html += '<p style="color:#999; text-align:center; padding:15px;">এই সপ্তাহে কোনো লেনদেন নেই</p>';
+            }
+            container.innerHTML = html;
+        }
+    }
+
+    // মাসিক রিপোর্ট
+    function updateMonthlyReport() {
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        var currentMonth = today.getMonth();
+        var currentDate = today.getDate();
+        
+        var monthStart = new Date(currentYear, currentMonth, 1);
+        var monthEnd = new Date(today);
+        var monthStartStr = monthStart.toLocaleDateString('bn-BD');
+        var monthEndStr = monthEnd.toLocaleDateString('bn-BD');
+        var monthName = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        
+        // সঠিক ডেট পার্সিং - convertToEnglish ব্যবহার করে
+        var monthlyTxns = [];
+        for (var i = 0; i < personalTransactions.length; i++) {
+            var t = personalTransactions[i];
+            var parts = t.date.split('/');
+            if (parts.length === 3) {
+                var day = parseInt(convertToEnglish(parts[0]));
+                var month = parseInt(convertToEnglish(parts[1])) - 1;
+                var year = parseInt(convertToEnglish(parts[2]));
+                var txnDate = new Date(year, month, day);
+                if (txnDate >= monthStart && txnDate <= monthEnd) {
+                    monthlyTxns.push(t);
+                }
+            }
+        }
+        
+        var monthlyIncome = 0, monthlyExpense = 0;
+        for (var i = 0; i < monthlyTxns.length; i++) {
+            if (monthlyTxns[i].amount > 0) monthlyIncome += monthlyTxns[i].amount;
+            else monthlyExpense += Math.abs(monthlyTxns[i].amount);
+        }
+        
+        var isMonthEnd = (currentDate === new Date(currentYear, currentMonth + 1, 0).getDate());
+        var monthStatus = isMonthEnd ? '✅ মাস শেষ (ফাইনাল রিপোর্ট)' : '📊 চলমান মাস';
+        
+        var container = document.getElementById('monthlyReportContainer2');
+        if (container) {
+            var html = '<div class="report-summary">';
+            html += '<h4>📊 ' + monthName + ' - ' + monthStatus + '</h4>';
+            html += '<p><strong>মোট আয়:</strong> ' + monthlyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + monthlyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (monthlyIncome - monthlyExpense).toLocaleString() + ' টাকা</p>';
+            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + monthStartStr + ' থেকে ' + monthEndStr + '</p>';
+            if (isMonthEnd) html += '<p style="font-size:0.8rem; color:#28a745; font-weight:bold;">✅ মাসিক হিসাব সমাপ্ত। নতুন মাস শুরু হয়েছে।</p>';
+            html += '</div>';
+            
+            if (monthlyTxns.length > 0) {
+                html += '<div class="table-responsive" style="max-height:150px;"><table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead><tbody>';
+                for (var i = 0; i < monthlyTxns.length; i++) {
+                    var t = monthlyTxns[i];
+                    html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount.toLocaleString() + ' টাকা</td><td>' + t.purpose + '</td></tr>';
+                }
+                html += '</tbody></table></div>';
+            } else {
+                html += '<p style="color:#999; text-align:center; padding:10px;">এই মাসে কোনো লেনদেন নেই</p>';
+            }
+            container.innerHTML = html;
+        }
+        
+        var foundMonth = false;
+        for (var i = 0; i < reportData.monthly.length; i++) {
+            if (reportData.monthly[i].month === monthName) {
+                reportData.monthly[i].income = monthlyIncome;
+                reportData.monthly[i].expense = monthlyExpense;
+                reportData.monthly[i].startDate = monthStartStr;
+                reportData.monthly[i].endDate = monthEndStr;
+                reportData.monthly[i].isComplete = isMonthEnd;
+                reportData.monthly[i].transactions = monthlyTxns.length;
+                foundMonth = true;
+                break;
+            }
+        }
+        if (!foundMonth) {
+            reportData.monthly.push({ month: monthName, income: monthlyIncome, expense: monthlyExpense, startDate: monthStartStr, endDate: monthEndStr, isComplete: isMonthEnd, transactions: monthlyTxns.length });
+        }
+    }
+
+    // বার্ষিক রিপোর্ট
+    function updateYearlyReport() {
+        var today = new Date();
+        var currentYear = today.getFullYear();
+        
+        var yearStart = new Date(currentYear, 0, 1);
+        var yearEnd = new Date(today);
+        var yearStartStr = yearStart.toLocaleDateString('bn-BD');
+        var yearEndStr = yearEnd.toLocaleDateString('bn-BD');
+        
+        // সঠিক ডেট পার্সিং - convertToEnglish ব্যবহার করে
+        var yearlyTxns = [];
+        for (var i = 0; i < personalTransactions.length; i++) {
+            var t = personalTransactions[i];
+            var parts = t.date.split('/');
+            if (parts.length === 3) {
+                var day = parseInt(convertToEnglish(parts[0]));
+                var month = parseInt(convertToEnglish(parts[1])) - 1;
+                var year = parseInt(convertToEnglish(parts[2]));
+                var txnDate = new Date(year, month, day);
+                if (txnDate >= yearStart && txnDate <= yearEnd) {
+                    yearlyTxns.push(t);
+                }
+            }
+        }
+        
+        var yearlyIncome = 0, yearlyExpense = 0;
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            if (yearlyTxns[i].amount > 0) yearlyIncome += yearlyTxns[i].amount;
+            else yearlyExpense += Math.abs(yearlyTxns[i].amount);
+        }
+        
+        var monthlySummary = {};
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            var t = yearlyTxns[i];
+            var monthKey = t.month || new Date(t.date).toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+            if (!monthlySummary[monthKey]) monthlySummary[monthKey] = { income: 0, expense: 0 };
+            if (t.amount > 0) monthlySummary[monthKey].income += t.amount;
+            else monthlySummary[monthKey].expense += Math.abs(t.amount);
+        }
+        
+        var container = document.getElementById('yearlyReportContainer');
+        if (container) {
+            var html = '<div class="report-summary">';
+            html += '<h4>📊 বার্ষিক রিপোর্ট - ' + currentYear + '</h4>';
+            html += '<p><strong>মোট আয়:</strong> ' + yearlyIncome.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>মোট ব্যয়:</strong> ' + yearlyExpense.toLocaleString() + ' টাকা</p>';
+            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (yearlyIncome - yearlyExpense).toLocaleString() + ' টাকা</p>';
+            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + yearStartStr + ' থেকে ' + yearEndStr + '</p>';
+            html += '</div>';
+            
+            var monthNames = Object.keys(monthlySummary);
+            if (monthNames.length > 0) {
+                html += '<div style="margin-top:10px;"><h5 style="color:#1a472a;">📋 মাসভিত্তিক সংগ্রহ:</h5>';
+                for (var i = 0; i < monthNames.length; i++) {
+                    var m = monthNames[i];
+                    var data = monthlySummary[m];
+                    html += '<p style="font-size:0.85rem; margin:3px 0;"><strong>' + m + ':</strong> আয় ' + data.income.toLocaleString() + ' টাকা, ব্যয় ' + data.expense.toLocaleString() + ' টাকা</p>';
+                }
+                html += '</div>';
+            } else {
+                html += '<p style="color:#999; text-align:center; padding:10px;">এই বছরে কোনো লেনদেন নেই</p>';
+            }
+            container.innerHTML = html;
+        }
+        
+        reportData.yearly = { year: currentYear, income: yearlyIncome, expense: yearlyExpense, startDate: yearStartStr, endDate: yearEndStr, monthlySummary: monthlySummary, transactions: yearlyTxns.length };
+    }
+
+    function updateAllReports() {
+        updateReportData('daily');
+        updateWeeklyReport();
+        updateMonthlyReport();
+        updateYearlyReport();
+        updatePublicStats();
+    }
+
+    function updatePublicStats() {
+        var balance = totalIncome - totalExpense;
+        document.getElementById('pubTotalIncome').textContent = totalIncome.toLocaleString();
+        document.getElementById('pubTotalExpense').textContent = totalExpense.toLocaleString();
+        document.getElementById('pubBalance').textContent = balance.toLocaleString();
+    }
+
+    function loadMonthlyReport() {
+        var month = document.getElementById('reportMonthSelect').value;
+        var container = document.getElementById('monthlyReportContainer');
+        var data = monthlyReports[month];
+        if (data && data.income > 0) {
+            var d = data.details || { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 };
+            container.innerHTML = '<div class="table-responsive" style="max-height:180px;"><table><thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead><tbody>' +
+                '<tr><td>মাসিক চাঁদা</td><td>' + (d.monthly || 0).toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিশেষ অনুদান</td><td>' + (d.special || 0).toLocaleString() + '</td><td>-</td></tr>' +
+                '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + (d.electric || 0).toLocaleString() + '</td></tr>' +
+                '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + (d.salary || 0).toLocaleString() + '</td></tr>' +
+                '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + (d.development || 0).toLocaleString() + '</td></tr>' +
+                '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + data.income.toLocaleString() + '</td><td>' + data.expense.toLocaleString() + '</td></tr>' +
+                '<tr style="font-weight:bold; background:#d4edda;"><td>উদ্বৃত্ত</td><td colspan="2">' + (data.income - data.expense).toLocaleString() + ' টাকা</td></tr>' +
+                '</tbody></table></div>';
+        } else {
+            container.innerHTML = '<p style="color:#999; text-align:center; padding:15px;">এই মাসের কোনো তথ্য নেই</p>';
+        }
+    }
+
+    // =========================================
+    // ===== ★★★★★ ব্যক্তিগত রিপোর্ট ★★★★★ =====
+    // =========================================
+    function updatePersonalReports() {
+        if (!currentUser) return;
+        var userRole = currentUser.role;
+        var userName = currentUser.name;
+        var today = new Date();
+        var todayStr = today.toLocaleDateString('bn-BD');
+        var userTransactions = personalTransactions.filter(function(t) {
+            return t.collectorRole === userRole && t.collectorName === userName;
+        });
+        
+        // দৈনিক
+        var dailyTxns = userTransactions.filter(function(t) { return t.date === todayStr; });
+        var dailyTotal = dailyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalDailyTotal').textContent = dailyTotal.toLocaleString();
+        document.getElementById('personalDailyCount').textContent = dailyTxns.length;
+        var dailyBody = document.getElementById('personalDailyBody');
+        if (dailyTxns.length === 0) {
+            dailyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">আজকে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < dailyTxns.length; i++) {
+                var t = dailyTxns[i];
+                html += '<tr><td>' + (i+1) + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
+            }
+            dailyBody.innerHTML = html;
+        }
+        
+        // সাপ্তাহিক - সঠিক ডেট পার্সিং
+        var currentDay = today.getDay();
+        var currentDate = today.getDate();
+        var weekStart = new Date(today);
+        var daysToSubtract = (currentDay + 1) % 7;
+        weekStart.setDate(currentDate - daysToSubtract);
+        weekStart.setHours(0, 0, 0, 0);
+        var weekEnd = new Date(today);
+        var daysToAdd = (5 - currentDay + 7) % 7;
+        weekEnd.setDate(currentDate + daysToAdd);
+        weekEnd.setHours(23, 59, 59, 999);
+        if (currentDay === 5) { weekEnd = new Date(today); weekEnd.setHours(23, 59, 59, 999); }
+        
+        var weekStartStr = weekStart.getDate() + '/' + (weekStart.getMonth() + 1) + '/' + weekStart.getFullYear();
+        var weekEndStr = weekEnd.getDate() + '/' + (weekEnd.getMonth() + 1) + '/' + weekEnd.getFullYear();
+        
+        var weeklyTxns = [];
+        for (var i = 0; i < userTransactions.length; i++) {
+            var t = userTransactions[i];
+            var parts = t.date.split('/');
+            if (parts.length === 3) {
+                var day = parseInt(convertToEnglish(parts[0]));
+                var month = parseInt(convertToEnglish(parts[1])) - 1;
+                var year = parseInt(convertToEnglish(parts[2]));
+                var txnDate = new Date(year, month, day);
+                if (txnDate >= weekStart && txnDate <= weekEnd) {
+                    weeklyTxns.push(t);
+                }
+            }
+        }
+        
+        var weeklyTotal = weeklyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalWeeklyTotal').textContent = weeklyTotal.toLocaleString();
+        document.getElementById('personalWeeklyCount').textContent = weeklyTxns.length;
+        var weeklyBody = document.getElementById('personalWeeklyBody');
+        if (weeklyTxns.length === 0) {
+            weeklyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">এই সপ্তাহে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < weeklyTxns.length; i++) {
+                var t = weeklyTxns[i];
+                html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
+            }
+            weeklyBody.innerHTML = html;
+        }
+        
+        // মাসিক
+        var currentMonth = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
+        var monthlyTxns = userTransactions.filter(function(t) { return t.month === currentMonth; });
+        var monthlyTotal = monthlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalMonthlyTotal').textContent = monthlyTotal.toLocaleString();
+        document.getElementById('personalMonthlyCount').textContent = monthlyTxns.length;
+        var monthlyBody = document.getElementById('personalMonthlyBody');
+        if (monthlyTxns.length === 0) {
+            monthlyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">এই মাসে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < monthlyTxns.length; i++) {
+                var t = monthlyTxns[i];
+                html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
+            }
+            monthlyBody.innerHTML = html;
+        }
+        
+        // বার্ষিক
+        var year = today.getFullYear();
+        var yearlyTxns = userTransactions.filter(function(t) { return t.year === year; });
+        var yearlyTotal = yearlyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
+        document.getElementById('personalYearlyTotal').textContent = yearlyTotal.toLocaleString();
+        document.getElementById('personalYearlyCount').textContent = yearlyTxns.length;
+        var monthlyGroups = {};
+        for (var i = 0; i < yearlyTxns.length; i++) {
+            var t = yearlyTxns[i];
+            if (!monthlyGroups[t.month]) monthlyGroups[t.month] = { total: 0, count: 0 };
+            monthlyGroups[t.month].total += t.amount;
+            monthlyGroups[t.month].count += 1;
+        }
+        var yearlyBody = document.getElementById('personalYearlyBody');
+        var monthNames = Object.keys(monthlyGroups);
+        if (monthNames.length === 0) {
+            yearlyBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#999;">এই বছরে কোনো লেনদেন নেই</td></tr>';
+        } else {
+            var html = '';
+            for (var i = 0; i < monthNames.length; i++) {
+                var m = monthNames[i];
+                html += '<tr><td>' + m + '</td><td>' + monthlyGroups[m].total.toLocaleString() + '</td><td>' + monthlyGroups[m].count + '</td></tr>';
+            }
+            yearlyBody.innerHTML = html;
+        }
+    }
+
+    // =========================================
+    // ===== ★★★★★ মেম্বার ফাংশন ★★★★★ =====
     // =========================================
     function generateMonthList() {
         var select = document.getElementById('donationPurpose');
@@ -1239,12 +1214,10 @@
         var currentMonth = new Date().getMonth();
         select.innerHTML = '';
         var bengaliMonths = ['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
-        
         var advanceOption = document.createElement('option');
         advanceOption.value = 'অগ্রিম';
         advanceOption.textContent = '📌 অগ্রিম (এগিয়ে)';
         select.appendChild(advanceOption);
-        
         for (var i = 0; i < 12; i++) {
             var monthIndex = (currentMonth + i) % 12;
             var year = currentYear + Math.floor((currentMonth + i) / 12);
@@ -1254,54 +1227,16 @@
             option.textContent = monthName + ' ' + year + (i === 0 ? ' (বর্তমান)' : i > 0 ? ' (অগ্রিম)' : '');
             select.appendChild(option);
         }
-        console.log('✅ মাস লিস্ট জেনারেট করা হয়েছে!');
     }
 
-    // =========================================
-    // ===== ★★★★★ নোটিফিকেশন সিস্টেম ★★★★★ =====
-    // =========================================
-    function showNotification(message, type) {
-        var notif = document.getElementById('donationSuccess');
-        if (!notif) {
-            notif = document.createElement('div');
-            notif.id = 'donationSuccess';
-            notif.className = 'notification';
-            document.querySelector('#tabDonation').prepend(notif);
-        }
-        notif.className = 'notification';
-        if (type === 'success') {
-            notif.style.background = '#d4edda';
-            notif.style.color = '#155724';
-            notif.style.borderLeftColor = '#28a745';
-        } else if (type === 'warning') {
-            notif.style.background = '#fff3cd';
-            notif.style.color = '#856404';
-            notif.style.borderLeftColor = '#ffc107';
-        } else {
-            notif.style.background = '#f8d7da';
-            notif.style.color = '#721c24';
-            notif.style.borderLeftColor = '#dc3545';
-        }
-        notif.textContent = message;
-        notif.classList.add('show');
-        clearTimeout(window.notifTimeout);
-        window.notifTimeout = setTimeout(function() { notif.classList.remove('show'); }, 5000);
-    }
-
-    // =========================================
-    // ===== ★★★★★ সার্চ ও চেক ফাংশন ★★★★★ =====
-    // =========================================
     function searchMember() {
         var input = document.getElementById('searchMobile').value.trim();
         if (!input) { alert('দয়া করে মোবাইল নম্বর লিখুন!'); return; }
         var englishInput = convertToEnglish(input);
-        var bengaliInput = convertToBengali(input);
         var found = false;
         for (var i = 0; i < members.length; i++) {
-            var memberMobile = members[i].mobile;
-            var memberEnglish = convertToEnglish(memberMobile);
-            var memberBengali = convertToBengali(memberMobile);
-            if (memberEnglish === englishInput || memberBengali === bengaliInput || memberMobile === input || memberMobile === englishInput || memberMobile === bengaliInput) {
+            var memberEng = convertToEnglish(members[i].mobile);
+            if (memberEng === englishInput || members[i].mobile === input) {
                 document.getElementById('memberInfo').innerHTML = 
                     '<p><strong>নাম:</strong> ' + members[i].name + '</p>' +
                     '<p><strong>সিরিয়াল:</strong> ' + members[i].serial + ' | <strong>ঠিকানা:</strong> ' + members[i].address + '</p>' +
@@ -1310,20 +1245,17 @@
                 break;
             }
         }
-        if (!found) { alert('এই মোবাইল নম্বরের কোনো মুসল্লি পাওয়া যায়নি!'); }
+        if (!found) alert('এই মোবাইল নম্বরের কোনো মুসল্লি পাওয়া যায়নি!');
     }
 
     function checkDues() {
         var input = document.getElementById('checkMobile').value.trim();
         if (!input) { alert('দয়া করে মোবাইল নম্বর লিখুন!'); return; }
         var englishInput = convertToEnglish(input);
-        var bengaliInput = convertToBengali(input);
         var found = false;
         for (var i = 0; i < members.length; i++) {
-            var memberMobile = members[i].mobile;
-            var memberEnglish = convertToEnglish(memberMobile);
-            var memberBengali = convertToBengali(memberMobile);
-            if (memberEnglish === englishInput || memberBengali === bengaliInput || memberMobile === input || memberMobile === englishInput || memberMobile === bengaliInput) {
+            var memberEng = convertToEnglish(members[i].mobile);
+            if (memberEng === englishInput || members[i].mobile === input) {
                 var status = members[i].due === 0 ? '✅ কোনো বকেয়া নেই।' : '⚠️ ' + members[i].due + ' টাকা বকেয়া আছে।';
                 document.getElementById('duesResult').innerHTML = 
                     '<div style="background:#d4edda; padding:8px 12px; border-radius:6px;">' +
@@ -1348,9 +1280,6 @@
         document.getElementById('guestFields').style.display = type === 'guest' ? 'block' : 'none';
     }
 
-    // =========================================
-    // ===== ★★★★★ মেম্বার ম্যানেজমেন্ট ★★★★★ =====
-    // =========================================
     function addNewMember() {
         var name = document.getElementById('newMemberName').value.trim();
         var mobile = document.getElementById('newMemberMobile').value.trim();
@@ -1365,19 +1294,11 @@
                 return;
             }
         }
-        var newMember = {
-            serial: String(nextSerial++).padStart(2, '0'),
-            name: name,
-            address: address,
-            mobile: mobile,
-            commitment: commitment,
-            due: due
-        };
+        var newMember = { serial: String(nextSerial++).padStart(2, '0'), name: name, address: address, mobile: mobile, commitment: commitment, due: due };
         members.push(newMember);
         saveAllData();
         loadMemberTable();
         loadMemberSelect();
-        loadPublicUpdates();
         document.getElementById('addMemberSuccess').classList.add('show');
         setTimeout(function() { document.getElementById('addMemberSuccess').classList.remove('show'); }, 4000);
         document.getElementById('newMemberName').value = '';
@@ -1396,7 +1317,7 @@
             var m = members[i];
             select.innerHTML += '<option value="' + i + '">' + m.serial + ' - ' + m.name + ' (' + m.mobile + ')</option>';
         }
-        if (currentVal && currentVal !== '') { select.value = currentVal; }
+        if (currentVal && currentVal !== '') select.value = currentVal;
         loadMemberForEdit();
     }
 
@@ -1444,7 +1365,6 @@
         saveAllData();
         loadMemberTable();
         loadMemberSelect();
-        loadPublicUpdates();
         document.getElementById('manageSuccess').classList.add('show');
         setTimeout(function() { document.getElementById('manageSuccess').classList.remove('show'); }, 4000);
         alert('✅ "' + name + '" আপডেট করা হয়েছে!');
@@ -1459,7 +1379,6 @@
             saveAllData();
             loadMemberTable();
             loadMemberSelect();
-            loadPublicUpdates();
             document.getElementById('editMemberForm').style.display = 'none';
             document.getElementById('noMemberSelected').style.display = 'block';
             document.getElementById('manageSuccess').classList.add('show');
@@ -1481,11 +1400,10 @@
             }
         }
         tbody.innerHTML = html;
-        updateDevInfo();
     }
 
     // =========================================
-    // ===== ★★★★★ অনুদান গ্রহণ ★★★★★ =====
+    // ===== ★★★★★ অনুদান ★★★★★ =====
     // =========================================
     function submitDonation() {
         var amount = document.getElementById('donationAmount').value;
@@ -1500,49 +1418,35 @@
             for (var i = 0; i < members.length; i++) {
                 var memberEng = convertToEnglish(members[i].mobile);
                 var searchEng = convertToEnglish(searchMobile);
-                var memberBen = convertToBengali(members[i].mobile);
-                var searchBen = convertToBengali(searchMobile);
-                if (members[i].mobile === searchMobile || memberEng === searchEng || memberBen === searchBen) {
-                    name = members[i].name;
-                    serial = members[i].serial;
-                    address = members[i].address;
-                    mobile = members[i].mobile;
-                    memberIndex = i;
-                    found = true;
-                    break;
+                if (members[i].mobile === searchMobile || memberEng === searchEng) {
+                    name = members[i].name; serial = members[i].serial; address = members[i].address; mobile = members[i].mobile;
+                    memberIndex = i; found = true; break;
                 }
             }
             if (!found) { alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!'); return; }
         } else {
             name = document.getElementById('guestName').value || 'অতিথি';
-            serial = 'N/A';
-            address = document.getElementById('guestAddress').value || 'N/A';
+            serial = 'N/A'; address = document.getElementById('guestAddress').value || 'N/A';
             mobile = document.getElementById('guestMobile').value || 'N/A';
         }
         
         if (!amount || amount <= 0) { alert('দয়া করে সঠিক পরিমাণ লিখুন'); return; }
         amount = parseInt(amount);
         
-        if (memberIndex >= 0 && purpose !== 'অগ্রিম') {
-            var alreadyPaid = false;
+        if (memberIndex >= 0 && purpose !== 'অগ্রيم') {
             for (var i = 0; i < personalTransactions.length; i++) {
-                var t = personalTransactions[i];
-                if (t.memberMobile === mobile && t.purpose === purpose && t.collectorName === currentUser.name) {
-                    alreadyPaid = true;
-                    break;
+                if (personalTransactions[i].memberMobile === mobile && personalTransactions[i].purpose === purpose && personalTransactions[i].collectorName === currentUser.name) {
+                    showNotification('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান ইতিমধ্যে গ্রহণ করা হয়েছে!', 'warning');
+                    return;
                 }
-            }
-            if (alreadyPaid) {
-                showNotification('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান ইতিমধ্যে গ্রহণ করা হয়েছে!', 'warning');
-                return;
             }
         }
         
         if (memberIndex >= 0 && members[memberIndex]) {
             var oldDue = members[memberIndex].due;
             if (oldDue > 0) {
-                if (amount >= oldDue) { members[memberIndex].due = 0; }
-                else { members[memberIndex].due = oldDue - amount; }
+                if (amount >= oldDue) members[memberIndex].due = 0;
+                else members[memberIndex].due = oldDue - amount;
             }
         }
         
@@ -1612,7 +1516,7 @@
                 break;
             }
         }
-        if (!foundToday) { reportData.daily.unshift({ date: today, income: amount, expense: 0 }); }
+        if (!foundToday) reportData.daily.unshift({ date: today, income: amount, expense: 0 });
         
         reportData.weekly.income += amount;
         var currentMonth = monthStr;
@@ -1624,7 +1528,7 @@
                 break;
             }
         }
-        if (!foundMonth) { reportData.monthly.unshift({ month: currentMonth, income: amount, expense: 0 }); }
+        if (!foundMonth) reportData.monthly.unshift({ month: currentMonth, income: amount, expense: 0 });
         reportData.yearly.income += amount;
         
         if (!monthlyReports[currentMonth]) {
@@ -1649,7 +1553,6 @@
         loadMemberSelect();
         showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
         saveAllData();
-        console.log('✅ অনুদান সেভ করা হয়েছে!');
     }
 
     function showReceipt(data) {
@@ -1671,533 +1574,20 @@
             '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
     }
 
-    // =========================================
-    // ===== ★★★★★ প্রিন্ট রশিদ ★★★★★ =====
-    // =========================================
     function printReceipt() {
-        if (!currentReceipt) {
-            alert('প্রথমে অনুদান গ্রহণ করুন');
-            return;
-        }
+        if (!currentReceipt) { alert('প্রথমে অনুদান গ্রহণ করুন'); return; }
         var content = document.getElementById('receiptContent').innerHTML;
         var printWindow = window.open('', '_blank', 'width=400,height=600');
-        if (!printWindow) {
-            alert('⚠️ পপ-আপ ব্লকার চালু আছে! দয়া করে পপ-আপ ব্লকার অফ করুন।');
-            return;
-        }
-        printWindow.document.write(
-            '<html><head><title>রশিদ</title>' +
-            '<style>body { font-family: "Courier New", monospace; padding:20px; max-width:350px; margin:auto; } .receipt-line { border-top:1px dashed #999; margin:6px 0; } @media print { .no-print { display:none !important; } }</style>' +
-            '</head><body>' +
-            content +
-            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 20px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem; margin-bottom:5px;">🖨️ প্রিন্ট করুন</button><button onclick="window.close()" style="padding:10px 20px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">✕ বন্ধ করুন</button></div>' +
-            '</body></html>'
-        );
+        if (!printWindow) { alert('⚠️ পপ-আপ ব্লকার চালু আছে!'); return; }
+        printWindow.document.write('<html><head><title>রশিদ</title><style>body{font-family:"Courier New",monospace;padding:20px;max-width:350px;margin:auto;}.receipt-line{border-top:1px dashed #999;margin:6px 0;}@media print{.no-print{display:none!important;}}</style></head><body>' +
+            content + '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 20px;background:#2d7d46;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;font-size:1rem;margin-bottom:5px;">🖨️ প্রিন্ট করুন</button><button onclick="window.close()" style="padding:10px 20px;background:#dc3545;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;font-size:1rem;">✕ বন্ধ করুন</button></div>' +
+            '</body></html>');
         printWindow.document.close();
         setTimeout(function() { printWindow.focus(); printWindow.print(); }, 800);
     }
 
     // =========================================
-    // ===== ★★★★★ রিপোর্ট ফাংশন ★★★★★ =====
-    // =========================================
-
-    // 1. দৈনিক রিপোর্ট
-    function updateReportData(type) {
-        if (type === 'daily') {
-            var tbody = document.getElementById('reportDailyBody');
-            var html = '';
-            var today = new Date().toLocaleDateString('bn-BD');
-            var todayTxns = personalTransactions.filter(function(t) {
-                return t.date === today;
-            });
-            
-            if (todayTxns.length === 0) {
-                html = '<tr><td colspan="4" style="text-align:center; color:#999;">আজকে কোনো লেনদেন নেই</td></tr>';
-            } else {
-                var totalIncome = 0, totalExpense = 0;
-                for (var i = 0; i < todayTxns.length; i++) {
-                    var t = todayTxns[i];
-                    if (t.amount > 0) totalIncome += t.amount;
-                    else totalExpense += Math.abs(t.amount);
-                    html += '<tr><td>' + t.date + '</td><td>' + (t.amount > 0 ? t.amount.toLocaleString() : '-') + '</td><td>' + (t.amount < 0 ? Math.abs(t.amount).toLocaleString() : '-') + '</td><td>' + (t.amount > 0 ? t.amount.toLocaleString() : (-t.amount).toLocaleString()) + '</td></tr>';
-                }
-                var balance = totalIncome - totalExpense;
-                html += '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + totalIncome.toLocaleString() + '</td><td>' + totalExpense.toLocaleString() + '</td><td>' + balance.toLocaleString() + '</td></tr>';
-            }
-            tbody.innerHTML = html;
-        }
-    }
-
-    // ★★★★★ 2. সাপ্তাহিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
-    function updateWeeklyReport() {
-        var today = new Date();
-        var currentDate = today.getDate();
-        var dayOfWeek = today.getDay();
-        
-        var weekStart = new Date(today);
-        var weekEnd = new Date(today);
-        
-        var daysToSaturday = (dayOfWeek + 1) % 7;
-        weekStart.setDate(currentDate - daysToSaturday);
-        weekStart.setHours(0, 0, 0, 0);
-        
-        var daysToFriday = (5 - dayOfWeek + 7) % 7;
-        weekEnd.setDate(currentDate + daysToFriday);
-        weekEnd.setHours(23, 59, 59, 999);
-        
-        if (dayOfWeek === 5) {
-            weekEnd = new Date(today);
-            weekEnd.setHours(23, 59, 59, 999);
-        }
-        
-        var weekStartStr = weekStart.getDate() + '/' + (weekStart.getMonth() + 1) + '/' + weekStart.getFullYear();
-        var weekEndStr = weekEnd.getDate() + '/' + (weekEnd.getMonth() + 1) + '/' + weekEnd.getFullYear();
-        
-        // ★★★ সঠিক ডেট পার্সিং ★★★
-        var weeklyTxns = [];
-        for (var i = 0; i < personalTransactions.length; i++) {
-            var t = personalTransactions[i];
-            var parts = t.date.split('/');
-            if (parts.length === 3) {
-                var day = parseInt(convertToEnglish(parts[0]));
-                var month = parseInt(convertToEnglish(parts[1])) - 1;
-                var year = parseInt(convertToEnglish(parts[2]));
-                var txnDate = new Date(year, month, day);
-                if (txnDate >= weekStart && txnDate <= weekEnd) {
-                    weeklyTxns.push(t);
-                }
-            }
-        }
-        
-        var weeklyIncome = 0, weeklyExpense = 0;
-        for (var i = 0; i < weeklyTxns.length; i++) {
-            if (weeklyTxns[i].amount > 0) {
-                weeklyIncome += weeklyTxns[i].amount;
-            } else {
-                weeklyExpense += Math.abs(weeklyTxns[i].amount);
-            }
-        }
-        
-        reportData.weekly = {
-            startDate: weekStartStr,
-            endDate: weekEndStr,
-            income: weeklyIncome,
-            expense: weeklyExpense,
-            transactions: weeklyTxns.length
-        };
-        
-        var container = document.getElementById('weeklyReportContainer');
-        if (container) {
-            var html = '';
-            html += '<div class="report-summary">';
-            html += '<h4>📊 সাপ্তাহিক রিপোর্ট</h4>';
-            html += '<p><strong>সময়কাল:</strong> ' + weekStartStr + ' - ' + weekEndStr + '</p>';
-            html += '<p><strong>মোট আয়:</strong> ' + weeklyIncome.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>মোট ব্যয়:</strong> ' + weeklyExpense.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (weeklyIncome - weeklyExpense).toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>মোট লেনদেন:</strong> ' + weeklyTxns.length + ' টি</p>';
-            html += '</div>';
-            
-            if (weeklyTxns.length > 0) {
-                html += '<div class="table-responsive" style="max-height:180px;">';
-                html += '<table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead><tbody>';
-                for (var i = 0; i < weeklyTxns.length; i++) {
-                    var t = weeklyTxns[i];
-                    html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount.toLocaleString() + ' টাকা</td><td>' + t.purpose + '</td></tr>';
-                }
-                html += '</tbody></table></div>';
-            } else {
-                html += '<p style="color:#999; text-align:center; padding:15px;">এই সপ্তাহে কোনো লেনদেন নেই</p>';
-            }
-            container.innerHTML = html;
-        }
-    }
-
-    // ★★★★★ 3. মাসিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
-    function updateMonthlyReport() {
-        var today = new Date();
-        var currentYear = today.getFullYear();
-        var currentMonth = today.getMonth();
-        var currentDate = today.getDate();
-        
-        var monthStart = new Date(currentYear, currentMonth, 1);
-        var monthEnd = new Date(today);
-        var monthStartStr = monthStart.toLocaleDateString('bn-BD');
-        var monthEndStr = monthEnd.toLocaleDateString('bn-BD');
-        var monthName = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
-        
-        // ★★★ সঠিক ডেট পার্সিং ★★★
-        var monthlyTxns = [];
-        for (var i = 0; i < personalTransactions.length; i++) {
-            var t = personalTransactions[i];
-            var parts = t.date.split('/');
-            if (parts.length === 3) {
-                var day = parseInt(convertToEnglish(parts[0]));
-                var month = parseInt(convertToEnglish(parts[1])) - 1;
-                var year = parseInt(convertToEnglish(parts[2]));
-                var txnDate = new Date(year, month, day);
-                if (txnDate >= monthStart && txnDate <= monthEnd) {
-                    monthlyTxns.push(t);
-                }
-            }
-        }
-        
-        var monthlyIncome = 0, monthlyExpense = 0;
-        for (var i = 0; i < monthlyTxns.length; i++) {
-            if (monthlyTxns[i].amount > 0) {
-                monthlyIncome += monthlyTxns[i].amount;
-            } else {
-                monthlyExpense += Math.abs(monthlyTxns[i].amount);
-            }
-        }
-        
-        var isMonthEnd = (currentDate === new Date(currentYear, currentMonth + 1, 0).getDate());
-        var monthStatus = isMonthEnd ? '✅ মাস শেষ (ফাইনাল রিপোর্ট)' : '📊 চলমান মাস';
-        
-        var container = document.getElementById('monthlyReportContainer2');
-        if (container) {
-            var html = '';
-            html += '<div class="report-summary">';
-            html += '<h4>📊 ' + monthName + ' - ' + monthStatus + '</h4>';
-            html += '<p><strong>মোট আয়:</strong> ' + monthlyIncome.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>মোট ব্যয়:</strong> ' + monthlyExpense.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (monthlyIncome - monthlyExpense).toLocaleString() + ' টাকা</p>';
-            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + monthStartStr + ' থেকে ' + monthEndStr + '</p>';
-            if (isMonthEnd) {
-                html += '<p style="font-size:0.8rem; color:#28a745; font-weight:bold;">✅ মাসিক হিসাব সমাপ্ত। নতুন মাস শুরু হয়েছে।</p>';
-            }
-            html += '</div>';
-            
-            if (monthlyTxns.length > 0) {
-                html += '<div class="table-responsive" style="max-height:150px;"><table><thead><tr><th>তারিখ</th><th>মুসল্লি</th><th>পরিমাণ</th><th>বাবদ</th></tr></thead><tbody>';
-                for (var i = 0; i < monthlyTxns.length; i++) {
-                    var t = monthlyTxns[i];
-                    html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount.toLocaleString() + ' টাকা</td><td>' + t.purpose + '</td></tr>';
-                }
-                html += '</tbody></table></div>';
-            } else {
-                html += '<p style="color:#999; text-align:center; padding:10px;">এই মাসে কোনো লেনদেন নেই</p>';
-            }
-            container.innerHTML = html;
-        }
-        
-        var foundMonth = false;
-        for (var i = 0; i < reportData.monthly.length; i++) {
-            if (reportData.monthly[i].month === monthName) {
-                reportData.monthly[i].income = monthlyIncome;
-                reportData.monthly[i].expense = monthlyExpense;
-                reportData.monthly[i].startDate = monthStartStr;
-                reportData.monthly[i].endDate = monthEndStr;
-                reportData.monthly[i].isComplete = isMonthEnd;
-                reportData.monthly[i].transactions = monthlyTxns.length;
-                foundMonth = true;
-                break;
-            }
-        }
-        if (!foundMonth) {
-            reportData.monthly.push({
-                month: monthName,
-                income: monthlyIncome,
-                expense: monthlyExpense,
-                startDate: monthStartStr,
-                endDate: monthEndStr,
-                isComplete: isMonthEnd,
-                transactions: monthlyTxns.length
-            });
-        }
-    }
-
-    // ★★★★★ 4. বার্ষিক রিপোর্ট (সম্পূর্ণ ঠিক করা) ★★★★★
-    function updateYearlyReport() {
-        var today = new Date();
-        var currentYear = today.getFullYear();
-        
-        var yearStart = new Date(currentYear, 0, 1);
-        var yearEnd = new Date(today);
-        var yearStartStr = yearStart.toLocaleDateString('bn-BD');
-        var yearEndStr = yearEnd.toLocaleDateString('bn-BD');
-        
-        // ★★★ সঠিক ডেট পার্সিং ★★★
-        var yearlyTxns = [];
-        for (var i = 0; i < personalTransactions.length; i++) {
-            var t = personalTransactions[i];
-            var parts = t.date.split('/');
-            if (parts.length === 3) {
-                var day = parseInt(convertToEnglish(parts[0]));
-                var month = parseInt(convertToEnglish(parts[1])) - 1;
-                var year = parseInt(convertToEnglish(parts[2]));
-                var txnDate = new Date(year, month, day);
-                if (txnDate >= yearStart && txnDate <= yearEnd) {
-                    yearlyTxns.push(t);
-                }
-            }
-        }
-        
-        var yearlyIncome = 0, yearlyExpense = 0;
-        for (var i = 0; i < yearlyTxns.length; i++) {
-            if (yearlyTxns[i].amount > 0) {
-                yearlyIncome += yearlyTxns[i].amount;
-            } else {
-                yearlyExpense += Math.abs(yearlyTxns[i].amount);
-            }
-        }
-        
-        var monthlySummary = {};
-        for (var i = 0; i < yearlyTxns.length; i++) {
-            var t = yearlyTxns[i];
-            var monthKey = t.month || new Date(t.date).toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
-            if (!monthlySummary[monthKey]) {
-                monthlySummary[monthKey] = { income: 0, expense: 0 };
-            }
-            if (t.amount > 0) {
-                monthlySummary[monthKey].income += t.amount;
-            } else {
-                monthlySummary[monthKey].expense += Math.abs(t.amount);
-            }
-        }
-        
-        var container = document.getElementById('yearlyReportContainer');
-        if (container) {
-            var html = '';
-            html += '<div class="report-summary">';
-            html += '<h4>📊 বার্ষিক রিপোর্ট - ' + currentYear + '</h4>';
-            html += '<p><strong>মোট আয়:</strong> ' + yearlyIncome.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>মোট ব্যয়:</strong> ' + yearlyExpense.toLocaleString() + ' টাকা</p>';
-            html += '<p><strong>উদ্বৃত্ত:</strong> ' + (yearlyIncome - yearlyExpense).toLocaleString() + ' টাকা</p>';
-            html += '<p style="font-size:0.8rem; color:#666; margin-top:5px;"><strong>📌 হিসাবের সময়কাল:</strong> ' + yearStartStr + ' থেকে ' + yearEndStr + '</p>';
-            html += '</div>';
-            
-            var monthNames = Object.keys(monthlySummary);
-            if (monthNames.length > 0) {
-                html += '<div style="margin-top:10px;"><h5 style="color:#1a472a;">📋 মাসভিত্তিক সংগ্রহ:</h5>';
-                for (var i = 0; i < monthNames.length; i++) {
-                    var m = monthNames[i];
-                    var data = monthlySummary[m];
-                    html += '<p style="font-size:0.85rem; margin:3px 0;"><strong>' + m + ':</strong> আয় ' + data.income.toLocaleString() + ' টাকা, ব্যয় ' + data.expense.toLocaleString() + ' টাকা</p>';
-                }
-                html += '</div>';
-            } else {
-                html += '<p style="color:#999; text-align:center; padding:10px;">এই বছরে কোনো লেনদেন নেই</p>';
-            }
-            container.innerHTML = html;
-        }
-        
-        reportData.yearly = {
-            year: currentYear,
-            income: yearlyIncome,
-            expense: yearlyExpense,
-            startDate: yearStartStr,
-            endDate: yearEndStr,
-            monthlySummary: monthlySummary,
-            transactions: yearlyTxns.length
-        };
-    }
-
-    // ★★★★★ 5. সব রিপোর্ট আপডেট ★★★★★
-    function updateAllReports() {
-        console.log('🔄 সব রিপোর্ট আপডেট হচ্ছে...');
-        
-        updateReportData('daily');
-        updateWeeklyReport();
-        updateMonthlyReport();
-        updateYearlyReport();
-        updatePublicStats();
-        updateDevInfo();
-        
-        console.log('✅ সব রিপোর্ট আপডেট সম্পূর্ণ!');
-    }
-
-    function updatePublicStats() {
-        var balance = totalIncome - totalExpense;
-        document.getElementById('pubTotalIncome').textContent = totalIncome.toLocaleString();
-        document.getElementById('pubTotalExpense').textContent = totalExpense.toLocaleString();
-        document.getElementById('pubBalance').textContent = balance.toLocaleString();
-        updateDevInfo();
-    }
-
-    function loadMonthlyReport() {
-        var month = document.getElementById('reportMonthSelect').value;
-        var container = document.getElementById('monthlyReportContainer');
-        var data = monthlyReports[month];
-        if (data && data.income > 0) {
-            var d = data.details || { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 };
-            container.innerHTML = 
-                '<div class="table-responsive" style="max-height:180px;">' +
-                '<table><thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead>' +
-                '<tbody>' +
-                '<tr><td>মাসিক চাঁদা</td><td>' + (d.monthly || 0).toLocaleString() + '</td><td>-</td></tr>' +
-                '<tr><td>বিশেষ অনুদান</td><td>' + (d.special || 0).toLocaleString() + '</td><td>-</td></tr>' +
-                '<tr><td>বিদ্যুৎ বিল</td><td>-</td><td>' + (d.electric || 0).toLocaleString() + '</td></tr>' +
-                '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + (d.salary || 0).toLocaleString() + '</td></tr>' +
-                '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + (d.development || 0).toLocaleString() + '</td></tr>' +
-                '<tr style="font-weight:bold; background:#e8f5e9;"><td>মোট</td><td>' + data.income.toLocaleString() + '</td><td>' + data.expense.toLocaleString() + '</td></tr>' +
-                '<tr style="font-weight:bold; background:#d4edda;"><td>উদ্বৃত্ত</td><td colspan="2">' + (data.income - data.expense).toLocaleString() + ' টাকা</td></tr>' +
-                '</tbody></table></div>';
-        } else {
-            container.innerHTML = '<p style="color:#999; text-align:center; padding:15px;">এই মাসের কোনো তথ্য নেই</p>';
-        }
-    }
-
-    // ★★★★★ ব্যক্তিগত রিপোর্ট আপডেট (সম্পূর্ণ ঠিক করা) ★★★★★
-    function updatePersonalReports() {
-        if (!currentUser) {
-            console.log('❌ currentUser নেই');
-            return;
-        }
-        
-        console.log('🔄 ব্যক্তিগত রিপোর্ট আপডেট শুরু...');
-        console.log('👤 বর্তমান ইউজার:', currentUser.name);
-        console.log('📊 মোট লেনদেন:', personalTransactions.length);
-        
-        var userRole = currentUser.role;
-        var userName = currentUser.name;
-        var today = new Date();
-        var todayStr = today.toLocaleDateString('bn-BD');
-        
-        // ইউজারের লেনদেন ফিল্টার
-        var userTransactions = personalTransactions.filter(function(t) {
-            return t.collectorRole === userRole && t.collectorName === userName;
-        });
-        
-        console.log('👤 ইউজারের লেনদেন:', userTransactions.length);
-        
-        // ===== দৈনিক =====
-        var dailyTxns = userTransactions.filter(function(t) { return t.date === todayStr; });
-        var dailyTotal = dailyTxns.reduce(function(sum, t) { return sum + t.amount; }, 0);
-        document.getElementById('personalDailyTotal').textContent = dailyTotal.toLocaleString();
-        document.getElementById('personalDailyCount').textContent = dailyTxns.length;
-        var dailyBody = document.getElementById('personalDailyBody');
-        if (dailyTxns.length === 0) {
-            dailyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">আজকে কোনো লেনদেন নেই</td></tr>';
-        } else {
-            var html = '';
-            for (var i = 0; i < dailyTxns.length; i++) {
-                var t = dailyTxns[i];
-                html += '<tr><td>' + (i+1) + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
-            }
-            dailyBody.innerHTML = html;
-        }
-        
-        // ===== ★★★★★ সাপ্তাহিক (সম্পূর্ণ ঠিক করা) ★★★★★ =====
-        var currentDay = today.getDay();
-        var currentDate = today.getDate();
-        
-        var weekStart = new Date(today);
-        var daysToSubtract = (currentDay + 1) % 7;
-        weekStart.setDate(currentDate - daysToSubtract);
-        weekStart.setHours(0, 0, 0, 0);
-        
-        var weekEnd = new Date(today);
-        var daysToAdd = (5 - currentDay + 7) % 7;
-        weekEnd.setDate(currentDate + daysToAdd);
-        weekEnd.setHours(23, 59, 59, 999);
-        
-        if (currentDay === 5) {
-            weekEnd = new Date(today);
-            weekEnd.setHours(23, 59, 59, 999);
-        }
-        
-        var weekStartStr = weekStart.getDate() + '/' + (weekStart.getMonth() + 1) + '/' + weekStart.getFullYear();
-        var weekEndStr = weekEnd.getDate() + '/' + (weekEnd.getMonth() + 1) + '/' + weekEnd.getFullYear();
-        
-        console.log('📅 সাপ্তাহিক সময়কাল:', weekStartStr, 'থেকে', weekEndStr);
-        
-        // ★★★ সঠিক ডেট পার্সিং ★★★
-        var weeklyTxns = [];
-        for (var i = 0; i < userTransactions.length; i++) {
-            var t = userTransactions[i];
-            var parts = t.date.split('/');
-            if (parts.length === 3) {
-                var day = parseInt(convertToEnglish(parts[0]));
-                var month = parseInt(convertToEnglish(parts[1])) - 1;
-                var year = parseInt(convertToEnglish(parts[2]));
-                var txnDate = new Date(year, month, day);
-                if (txnDate >= weekStart && txnDate <= weekEnd) {
-                    weeklyTxns.push(t);
-                }
-            }
-        }
-        
-        console.log('📊 সাপ্তাহিক লেনদেন পাওয়া গেছে:', weeklyTxns.length, 'টি');
-        
-        var weeklyTotal = 0;
-        for (var i = 0; i < weeklyTxns.length; i++) {
-            weeklyTotal += weeklyTxns[i].amount;
-        }
-        
-        document.getElementById('personalWeeklyTotal').textContent = weeklyTotal.toLocaleString();
-        document.getElementById('personalWeeklyCount').textContent = weeklyTxns.length;
-        
-        var weeklyBody = document.getElementById('personalWeeklyBody');
-        if (weeklyTxns.length === 0) {
-            weeklyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">এই সপ্তাহে (' + weekStartStr + ' - ' + weekEndStr + ') কোনো লেনদেন নেই</td></tr>';
-        } else {
-            var html = '';
-            for (var i = 0; i < weeklyTxns.length; i++) {
-                var t = weeklyTxns[i];
-                html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
-            }
-            weeklyBody.innerHTML = html;
-        }
-        
-        // ===== মাসিক =====
-        var currentMonth = today.toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
-        var monthlyTxns = userTransactions.filter(function(t) { return t.month === currentMonth; });
-        var monthlyTotal = 0;
-        for (var i = 0; i < monthlyTxns.length; i++) {
-            monthlyTotal += monthlyTxns[i].amount;
-        }
-        document.getElementById('personalMonthlyTotal').textContent = monthlyTotal.toLocaleString();
-        document.getElementById('personalMonthlyCount').textContent = monthlyTxns.length;
-        var monthlyBody = document.getElementById('personalMonthlyBody');
-        if (monthlyTxns.length === 0) {
-            monthlyBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">এই মাসে কোনো লেনদেন নেই</td></tr>';
-        } else {
-            var html = '';
-            for (var i = 0; i < monthlyTxns.length; i++) {
-                var t = monthlyTxns[i];
-                html += '<tr><td>' + t.date + '</td><td>' + t.memberName + '</td><td>' + t.amount + '</td><td>' + t.purpose + '</td></tr>';
-            }
-            monthlyBody.innerHTML = html;
-        }
-        
-        // ===== বার্ষিক =====
-        var year = today.getFullYear();
-        var yearlyTxns = userTransactions.filter(function(t) { return t.year === year; });
-        var yearlyTotal = 0;
-        for (var i = 0; i < yearlyTxns.length; i++) {
-            yearlyTotal += yearlyTxns[i].amount;
-        }
-        document.getElementById('personalYearlyTotal').textContent = yearlyTotal.toLocaleString();
-        document.getElementById('personalYearlyCount').textContent = yearlyTxns.length;
-        
-        var monthlyGroups = {};
-        for (var i = 0; i < yearlyTxns.length; i++) {
-            var t = yearlyTxns[i];
-            if (!monthlyGroups[t.month]) { 
-                monthlyGroups[t.month] = { total: 0, count: 0 }; 
-            }
-            monthlyGroups[t.month].total += t.amount;
-            monthlyGroups[t.month].count += 1;
-        }
-        var yearlyBody = document.getElementById('personalYearlyBody');
-        var monthNames = Object.keys(monthlyGroups);
-        if (monthNames.length === 0) {
-            yearlyBody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#999;">এই বছরে কোনো লেনদেন নেই</td></tr>';
-        } else {
-            var html = '';
-            for (var i = 0; i < monthNames.length; i++) {
-                var m = monthNames[i];
-                html += '<tr><td>' + m + '</td><td>' + monthlyGroups[m].total.toLocaleString() + '</td><td>' + monthlyGroups[m].count + '</td></tr>';
-            }
-            yearlyBody.innerHTML = html;
-        }
-        
-        console.log('✅ ব্যক্তিগত রিপোর্ট আপডেট সম্পূর্ণ!');
-    }
-
-    // =========================================
-    // ===== ★★★★★ অন্যান্য ফাংশন ★★★★★ =====
+    // ===== ★★★★★ খরচ ★★★★★ =====
     // =========================================
     function submitExpense() {
         if (!currentUser || currentUser.role !== 'cashier') {
@@ -2219,7 +1609,7 @@
                 break;
             }
         }
-        if (!foundToday) { reportData.daily.unshift({ date: today, income: 0, expense: amount }); }
+        if (!foundToday) reportData.daily.unshift({ date: today, income: 0, expense: amount });
         reportData.weekly.expense += amount;
         var currentMonth = new Date().toLocaleString('bn-BD', { month: 'long', year: 'numeric' });
         var foundMonth = false;
@@ -2230,7 +1620,7 @@
                 break;
             }
         }
-        if (!foundMonth) { reportData.monthly.unshift({ month: currentMonth, income: 0, expense: amount }); }
+        if (!foundMonth) reportData.monthly.unshift({ month: currentMonth, income: 0, expense: amount });
         reportData.yearly.expense += amount;
         if (!monthlyReports[currentMonth]) {
             monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
@@ -2250,6 +1640,9 @@
         saveAllData();
     }
 
+    // =========================================
+    // ===== ★★★★★ আপডেট ★★★★★ =====
+    // =========================================
     function submitUpdate() {
         var title = document.getElementById('updateTitle').value;
         var desc = document.getElementById('updateDesc').value;
@@ -2292,8 +1685,36 @@
         container.innerHTML = html;
     }
 
+    function showNotification(message, type) {
+        var notif = document.getElementById('donationSuccess');
+        if (!notif) {
+            notif = document.createElement('div');
+            notif.id = 'donationSuccess';
+            notif.className = 'notification';
+            document.querySelector('#tabDonation').prepend(notif);
+        }
+        notif.className = 'notification';
+        if (type === 'success') {
+            notif.style.background = '#d4edda';
+            notif.style.color = '#155724';
+            notif.style.borderLeftColor = '#28a745';
+        } else if (type === 'warning') {
+            notif.style.background = '#fff3cd';
+            notif.style.color = '#856404';
+            notif.style.borderLeftColor = '#ffc107';
+        } else {
+            notif.style.background = '#f8d7da';
+            notif.style.color = '#721c24';
+            notif.style.borderLeftColor = '#dc3545';
+        }
+        notif.textContent = message;
+        notif.classList.add('show');
+        clearTimeout(window.notifTimeout);
+        window.notifTimeout = setTimeout(function() { notif.classList.remove('show'); }, 5000);
+    }
+
     // =========================================
-    // ===== ★★★★★ প্রিন্ট ফাংশন ★★★★★ =====
+    // ===== ★★★★★ প্রিন্ট ★★★★★ =====
     // =========================================
     function printGeneralReport() {
         var activeTab = document.querySelector('#tabReports .tab-content.active');
@@ -2306,17 +1727,12 @@
         else if (tabId === 'reportMonthly') { tabName = 'মাসিক রিপোর্ট'; reportContent = document.getElementById('monthlyReportContainer2')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
         else if (tabId === 'reportYearly') { tabName = 'বার্ষিক রিপোর্ট'; reportContent = document.getElementById('yearlyReportContainer')?.innerHTML || '<p>কোনো ডাটা নেই</p>'; }
         var printWindow = window.open('', '_blank', 'width=800,height=600');
-        printWindow.document.write(
-            '<html><head><title>' + tabName + '</title>' +
-            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:1000px; margin:auto; } .header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; } .header h1 { color:#1a472a; margin:0; } .header p { color:#555; margin:5px 0; } table { width:100%; border-collapse:collapse; margin-top:10px; } th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; } th { background:#1a472a; color:white; } .report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:15px; } .footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } @media print { .no-print { display:none !important; } }</style>' +
-            '</head><body>' +
+        printWindow.document.write('<html><head><title>' + tabName + '</title><style>body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;padding:30px;max-width:1000px;margin:auto;}.header{text-align:center;margin-bottom:20px;border-bottom:2px solid #1a472a;padding-bottom:15px;}.header h1{color:#1a472a;margin:0;}.header p{color:#555;margin:5px 0;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{padding:8px 12px;text-align:left;border:1px solid #ddd;}th{background:#1a472a;color:white;}.report-date{text-align:right;font-size:0.9rem;color:#666;margin-bottom:15px;}.footer{text-align:center;margin-top:30px;border-top:2px solid #1a472a;padding-top:15px;font-size:0.9rem;color:#666;}@media print{.no-print{display:none!important;}}</style></head><body>' +
             '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><h2 style="color:#1a472a;">' + tabName + '</h2></div>' +
             '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
             '<div>' + reportContent + '</div>' +
             '<div class="footer"><p>এই রিপোর্টটি আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত।</p></div>' +
-            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button></div>' +
-            '</body></html>'
-        );
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px;background:#2d7d46;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px;background:#dc3545;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;margin-top:5px;">বন্ধ</button></div></body></html>');
         printWindow.document.close();
     }
 
@@ -2328,10 +1744,7 @@
         var monthData = monthlyReports[month] || { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
         var d = monthData.details;
         var printWindow = window.open('', '_blank', 'width=800,height=600');
-        printWindow.document.write(
-            '<html><head><title>A4 জাবেদা</title>' +
-            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:40px; max-width:900px; margin:auto; } .header { text-align:center; margin-bottom:25px; border-bottom:3px solid #1a472a; padding-bottom:20px; } .header h1 { color:#1a472a; font-size:2rem; margin:0; } .header p { color:#555; font-size:1.1rem; margin:5px 0; } .header .sub-title { color:#1a472a; font-size:1.3rem; font-weight:bold; margin-top:8px; } .info-row { display:flex; justify-content:space-between; margin:10px 0; font-size:1rem; } table { width:100%; border-collapse:collapse; margin:15px 0; } th, td { padding:10px 15px; text-align:left; border:1px solid #333; } th { background:#1a472a; color:white; } tr:nth-child(even) { background:#f5f5f5; } .total-row { font-weight:bold; background:#e8f5e9; } .balance-row { font-weight:bold; background:#d4edda; font-size:1.1rem; } .footer { text-align:center; margin-top:30px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } .signature { display:flex; justify-content:space-between; margin-top:30px; } .signature div { text-align:center; } .signature .line { border-top:1px solid #333; width:200px; margin:5px auto; } @media print { .no-print { display:none !important; } }</style>' +
-            '</head><body>' +
+        printWindow.document.write('<html><head><title>A4 জাবেদা</title><style>body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;padding:40px;max-width:900px;margin:auto;}.header{text-align:center;margin-bottom:25px;border-bottom:3px solid #1a472a;padding-bottom:20px;}.header h1{color:#1a472a;font-size:2rem;margin:0;}.header p{color:#555;font-size:1.1rem;margin:5px 0;}.header .sub-title{color:#1a472a;font-size:1.3rem;font-weight:bold;margin-top:8px;}.info-row{display:flex;justify-content:space-between;margin:10px 0;font-size:1rem;}table{width:100%;border-collapse:collapse;margin:15px 0;}th,td{padding:10px 15px;text-align:left;border:1px solid #333;}th{background:#1a472a;color:white;}tr:nth-child(even){background:#f5f5f5;}.total-row{font-weight:bold;background:#e8f5e9;}.balance-row{font-weight:bold;background:#d4edda;font-size:1.1rem;}.footer{text-align:center;margin-top:30px;border-top:2px solid #1a472a;padding-top:15px;font-size:0.9rem;color:#666;}.signature{display:flex;justify-content:space-between;margin-top:30px;}.signature div{text-align:center;}.signature .line{border-top:1px solid #333;width:200px;margin:5px auto;}@media print{.no-print{display:none!important;}}</style></head><body>' +
             '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><div class="sub-title">📊 মাসিক আয়-ব্যয় জাবেদা - ' + month + '</div></div>' +
             '<div class="info-row"><span><strong>প্রিন্ট:</strong> ' + new Date().toLocaleDateString('bn-BD') + '</span><span><strong>সময়:</strong> ' + new Date().toLocaleTimeString('bn-BD') + '</span></div>' +
             '<table><thead><tr><th>বিবরণ</th><th>আয় (টাকা)</th><th>ব্যয় (টাকা)</th></tr></thead><tbody>' +
@@ -2341,14 +1754,11 @@
             '<tr><td>ইমাম-মুয়াজ্জিন বেতন</td><td>-</td><td>' + (d.salary || 0).toLocaleString() + '</td></tr>' +
             '<tr><td>উন্নয়ন তহবিল</td><td>-</td><td>' + (d.development || 0).toLocaleString() + '</td></tr>' +
             '<tr class="total-row"><td>মোট</td><td>' + (monthData.income || 0).toLocaleString() + '</td><td>' + (monthData.expense || 0).toLocaleString() + '</td></tr>' +
-            '<tr class="balance-row"><td>উদ্বৃত্ত</td><td colspan="2">' + ((monthData.income || 0) - (monthData.expense || 0)).toLocaleString() + ' টাকা</td></tr>' +
-            '</tbody></table>' +
-            '<div style="margin:15px 0; padding:10px; background:#f8f9fa; border-radius:5px;"><p><strong>📌 সর্বমোট সংগ্রহ:</strong> ' + income + ' টাকা</p><p><strong>📌 সর্বমোট খরচ:</strong> ' + expense + ' টাকা</p><p><strong>📌 সর্বমোট উদ্বৃত্ত:</strong> ' + balance + ' টাকা</p></div>' +
+            '<tr class="balance-row"><td>উদ্বৃত্ত</td><td colspan="2">' + ((monthData.income || 0) - (monthData.expense || 0)).toLocaleString() + ' টাকা</td></tr></tbody></table>' +
+            '<div style="margin:15px 0;padding:10px;background:#f8f9fa;border-radius:5px;"><p><strong>📌 সর্বমোট সংগ্রহ:</strong> ' + income + ' টাকা</p><p><strong>📌 সর্বমোট খরচ:</strong> ' + expense + ' টাকা</p><p><strong>📌 সর্বমোট উদ্বৃত্ত:</strong> ' + balance + ' টাকা</p></div>' +
             '<div class="signature"><div><p><strong>ক্যাশিয়ার</strong></p><div class="line"></div><p>স্বাক্ষর</p></div><div><p><strong>সেক্রেটারি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div><div><p><strong>সভাপতি</strong></p><div class="line"></div><p>স্বাক্ষর</p></div></div>' +
             '<div class="footer"><p>🔹 আলগী বাজার জামে মসজিদের আয়-ব্যয় সংক্রান্ত</p></div>' +
-            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button></div>' +
-            '</body></html>'
-        );
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px;background:#2d7d46;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px;background:#dc3545;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;margin-top:5px;">বন্ধ</button></div></body></html>');
         printWindow.document.close();
     }
 
@@ -2365,10 +1775,7 @@
         else if (tabId === 'personalMonthly') { tabName = 'মাসিক সংগ্রহ'; var table = document.querySelector('#personalMonthly table'); var summary = document.querySelector('#personalMonthly .report-summary'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; summaryHtml = summary ? summary.outerHTML : ''; }
         else if (tabId === 'personalYearly') { tabName = 'বার্ষিক সংগ্রহ'; var table = document.querySelector('#personalYearly table'); var summary = document.querySelector('#personalYearly .report-summary'); reportContent = table ? table.outerHTML : '<p>কোনো ডাটা নেই</p>'; summaryHtml = summary ? summary.outerHTML : ''; }
         var printWindow = window.open('', '_blank', 'width=800,height=600');
-        printWindow.document.write(
-            '<html><head><title>ব্যক্তিগত রিপোর্ট</title>' +
-            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; } .header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; } .header h1 { color:#1a472a; margin:0; } .header p { color:#555; margin:3px 0; } .user-info { background:#e8f5e9; padding:10px 15px; border-radius:5px; margin:10px 0; border-left:4px solid #1a472a; } .user-info h3 { color:#1a472a; margin:0; } table { width:100%; border-collapse:collapse; margin-top:10px; } th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; } th { background:#1a472a; color:white; } .report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; } .footer { text-align:center; margin-top:25px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } .summary-box { background:#e8f5e9; padding:10px 15px; border-radius:5px; margin:10px 0; border-left:4px solid #2d7d46; } @media print { .no-print { display:none !important; } }</style>' +
-            '</head><body>' +
+        printWindow.document.write('<html><head><title>ব্যক্তিগত রিপোর্ট</title><style>body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;padding:30px;max-width:900px;margin:auto;}.header{text-align:center;margin-bottom:20px;border-bottom:2px solid #1a472a;padding-bottom:15px;}.header h1{color:#1a472a;margin:0;}.header p{color:#555;margin:3px 0;}.user-info{background:#e8f5e9;padding:10px 15px;border-radius:5px;margin:10px 0;border-left:4px solid #1a472a;}.user-info h3{color:#1a472a;margin:0;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{padding:8px 12px;text-align:left;border:1px solid #ddd;}th{background:#1a472a;color:white;}.report-date{text-align:right;font-size:0.9rem;color:#666;margin-bottom:10px;}.footer{text-align:center;margin-top:25px;border-top:2px solid #1a472a;padding-top:15px;font-size:0.9rem;color:#666;}.summary-box{background:#e8f5e9;padding:10px 15px;border-radius:5px;margin:10px 0;border-left:4px solid #2d7d46;}@media print{.no-print{display:none!important;}}</style></head><body>' +
             '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><h2 style="color:#1a472a;">👤 ব্যক্তিগত সংগ্রহ</h2></div>' +
             '<div class="user-info"><h3>👤 ' + currentUser.name + ' (' + currentUser.role + ')</h3></div>' +
             '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
@@ -2376,9 +1783,7 @@
             (summaryHtml ? '<div class="summary-box">' + summaryHtml + '</div>' : '') +
             '<div>' + reportContent + '</div>' +
             '<div class="footer"><p>🔹 ' + currentUser.name + ' এর ব্যক্তিগত অনুদান সংগ্রহ</p></div>' +
-            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button></div>' +
-            '</body></html>'
-        );
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px;background:#2d7d46;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px;background:#dc3545;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;margin-top:5px;">বন্ধ</button></div></body></html>');
         printWindow.document.close();
     }
 
@@ -2386,227 +1791,18 @@
         var table = document.querySelector('#tabMembers table');
         if (!table) { alert('কোনো মুসল্লি তালিকা পাওয়া যায়নি!'); return; }
         var printWindow = window.open('', '_blank', 'width=800,height=600');
-        printWindow.document.write(
-            '<html><head><title>মুসল্লি তালিকা</title>' +
-            '<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding:30px; max-width:900px; margin:auto; } .header { text-align:center; margin-bottom:20px; border-bottom:2px solid #1a472a; padding-bottom:15px; } .header h1 { color:#1a472a; margin:0; } .header p { color:#555; margin:3px 0; } table { width:100%; border-collapse:collapse; margin-top:10px; } th, td { padding:8px 12px; text-align:left; border:1px solid #ddd; } th { background:#1a472a; color:white; } .badge-success { background:#d4edda; color:#155724; padding:2px 8px; border-radius:20px; font-size:0.7rem; } .badge-danger { background:#f8d7da; color:#721c24; padding:2px 8px; border-radius:20px; font-size:0.7rem; } .report-date { text-align:right; font-size:0.9rem; color:#666; margin-bottom:10px; } .footer { text-align:center; margin-top:25px; border-top:2px solid #1a472a; padding-top:15px; font-size:0.9rem; color:#666; } .total-count { background:#e8f5e9; padding:8px 15px; border-radius:5px; margin:10px 0; text-align:center; font-weight:bold; } @media print { .no-print { display:none !important; } }</style>' +
-            '</head><body>' +
+        printWindow.document.write('<html><head><title>মুসল্লি তালিকা</title><style>body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;padding:30px;max-width:900px;margin:auto;}.header{text-align:center;margin-bottom:20px;border-bottom:2px solid #1a472a;padding-bottom:15px;}.header h1{color:#1a472a;margin:0;}.header p{color:#555;margin:3px 0;}table{width:100%;border-collapse:collapse;margin-top:10px;}th,td{padding:8px 12px;text-align:left;border:1px solid #ddd;}th{background:#1a472a;color:white;}.badge-success{background:#d4edda;color:#155724;padding:2px 8px;border-radius:20px;font-size:0.7rem;}.badge-danger{background:#f8d7da;color:#721c24;padding:2px 8px;border-radius:20px;font-size:0.7rem;}.report-date{text-align:right;font-size:0.9rem;color:#666;margin-bottom:10px;}.footer{text-align:center;margin-top:25px;border-top:2px solid #1a472a;padding-top:15px;font-size:0.9rem;color:#666;}.total-count{background:#e8f5e9;padding:8px 15px;border-radius:5px;margin:10px 0;text-align:center;font-weight:bold;}@media print{.no-print{display:none!important;}}</style></head><body>' +
             '<div class="header"><h1>🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</h1><p>ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</p><h2 style="color:#1a472a;">📋 মুসল্লি তালিকা</h2></div>' +
             '<div class="report-date">প্রিন্ট: ' + new Date().toLocaleDateString('bn-BD') + ' | ' + new Date().toLocaleTimeString('bn-BD') + '</div>' +
             '<div class="total-count">মোট মুসল্লি: ' + members.length + ' জন</div>' +
             '<div>' + table.outerHTML + '</div>' +
             '<div class="footer"><p>🔹 আলগী বাজার জামে মসজিদের স্থায়ী মুসল্লি</p></div>' +
-            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; margin-top:5px;">বন্ধ</button></div>' +
-            '</body></html>'
-        );
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 25px;background:#2d7d46;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;">🖨️ প্রিন্ট</button><button onclick="window.close()" style="padding:10px 25px;background:#dc3545;color:white;border:none;border-radius:5px;cursor:pointer;width:100%;margin-top:5px;">বন্ধ</button></div></body></html>');
         printWindow.document.close();
     }
 
     // =========================================
-    // ===== ★★★★★ ডেভেলপার প্যানেল ★★★★★ =====
-    // =========================================
-    function toggleDevPanel() {
-        var panel = document.getElementById('devPanel');
-        var overlay = document.getElementById('devOverlay');
-        if (panel.classList.contains('active')) {
-            panel.classList.remove('active');
-            overlay.classList.remove('active');
-        } else {
-            panel.classList.add('active');
-            overlay.classList.add('active');
-            document.getElementById('devPassword').focus();
-            if (isDevUnlocked) {
-                document.getElementById('devContent').style.display = 'block';
-                document.getElementById('devLock').style.display = 'none';
-                updateDevInfo();
-                loadDevUserList();
-            } else {
-                document.getElementById('devContent').style.display = 'none';
-                document.getElementById('devLock').style.display = 'block';
-            }
-        }
-    }
-
-    function unlockDevPanel() {
-        var password = document.getElementById('devPassword').value;
-        if (password === DEV_PASSWORD) {
-            isDevUnlocked = true;
-            document.getElementById('devContent').style.display = 'block';
-            document.getElementById('devLock').style.display = 'none';
-            updateDevInfo();
-            loadDevUserList();
-            document.getElementById('devPassword').value = '';
-            alert('✅ ডেভেলপার প্যানেল আনলক করা হয়েছে!');
-        } else {
-            alert('❌ ভুল পাসওয়ার্ড!');
-            document.getElementById('devPassword').value = '';
-        }
-    }
-
-    function loadDevUserList() {
-        var container = document.getElementById('devUserList');
-        var html = '<h5 style="margin-bottom:5px;">বর্তমান ইউজার:</h5>';
-        for (var role in users) {
-            var roleName = role === 'cashier' ? 'ক্যাশিয়ার' : role === 'secretary' ? 'সেক্রেটারি' : 'সভাপতি';
-            html += '<div style="display:flex; justify-content:space-between; padding:3px 8px; border-bottom:1px solid #eee; font-size:0.9rem;"><span><strong>' + roleName + ':</strong></span><span>' + users[role].name + '</span></div>';
-        }
-        container.innerHTML = html;
-    }
-
-    function devUpdateUser() {
-        var role = document.getElementById('devUserRole').value;
-        var newName = document.getElementById('devNewUserName').value.trim();
-        var newPass = document.getElementById('devNewPassword').value.trim();
-        if (newName) {
-            users[role].name = newName;
-            if (currentUser && currentUser.role === role) {
-                currentUser.name = newName;
-                document.getElementById('userRoleDisplay').innerHTML = '<i class="fas fa-user"></i> ' + newName + ' (' + role + ')';
-                document.getElementById('personalReportUser').textContent = newName + ' (' + role + ')';
-            }
-        }
-        if (newPass && newPass.length >= 4) {
-            users[role].password = newPass;
-            if (currentUser && currentUser.role === role) {
-                currentUser.password = newPass;
-            }
-            alert('✅ পাসওয়ার্ড পরিবর্তন করা হয়েছে!');
-        }
-        if (newName) {
-            document.getElementById('devNewUserName').value = '';
-            loadDevUserList();
-            loadCommitteeUpdates();
-            alert('✅ "' + role + '" আপডেট করা হয়েছে!');
-        }
-        if (newPass) { document.getElementById('devNewPassword').value = ''; }
-        saveAllData();
-    }
-
-    function updateDevInfo() {
-        document.getElementById('devTotalMembers').textContent = members.length;
-        document.getElementById('devTotalTransactions').textContent = personalTransactions.length;
-        document.getElementById('devTotalIncome').textContent = totalIncome.toLocaleString();
-        document.getElementById('devTotalExpense').textContent = totalExpense.toLocaleString();
-    }
-
-    // =========================================
-    // ===== ★★★★★ ব্যাকআপ সিস্টেম ★★★★★ =====
-    // =========================================
-    function backupData() {
-        if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
-        try {
-            var data = { users, members, updates, personalTransactions, monthlyReports, reportData, totalIncome, totalExpense, nextSerial, nextMemo, exportedAt: new Date().toISOString(), version: '1.0' };
-            var json = JSON.stringify(data, null, 2);
-            var blob = new Blob([json], { type: 'application/json' });
-            var url = URL.createObjectURL(blob);
-            var dateStr = new Date().toLocaleDateString('bn-BD').replace(/\//g, '-');
-            var fileName = 'mosjid_backup_' + dateStr + '.json';
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function() { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
-            alert('✅ ব্যাকআপ ডাউনলোড শুরু হয়েছে!\nফাইলের নাম: ' + fileName);
-        } catch (error) {
-            alert('❌ ব্যাকআপ ডাউনলোড করতে সমস্যা:\n' + error.message);
-        }
-    }
-
-    function restoreData(event) {
-        var file = event.target.files[0];
-        if (!file) return;
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                var data = JSON.parse(e.target.result);
-                if (!data.version) { alert('❌ এই ফাইলটি সঠিক ব্যাকআপ নয়!'); return; }
-                if (!confirm('⚠️ ব্যাকআপ রিস্টোর করবেন? বর্তমান ডাটা মুছে যাবে!')) return;
-                users = data.users || users;
-                members = data.members || [];
-                updates = data.updates || [];
-                personalTransactions = data.personalTransactions || [];
-                monthlyReports = data.monthlyReports || {};
-                reportData = data.reportData || { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
-                totalIncome = data.totalIncome || 0;
-                totalExpense = data.totalExpense || 0;
-                nextSerial = data.nextSerial || 1;
-                nextMemo = data.nextMemo || 1001;
-                loadMemberTable();
-                loadMemberSelect();
-                loadCommitteeUpdates();
-                loadPublicUpdates();
-                updateAllReports();
-                updatePersonalReports();
-                loadMonthlyReport();
-                saveAllData();
-                alert('✅ ব্যাকআপ রিস্টোর সম্পূর্ণ!');
-                toggleDevPanel();
-            } catch(err) { alert('❌ ফাইলটি সঠিক নয়: ' + err.message); }
-        };
-        reader.readAsText(file);
-        event.target.value = '';
-    }
-
-    function devResetAll() {
-        if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
-        if (!confirm('⚠️ সাবধান! সব ডাটা মুছে যাবে!')) return;
-        if (!confirm('আবারও নিশ্চিত করুন!')) return;
-        members = []; updates = []; personalTransactions = []; monthlyReports = {};
-        reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
-        totalIncome = 0; totalExpense = 0; nextSerial = 1; nextMemo = 1001;
-        loadMemberTable(); loadMemberSelect(); loadCommitteeUpdates(); loadPublicUpdates();
-        updateAllReports(); updatePersonalReports(); loadMonthlyReport(); updateDevInfo();
-        saveAllData();
-        alert('✅ সব ডাটা সফলভাবে রিসেট করা হয়েছে!');
-        toggleDevPanel();
-    }
-
-    function devResetIncomeExpense() {
-        if (!isDevUnlocked) { alert('⚠️ দয়া করে প্রথমে ডেভেলপার প্যানেল আনলক করুন!'); return; }
-        if (!confirm('শুধু আয়-ব্যয় রিসেট করবেন? (মুসল্লি ও বকেয়া থাকবে)')) return;
-        personalTransactions = []; monthlyReports = {};
-        reportData = { daily: [], weekly: { income: 0, expense: 0 }, monthly: [], yearly: { income: 0, expense: 0 } };
-        totalIncome = 0; totalExpense = 0; nextMemo = 1001;
-        updateAllReports(); updatePersonalReports(); loadMonthlyReport(); updateDevInfo();
-        saveAllData();
-        alert('✅ আয়-ব্যয় রিসেট করা হয়েছে! বকেয়া অপরিবর্তিত আছে।');
-        toggleDevPanel();
-    }
-
-    // =========================================
-    // ===== ★★★★★ পাসওয়ার্ড ফরগেট ★★★★★ =====
-    // =========================================
-    function showForgotPassword() {
-        var html = '<div id="forgotPasswordModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; display:flex; align-items:center; justify-content:center;"><div style="background:white; padding:30px; border-radius:18px; max-width:400px; width:95%; box-shadow:0 20px 60px rgba(0,0,0,0.3);"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"><h3 style="color:#1a472a; margin:0;"><i class="fas fa-key"></i> পাসওয়ার্ড রিসেট</h3><button onclick="closeForgotPassword()" style="background:#dc3545; color:white; border:none; padding:5px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">✕</button></div><p style="color:#666; font-size:0.9rem; margin-bottom:15px;">আপনার ইউজারনাম নির্বাচন করে নতুন পাসওয়ার্ড সেট করুন।</p><div class="form-group"><label>ইউজারনাম</label><select id="forgotUserSelect" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"><option value="cashier">ক্যাশিয়ার</option><option value="secretary">সেক্রেটারি</option><option value="president">সভাপতি</option></select></div><div class="form-group"><label>নতুন পাসওয়ার্ড</label><input type="password" id="forgotNewPassword" placeholder="নতুন পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"></div><div class="form-group"><label>পাসওয়ার্ড নিশ্চিত</label><input type="password" id="forgotConfirmPassword" placeholder="আবার পাসওয়ার্ড লিখুন" style="width:100%; padding:10px; border:2px solid #ddd; border-radius:8px; font-size:1rem;"></div><button onclick="resetPassword()" style="width:100%; padding:12px; background:#2d7d46; color:white; border:none; border-radius:8px; font-size:1.1rem; font-weight:bold; cursor:pointer;"><i class="fas fa-save"></i> পাসওয়ার্ড রিসেট করুন</button><div style="margin-top:10px; text-align:center; font-size:0.8rem; color:#999;">💡 ডেভেলপারের সাথে যোগাযোগ করুন: মসজিদ কমিটি</div></div></div>';
-        var container = document.getElementById('forgotPasswordModalContainer');
-        if (!container) { var div = document.createElement('div'); div.id = 'forgotPasswordModalContainer'; div.innerHTML = html; document.body.appendChild(div); }
-        else { container.innerHTML = html; }
-    }
-
-    function closeForgotPassword() {
-        var container = document.getElementById('forgotPasswordModalContainer');
-        if (container) { container.remove(); }
-    }
-
-    function resetPassword() {
-        var username = document.getElementById('forgotUserSelect').value;
-        var newPass = document.getElementById('forgotNewPassword').value;
-        var confirmPass = document.getElementById('forgotConfirmPassword').value;
-        if (!newPass || newPass.length < 4) { alert('পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!'); return; }
-        if (newPass !== confirmPass) { alert('পাসওয়ার্ড দুইটি মিলছে না!'); return; }
-        if (users[username]) {
-            users[username].password = newPass;
-            if (currentUser && currentUser.username === username) { currentUser.password = newPass; }
-            saveAllData();
-            alert('✅ "' + username + '" এর পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!');
-            closeForgotPassword();
-            document.getElementById('loginPassword').value = '';
-            document.getElementById('loginPassword').focus();
-        } else { alert('❌ ইউজার পাওয়া যায়নি!'); }
-    }
-
-    // =========================================
-    // ===== ★★★★★ পাসওয়ার্ড চেঞ্জ ★★★★★ =====
+    // ===== ★★★★★ পাসওয়ার্ড ★★★★★ =====
     // =========================================
     function openChangePassword() {
         document.getElementById('changePasswordModal').style.display = 'block';
@@ -2637,52 +1833,28 @@
     }
 
     // =========================================
-    // ===== ★★★★★ অনলাইন স্ট্যাটাস ★★★★★ =====
-    // =========================================
-    function updateOnlineStatus() {
-        var status = document.getElementById('onlineStatus');
-        if (navigator.onLine) {
-            status.textContent = '🟢 অনলাইন';
-            status.className = 'online-status online';
-        } else {
-            status.textContent = '🔴 অফলাইন';
-            status.className = 'online-status offline';
-        }
-    }
-
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-
-    // =========================================
     // ===== ★★★★★ পেজ লোড ★★★★★ =====
     // =========================================
     document.addEventListener('DOMContentLoaded', function() {
         console.log('🚀 অ্যাপ লোড হচ্ছে...');
         
-        testFirebaseConnection();
+        document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleLogin();
+        });
+        
         loadAllData();
-        loadAllDataFromFirebase();
-        listenToAllFirebase();
         generateMonthList();
-        updateOnlineStatus();
         loadMemberTable();
         loadMemberSelect();
         loadCommitteeUpdates();
         loadPublicUpdates();
         updateAllReports();
-        updatePublicStats();
         updatePersonalReports();
         loadMonthlyReport();
         
         console.log('✅ অ্যাপ লোড সম্পূর্ণ!');
+        console.log('👤 ডিফল্ট লগইন: cashier / পাসওয়ার্ড: 123456');
     });
-
-    document.getElementById('loginPassword').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') { handleLogin(); }
-    });
-
-    console.log('✅ সব ফাংশন ডিফাইন করা হয়েছে!');
 </script>
-
 </body>
 </html>
