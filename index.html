@@ -1405,6 +1405,9 @@
     // =========================================
     // ===== ★★★★★ অনুদান ★★★★★ =====
     // =========================================
+        // =========================================
+    // ===== ★★★★★ অনুদান গ্রহণ (আপডেট) ★★★★★ =====
+    // =========================================
     function submitDonation() {
         var amount = document.getElementById('donationAmount').value;
         var purpose = document.getElementById('donationPurpose').value;
@@ -1419,24 +1422,53 @@
                 var memberEng = convertToEnglish(members[i].mobile);
                 var searchEng = convertToEnglish(searchMobile);
                 if (members[i].mobile === searchMobile || memberEng === searchEng) {
-                    name = members[i].name; serial = members[i].serial; address = members[i].address; mobile = members[i].mobile;
-                    memberIndex = i; found = true; break;
+                    name = members[i].name; 
+                    serial = members[i].serial; 
+                    address = members[i].address; 
+                    mobile = members[i].mobile;
+                    memberIndex = i; 
+                    found = true; 
+                    break;
                 }
             }
-            if (!found) { alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!'); return; }
+            if (!found) { 
+                alert('দয়া করে সঠিক মুসল্লি সার্চ করুন!'); 
+                return; 
+            }
         } else {
             name = document.getElementById('guestName').value || 'অতিথি';
-            serial = 'N/A'; address = document.getElementById('guestAddress').value || 'N/A';
+            serial = 'N/A'; 
+            address = document.getElementById('guestAddress').value || 'N/A';
             mobile = document.getElementById('guestMobile').value || 'N/A';
         }
         
-        if (!amount || amount <= 0) { alert('দয়া করে সঠিক পরিমাণ লিখুন'); return; }
+        if (!amount || amount <= 0) { 
+            alert('দয়া করে সঠিক পরিমাণ লিখুন'); 
+            return; 
+        }
         amount = parseInt(amount);
         
-        if (memberIndex >= 0 && purpose !== 'অগ্রيم') {
+        // ★★★ চেক করুন: এই মুসল্লির এই মাসের অনুদান ইতিমধ্যে কেউ গ্রহণ করেছে কিনা ★★★
+        if (memberIndex >= 0 && purpose !== 'অগ্রিম') {
             for (var i = 0; i < personalTransactions.length; i++) {
-                if (personalTransactions[i].memberMobile === mobile && personalTransactions[i].purpose === purpose && personalTransactions[i].collectorName === currentUser.name) {
-                    showNotification('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান ইতিমধ্যে গ্রহণ করা হয়েছে!', 'warning');
+                var t = personalTransactions[i];
+                // একই মুসল্লি, একই মাস, এবং অনুদান (খরচ নয়)
+                if (t.memberMobile === mobile && t.purpose === purpose && t.amount > 0) {
+                    var collectorName = t.collectorName || 'অজানা';
+                    alert('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান ইতিমধ্যে ' + collectorName + ' গ্রহণ করেছেন!\n\nআপনি আর এই মাসের অনুদান গ্রহণ করতে পারবেন না।');
+                    showNotification('⚠️ ' + name + ' এর ' + purpose + ' মাসের অনুদান আগেই ' + collectorName + ' গ্রহণ করেছেন!', 'warning');
+                    return;
+                }
+            }
+        }
+        
+        // অগ্রিম চেক - অগ্রিমের জন্য আলাদা চেক
+        if (memberIndex >= 0 && purpose === 'অগ্রিম') {
+            for (var i = 0; i < personalTransactions.length; i++) {
+                var t = personalTransactions[i];
+                if (t.memberMobile === mobile && t.isAdvance === true && t.advanceParentId) {
+                    alert('⚠️ ' + name + ' এর অগ্রিম অনুদান ইতিমধ্যে ' + (t.collectorName || 'অজানা') + ' গ্রহণ করেছেন!');
+                    showNotification('⚠️ ' + name + ' এর অগ্রিম অনুদান আগেই গ্রহণ করা হয়েছে!', 'warning');
                     return;
                 }
             }
@@ -1458,11 +1490,17 @@
         var yearNum = now.getFullYear();
         
         var transaction = {
-            memberName: name, memberSerial: serial, memberMobile: mobile,
-            amount: amount, purpose: purpose,
+            memberName: name, 
+            memberSerial: serial, 
+            memberMobile: mobile,
+            amount: amount, 
+            purpose: purpose,
             collectorName: currentUser ? currentUser.name : 'ক্যাশিয়ার',
             collectorRole: currentUser ? currentUser.role : 'cashier',
-            date: dateStr, time: timeStr, month: monthStr, year: yearNum,
+            date: dateStr, 
+            time: timeStr, 
+            month: monthStr, 
+            year: yearNum,
             isAdvance: purpose === 'অগ্রিম'
         };
         
@@ -1471,18 +1509,25 @@
             var currentMonthIndex = now.getMonth();
             var currentYear = now.getFullYear();
             var advanceAmountPerMonth = Math.floor(amount / 12);
+            var advanceParentId = Date.now();
+            
             for (var m = 0; m < 12; m++) {
                 var idx = (currentMonthIndex + m + 1) % 12;
                 var yr = currentYear + Math.floor((currentMonthIndex + m + 1) / 12);
                 personalTransactions.push({
-                    memberName: name, memberSerial: serial, memberMobile: mobile,
+                    memberName: name, 
+                    memberSerial: serial, 
+                    memberMobile: mobile,
                     amount: advanceAmountPerMonth,
                     purpose: bengaliMonths[idx] + ' ' + yr,
                     collectorName: currentUser ? currentUser.name : 'ক্যাশিয়ার',
                     collectorRole: currentUser ? currentUser.role : 'cashier',
-                    date: dateStr, time: timeStr,
-                    month: bengaliMonths[idx] + ' ' + yr, year: yr,
-                    isAdvance: true, advanceParentId: Date.now()
+                    date: dateStr, 
+                    time: timeStr,
+                    month: bengaliMonths[idx] + ' ' + yr, 
+                    year: yr,
+                    isAdvance: true, 
+                    advanceParentId: advanceParentId
                 });
             }
             if (!monthlyReports[monthStr]) {
@@ -1496,13 +1541,21 @@
             saveAllData();
             showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
             currentReceipt = {
-                name: name, serial: serial, address: address, mobile: mobile,
-                amount: amount, purpose: 'অগ্রিম (১২ মাস)',
+                name: name, 
+                serial: serial, 
+                address: address, 
+                mobile: mobile,
+                amount: amount, 
+                purpose: 'অগ্রিম (১২ মাস)',
                 collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
                 collectorRole: currentUser ? currentUser.role : 'cashier',
-                date: dateStr, time: timeStr, memo: nextMemo++
+                date: dateStr, 
+                time: timeStr, 
+                memo: nextMemo++
             };
             showReceipt(currentReceipt);
+            // ★★★ প্রিন্ট অপশন দেখান ★★★
+            document.getElementById('receiptPreview').style.display = 'block';
             return;
         }
         
@@ -1538,14 +1591,23 @@
         monthlyReports[currentMonth].details.monthly += amount;
         
         currentReceipt = {
-            name: name, serial: serial, address: address, mobile: mobile,
-            amount: amount, purpose: purpose,
+            name: name, 
+            serial: serial, 
+            address: address, 
+            mobile: mobile,
+            amount: amount, 
+            purpose: purpose,
             collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
             collectorRole: currentUser ? currentUser.role : 'cashier',
-            date: dateStr, time: timeStr, memo: nextMemo++
+            date: dateStr, 
+            time: timeStr, 
+            memo: nextMemo++
         };
         
         showReceipt(currentReceipt);
+        // ★★★ প্রিন্ট অপশন দেখান ★★★
+        document.getElementById('receiptPreview').style.display = 'block';
+        
         updateAllReports();
         updatePublicStats();
         updatePersonalReports();
@@ -1555,8 +1617,7 @@
         saveAllData();
     }
 
-    function showReceipt(data) {
-        document.getElementById('receiptPreview').style.display = 'block';
+       function showReceipt(data) {
         document.getElementById('receiptContent').innerHTML = 
             '<div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>' +
             '<div style="text-align:center; font-size:0.7rem;">ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</div>' +
@@ -1572,6 +1633,9 @@
             '<div><strong>তারিখ:</strong> ' + data.date + ' | ' + data.time + '</div>' +
             '<div class="receipt-line"></div>' +
             '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
+        
+        // ★★★ প্রিন্ট বাটন দেখান ★★★
+        document.getElementById('receiptPreview').style.display = 'block';
     }
 
     function printReceipt() {
