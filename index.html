@@ -105,7 +105,6 @@
         .stat-card p { font-size: 1.2rem; font-weight: bold; margin-top: 2px; }
         .receipt-preview { background: #f8f9fa; border: 2px dashed #2d7d46; padding: 12px; border-radius: 8px; margin: 10px 0; font-family: 'Courier New', monospace; max-width: 280px; font-size: 0.78rem; }
         .receipt-preview .receipt-line { border-top: 1px dashed #999; margin: 4px 0; }
-        /* ★★★ প্রিন্ট রশিদ দেখানোর জন্য ★★★ */
         #receiptPreview { display: none; margin-top: 10px; }
         #receiptPreview.show { display: block !important; }
         .update-card { background: #f8f9fa; padding: 8px 12px; border-radius: 6px; margin: 5px 0; border-left: 4px solid #2d7d46; }
@@ -368,8 +367,7 @@
                     <i class="fas fa-save"></i> গ্রহণ করুন
                 </button>
                 
-                <!-- ★★★ রশিদ প্রিভিউ (সর্বদা show হবে) ★★★ -->
-                <div id="receiptPreview" style="display:block; margin-top:10px;">
+                <div id="receiptPreview" style="display:none; margin-top:10px;">
                     <h4 style="font-size:0.85rem;">📄 রশিদ</h4>
                     <div class="receipt-preview" id="receiptContent">
                         <div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>
@@ -1504,9 +1502,9 @@
     }
 
     // =========================================
-    // ===== ★★★★★ অনুদান গ্রহণ (প্রিন্ট সহ) ★★★★★ =====
+    // ===== ★★★★★ অনুদান গ্রহণ (সরাসরি প্রিন্ট) ★★★★★ =====
     // =========================================
-     // =========================================
+       // =========================================
     // ===== ★★★★★ অনুদান গ্রহণ (প্রিন্ট সহ) ★★★★★ =====
     // =========================================
     function submitDonation() {
@@ -1692,8 +1690,7 @@
         showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
         saveAllData();
     }
-            showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
-               // ★★★★★ রশিদ দেখান ও সরাসরি প্রিন্ট ★★★★★
+    // ★★★★★ রশিদ দেখান ও সরাসরি প্রিন্ট ★★★★★
     function showReceiptAndPrint(data) {
         if (!data) {
             alert('রশিদ ডাটা পাওয়া যায়নি!');
@@ -1773,8 +1770,10 @@
             printWindow.focus();
             printWindow.print();
         }, 600);
-    } 
-            // ★★★ রশিদ তৈরি ★★★
+    }
+            showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
+            
+            // ★★★ রশিদ তৈরি ও সরাসরি প্রিন্ট ★★★
             currentReceipt = {
                 name: name, serial: serial, address: address, mobile: mobile,
                 amount: amount, purpose: 'অগ্রিম (১২ মাস)',
@@ -1782,7 +1781,7 @@
                 collectorRole: currentUser ? currentUser.role : 'cashier',
                 date: dateStr, time: timeStr, memo: nextMemo++
             };
-            showReceipt(currentReceipt);
+            showReceiptAndPrint(currentReceipt);
             return;
         }
         
@@ -1817,7 +1816,7 @@
         monthlyReports[currentMonth].income += amount;
         monthlyReports[currentMonth].details.monthly += amount;
         
-        // ★★★ রশিদ তৈরি ★★★
+        // ★★★ রশিদ তৈরি ও সরাসরি প্রিন্ট ★★★
         currentReceipt = {
             name: name, serial: serial, address: address, mobile: mobile,
             amount: amount, purpose: purpose,
@@ -1826,7 +1825,7 @@
             date: dateStr, time: timeStr, memo: nextMemo++
         };
         
-        showReceipt(currentReceipt);
+        showReceiptAndPrint(currentReceipt);
         
         updateAllReports();
         updatePublicStats();
@@ -1838,8 +1837,8 @@
         console.log('✅ অনুদান সেভ করা হয়েছে!');
     }
 
-    // ★★★★★ রশিদ দেখান ★★★★★
-    function showReceipt(data) {
+    // ★★★★★ রশিদ দেখান ও সরাসরি প্রিন্ট ★★★★★
+    function showReceiptAndPrint(data) {
         var receiptContent = document.getElementById('receiptContent');
         
         receiptContent.innerHTML = 
@@ -1864,15 +1863,13 @@
         receiptDiv.style.visibility = 'visible';
         receiptDiv.style.opacity = '1';
         
-        // স্ক্রোল করে দেখান
+        // ★★★ ১ সেকেন্ড পর সরাসরি প্রিন্ট ★★★
         setTimeout(function() {
-            receiptDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
+            printReceiptDirect();
+        }, 500);
     }
 
-    // =========================================
-    // ===== ★★★★★ প্রিন্ট রশিদ ★★★★★ =====
-    // =========================================
+    // ★★★★★ সরাসরি প্রিন্ট (নতুন উইন্ডো ছাড়া) ★★★★★
         // ★★★★★ প্রিন্ট রশিদ (ম্যানুয়াল) ★★★★★
     function printReceipt() {
         if (!currentReceipt) {
@@ -1881,6 +1878,35 @@
         }
         printReceiptNow();
     }
+        var content = document.getElementById('receiptContent').innerHTML;
+        var printWindow = window.open('', '_blank', 'width=400,height=600');
+        if (!printWindow) {
+            alert('⚠️ পপ-আপ ব্লকার চালু আছে! দয়া করে পপ-আপ ব্লকার অফ করুন।');
+            return;
+        }
+        printWindow.document.write(
+            '<html><head><title>রশিদ</title>' +
+            '<style>body { font-family: "Courier New", monospace; padding:20px; max-width:350px; margin:auto; } .receipt-line { border-top:1px dashed #999; margin:6px 0; } @media print { .no-print { display:none !important; } }</style>' +
+            '</head><body>' +
+            content +
+            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 20px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem; margin-bottom:5px;">🖨️ প্রিন্ট করুন</button><button onclick="window.close()" style="padding:10px 20px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">✕ বন্ধ করুন</button></div>' +
+            '</body></html>'
+        );
+        printWindow.document.close();
+        setTimeout(function() { 
+            printWindow.focus(); 
+            printWindow.print(); 
+        }, 500);
+    }
+
+    // =========================================
+    // ===== ★★★★★ প্রিন্ট রশিদ (ম্যানুয়াল) ★★★★★ =====
+    // =========================================
+    function printReceipt() {
+        if (!currentReceipt) {
+            alert('প্রথমে অনুদান গ্রহণ করুন');
+            return;
+        }
         var content = document.getElementById('receiptContent').innerHTML;
         var printWindow = window.open('', '_blank', 'width=400,height=600');
         if (!printWindow) {
