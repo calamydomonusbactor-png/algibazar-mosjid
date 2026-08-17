@@ -749,7 +749,7 @@
 
 
 <script>
-    // =========================================
+        // =========================================
     // ===== ★★★★★ FIREBASE CONFIG ★★★★★ =====
     // =========================================
     const firebaseConfig = {
@@ -1502,9 +1502,6 @@
     }
 
     // =========================================
-    // ===== ★★★★★ অনুদান গ্রহণ (সরাসরি প্রিন্ট) ★★★★★ =====
-    // =========================================
-       // =========================================
     // ===== ★★★★★ অনুদান গ্রহণ (প্রিন্ট সহ) ★★★★★ =====
     // =========================================
     function submitDonation() {
@@ -1689,7 +1686,9 @@
         loadMemberSelect();
         showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
         saveAllData();
+        console.log('✅ অনুদান সেভ করা হয়েছে!');
     }
+
     // ★★★★★ রশিদ দেখান ও সরাসরি প্রিন্ট ★★★★★
     function showReceiptAndPrint(data) {
         if (!data) {
@@ -1733,6 +1732,7 @@
             printReceiptNow();
         }, 500);
     }
+
     // ★★★★★ এখনই প্রিন্ট করুন ★★★★★
     function printReceiptNow() {
         var content = document.getElementById('receiptContent');
@@ -1771,158 +1771,14 @@
             printWindow.print();
         }, 600);
     }
-            showNotification('✅ ' + name + ' এর ' + amount + ' টাকা অগ্রিম অনুদান গ্রহণ করা হয়েছে! (১২ মাস)', 'success');
-            
-            // ★★★ রশিদ তৈরি ও সরাসরি প্রিন্ট ★★★
-            currentReceipt = {
-                name: name, serial: serial, address: address, mobile: mobile,
-                amount: amount, purpose: 'অগ্রিম (১২ মাস)',
-                collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
-                collectorRole: currentUser ? currentUser.role : 'cashier',
-                date: dateStr, time: timeStr, memo: nextMemo++
-            };
-            showReceiptAndPrint(currentReceipt);
-            return;
-        }
-        
-        personalTransactions.push(transaction);
-        var today = dateStr;
-        var foundToday = false;
-        for (var i = 0; i < reportData.daily.length; i++) {
-            if (reportData.daily[i].date === today) {
-                reportData.daily[i].income += amount;
-                foundToday = true;
-                break;
-            }
-        }
-        if (!foundToday) { reportData.daily.unshift({ date: today, income: amount, expense: 0 }); }
-        
-        reportData.weekly.income += amount;
-        var currentMonth = monthStr;
-        var foundMonth = false;
-        for (var i = 0; i < reportData.monthly.length; i++) {
-            if (reportData.monthly[i].month === currentMonth) {
-                reportData.monthly[i].income += amount;
-                foundMonth = true;
-                break;
-            }
-        }
-        if (!foundMonth) { reportData.monthly.unshift({ month: currentMonth, income: amount, expense: 0 }); }
-        reportData.yearly.income += amount;
-        
-        if (!monthlyReports[currentMonth]) {
-            monthlyReports[currentMonth] = { income: 0, expense: 0, details: { monthly: 0, special: 0, electric: 0, salary: 0, development: 0 } };
-        }
-        monthlyReports[currentMonth].income += amount;
-        monthlyReports[currentMonth].details.monthly += amount;
-        
-        // ★★★ রশিদ তৈরি ও সরাসরি প্রিন্ট ★★★
-        currentReceipt = {
-            name: name, serial: serial, address: address, mobile: mobile,
-            amount: amount, purpose: purpose,
-            collector: currentUser ? currentUser.name : 'ক্যাশিয়ার',
-            collectorRole: currentUser ? currentUser.role : 'cashier',
-            date: dateStr, time: timeStr, memo: nextMemo++
-        };
-        
-        showReceiptAndPrint(currentReceipt);
-        
-        updateAllReports();
-        updatePublicStats();
-        updatePersonalReports();
-        loadMemberTable();
-        loadMemberSelect();
-        showNotification('✅ ' + name + ' এর ' + purpose + ' মাসের ' + amount + ' টাকা অনুদান গ্রহণ করা হয়েছে!', 'success');
-        saveAllData();
-        console.log('✅ অনুদান সেভ করা হয়েছে!');
-    }
 
-    // ★★★★★ রশিদ দেখান ও সরাসরি প্রিন্ট ★★★★★
-    function showReceiptAndPrint(data) {
-        var receiptContent = document.getElementById('receiptContent');
-        
-        receiptContent.innerHTML = 
-            '<div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>' +
-            '<div style="text-align:center; font-size:0.7rem;">ঠিকানা: আলগী বাজার, কবিরহাট, নোয়াখালী</div>' +
-            '<div class="receipt-line"></div>' +
-            '<div><strong>মেমো:</strong> ' + data.memo + '</div>' +
-            '<div><strong>সিরিয়াল:</strong> ' + data.serial + '</div>' +
-            '<div><strong>নাম:</strong> ' + data.name + '</div>' +
-            '<div><strong>ঠিকানা:</strong> ' + data.address + '</div>' +
-            '<div><strong>বাবদ:</strong> ' + data.purpose + '</div>' +
-            '<div><strong>টাকা:</strong> ' + data.amount + '</div>' +
-            '<div class="receipt-line"></div>' +
-            '<div><strong>গ্রহণ:</strong> ' + data.collector + ' (' + data.collectorRole + ')</div>' +
-            '<div><strong>তারিখ:</strong> ' + data.date + ' | ' + data.time + '</div>' +
-            '<div class="receipt-line"></div>' +
-            '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
-        
-        // ★★★ রশিদ দেখান ★★★
-        var receiptDiv = document.getElementById('receiptPreview');
-        receiptDiv.style.display = 'block';
-        receiptDiv.style.visibility = 'visible';
-        receiptDiv.style.opacity = '1';
-        
-        // ★★★ ১ সেকেন্ড পর সরাসরি প্রিন্ট ★★★
-        setTimeout(function() {
-            printReceiptDirect();
-        }, 500);
-    }
-
-    // ★★★★★ সরাসরি প্রিন্ট (নতুন উইন্ডো ছাড়া) ★★★★★
-        // ★★★★★ প্রিন্ট রশিদ (ম্যানুয়াল) ★★★★★
+    // ★★★★★ প্রিন্ট রশিদ (ম্যানুয়াল) ★★★★★
     function printReceipt() {
         if (!currentReceipt) {
             alert('প্রথমে অনুদান গ্রহণ করুন');
             return;
         }
         printReceiptNow();
-    }
-        var content = document.getElementById('receiptContent').innerHTML;
-        var printWindow = window.open('', '_blank', 'width=400,height=600');
-        if (!printWindow) {
-            alert('⚠️ পপ-আপ ব্লকার চালু আছে! দয়া করে পপ-আপ ব্লকার অফ করুন।');
-            return;
-        }
-        printWindow.document.write(
-            '<html><head><title>রশিদ</title>' +
-            '<style>body { font-family: "Courier New", monospace; padding:20px; max-width:350px; margin:auto; } .receipt-line { border-top:1px dashed #999; margin:6px 0; } @media print { .no-print { display:none !important; } }</style>' +
-            '</head><body>' +
-            content +
-            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 20px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem; margin-bottom:5px;">🖨️ প্রিন্ট করুন</button><button onclick="window.close()" style="padding:10px 20px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">✕ বন্ধ করুন</button></div>' +
-            '</body></html>'
-        );
-        printWindow.document.close();
-        setTimeout(function() { 
-            printWindow.focus(); 
-            printWindow.print(); 
-        }, 500);
-    }
-
-    // =========================================
-    // ===== ★★★★★ প্রিন্ট রশিদ (ম্যানুয়াল) ★★★★★ =====
-    // =========================================
-    function printReceipt() {
-        if (!currentReceipt) {
-            alert('প্রথমে অনুদান গ্রহণ করুন');
-            return;
-        }
-        var content = document.getElementById('receiptContent').innerHTML;
-        var printWindow = window.open('', '_blank', 'width=400,height=600');
-        if (!printWindow) {
-            alert('⚠️ পপ-আপ ব্লকার চালু আছে! দয়া করে পপ-আপ ব্লকার অফ করুন।');
-            return;
-        }
-        printWindow.document.write(
-            '<html><head><title>রশিদ</title>' +
-            '<style>body { font-family: "Courier New", monospace; padding:20px; max-width:350px; margin:auto; } .receipt-line { border-top:1px dashed #999; margin:6px 0; } @media print { .no-print { display:none !important; } }</style>' +
-            '</head><body>' +
-            content +
-            '<br><div class="no-print"><button onclick="window.print()" style="padding:10px 20px; background:#2d7d46; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem; margin-bottom:5px;">🖨️ প্রিন্ট করুন</button><button onclick="window.close()" style="padding:10px 20px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer; width:100%; font-size:1rem;">✕ বন্ধ করুন</button></div>' +
-            '</body></html>'
-        );
-        printWindow.document.close();
-        setTimeout(function() { printWindow.focus(); printWindow.print(); }, 800);
     }
 
     // =========================================
