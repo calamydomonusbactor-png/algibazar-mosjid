@@ -105,8 +105,8 @@
         .stat-card p { font-size: 1.2rem; font-weight: bold; margin-top: 2px; }
         .receipt-preview { background: #f8f9fa; border: 2px dashed #2d7d46; padding: 12px; border-radius: 8px; margin: 10px 0; font-family: 'Courier New', monospace; max-width: 280px; font-size: 0.78rem; }
         .receipt-preview .receipt-line { border-top: 1px dashed #999; margin: 4px 0; }
-        #receiptPreview { display: none; margin-top: 10px; }
-        #receiptPreview.show { display: block !important; }
+        /* ★★★ রশিদ সবসময় visible ★★★ */
+        #receiptPreview { display: block; margin-top: 10px; }
         .update-card { background: #f8f9fa; padding: 8px 12px; border-radius: 6px; margin: 5px 0; border-left: 4px solid #2d7d46; }
         .update-card h5 { color: #1a472a; font-size: 0.85rem; }
         .update-card p { font-size: 0.8rem; margin: 2px 0; }
@@ -367,7 +367,8 @@
                     <i class="fas fa-save"></i> গ্রহণ করুন
                 </button>
                 
-                <div id="receiptPreview" style="display:none; margin-top:10px;">
+                <!-- ★★★ রশিদ প্রিভিউ (সবসময় visible) ★★★ -->
+                <div id="receiptPreview" style="display:block; margin-top:10px;">
                     <h4 style="font-size:0.85rem;">📄 রশিদ</h4>
                     <div class="receipt-preview" id="receiptContent">
                         <div style="text-align:center; font-weight:bold; font-size:0.9rem;">🕌 আলগী বাজার কেন্দ্রীয় জামে মসজিদ</div>
@@ -671,7 +672,7 @@
             <input type="password" id="devPassword" placeholder="ডেভেলপার পাসওয়ার্ড দিন" style="flex:1; padding:8px 12px; border:2px solid #ddd; border-radius:6px;">
             <button class="btn btn-primary btn-sm" onclick="unlockDevPanel()">আনলক</button>
         </div>
-        <small style="color:#999;">💡 ডিফল্ট পাসওয়ার্ড: <strong>●●●●●●●●</strong> (শুধু ডেভেলপার জানবেন)</small>
+        <small style="color:#999;">💡 ডিফল্ট পাসওয়ার্ড: <strong>●●●●●●●●</strong> (শুধু ডেভেলপার জানবেন)</small>
     </div>
     
     <div id="devContent" style="display:none;">
@@ -749,7 +750,7 @@
 
 
 <script>
-        // =========================================
+    // =========================================
     // ===== ★★★★★ FIREBASE CONFIG ★★★★★ =====
     // =========================================
     const firebaseConfig = {
@@ -1719,7 +1720,7 @@
             '<div class="receipt-line"></div>' +
             '<div style="text-align:center; font-size:0.7rem;">ধন্যবাদ! আল্লাহ মঙ্গল করুন।</div>';
         
-        // রশিদ দেখান
+        // রশিদ দেখান (ইতিমধ্যে visible)
         var receiptDiv = document.getElementById('receiptPreview');
         if (receiptDiv) {
             receiptDiv.style.display = 'block';
